@@ -1,12 +1,33 @@
 import React, { Component } from 'react';
 
-export class Cangyr extends Component {
+export class Permission extends Component {
+
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    this.state = {
+      modal: false,
+      view: 'landing'
+    };
+    this.askPermission = this.askPermission.bind(this);
+  }
+
+  askPermission() {
+    navigator.mediaDevices.getUserMedia({video: true, audio: true}).then( stream => {
+        window.localStream = stream;
+        window.localAudio.srcObject = stream;
+        window.localAudio.autoplay = true;
+    }).catch( err => {
+        console.log("u got an error:" + err)
+    });
+  }
+  
   render() {
     return (
       <>
         <div className='cb-wrapper-app'>
           <div className='cb-content phone-layout'>
-            <div className='mastdead'>
+            <div className=''>
               <img
                 className='mast-head-img'
                 src='../images/Masthead-02.png'
@@ -21,11 +42,13 @@ export class Cangyr extends Component {
                 <div>
                   <p className='text-center text-white'>
                     'playnow.com' would like <br />
-                    to access the Ccamera and Goro.
+                    to access the Camera and Gyro.
                   </p>
                 </div>
               </div>
-              <button className='btn btn-primary margin-auto mt-3'>OKAY</button>
+              <div className="mb-3">
+                <button className='btn btn-primary margin-auto mt-3' onClick={this.askPermission}>OKAY</button>
+              </div>              
             </div>
           </div>
         </div>
@@ -34,4 +57,4 @@ export class Cangyr extends Component {
   }
 }
 
-export default Cangyr;
+export default Permission;

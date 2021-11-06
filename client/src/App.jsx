@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
-// import 
-
-// import './App.css';
-
+import { render } from "react-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Landing from './components/Landing';
 import Desktop from './components/Desktop';
 import Registration from './components/Registration';
-import Loading from './components/Loading';
-import Cangyr from './components/Cangyr';
-import Userdeny from './components/Userdeny';
-import Thankyou from './components/Thankyou';
-import Landing2 from './components/Landing2';
-
-
+import Permission from './components/Permission';
+import PermissionDenied from './components/PermissionDenied';
+import Creation from './components/Creation';
+import ScrollToTop  from './components/ScrollToTop';
 export class App extends Component {
   constructor(props){
     super(props);
@@ -22,18 +17,29 @@ export class App extends Component {
   }
   render() {
     return (
-      <>
-        {this.state.load === 0 && <Desktop/>}
+      <BrowserRouter>
+        <ScrollToTop>
+          <Routes>
+            <Route exact path="/"  element={<Landing />} />            
+            <Route path="/desktop"  element={<Desktop />} />  
+            <Route path="/registration"  element={<Registration />} />
+            <Route path="/permission"  element={<Permission />} />
+            <Route path="/permission-required"  element={<PermissionDenied />} /> 
+            <Route path="/creation"  element={<Creation />} />                  
+          </Routes>
+        </ScrollToTop>        
+      </BrowserRouter>
+    )
+  }
+}
+
+export default App
+
+/* {this.state.load === 0 && <Desktop/>}
         {this.state.load === 1 && <Landing/>}
         {this.state.load === 2 && <Registration/>}
         {this.state.load === 3 && <Loading/>}
         {this.state.load === 4 && <Cangyr/>}
         {this.state.load === 5 && <Userdeny/>}
         {this.state.load === 6 && <Thankyou/>}
-        {this.state.load === 7 && <Landing2/>}
-      </>
-    )
-  }
-}
-
-export default App
+        {this.state.load === 7 && <Landing2/>} */
