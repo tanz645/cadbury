@@ -1,0 +1,6 @@
+
+{
+    "note": "Config default values!",
+    "DATABASE_URL": "mongodb://localhost/servitex",
+    "jwtSecret": "servitexsecrettocken"
+}
