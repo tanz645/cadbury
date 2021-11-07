@@ -5,6 +5,7 @@
 /* Variables */
 :root{
   --color-primary: #471d7b;
+  --color-primary-light: #6e5294;
   --color-primary-dark: #2a0a49;
   --color-secondary: #e3b870;
   --color-white: #ffffff;
@@ -348,6 +349,13 @@ button {
 thead>tr{
   border-top: 2px solid var(--color-secondary);
 }
+thead td{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+thead img{
+  max-height: 35px;
+}
 
 /* Device */
 body > div > .desktop {
@@ -370,6 +378,14 @@ tbody *{
   border-top: 0 none !important;
 }
 .table-striped>tbody>tr:nth-of-type(odd)>*{
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-light);
   color: var(--color-white) !important;
+}
+.table-striped>tbody>tr>*{
+  padding: 25px 0;
+}
+
+/* Fixes */
+td .form-check .form-check-input{
+  margin: auto;
 }

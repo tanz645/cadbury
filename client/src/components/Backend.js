@@ -17,13 +17,20 @@ export class Backend extends Component {
                   <div>VEERIFY</div>
                   <div class="d-flex">
                     <div class="flex-fill">
-                      
-                      <FontAwesomeIcon icon={faCoffee} />
+                      <img src="../images/AEON.png" alt="" />
                     </div>
-                    <div class="flex-fill">i</div>
-                    <div class="flex-fill">i</div>
-                    <div class="flex-fill">i</div>
-                    <div class="flex-fill">i</div>
+                    <div class="flex-fill">
+                      <img src="../images/TF.png" alt="" />
+                    </div>
+                    <div class="flex-fill">
+                      <img src="../images/Econsave.png" alt="" />
+                    </div>
+                    <div class="flex-fill">
+                      <strong className="cb-text-black">Nationwide</strong>
+                    </div>
+                    <div class="flex-fill">
+                      <img src="../images/Invalid.png" alt="" />
+                    </div>
                   </div>
                 </td>
                 <td>RM8<br />PROMO<br />CODE</td>
@@ -48,11 +55,21 @@ export class Backend extends Component {
                 <td>e</td>
                 <td>
                   <div class="d-flex">
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
                   </div>
                 </td>
                 <td>bkh13%e</td>
@@ -60,13 +77,22 @@ export class Backend extends Component {
                 <td>e</td>
                 <td>d/p</td>
                 <td>
-                  <div class="d-flex">
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
+                <div class="d-flex">
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
                   </div>
                 </td>
-                <td></td>
+                <td className="cb-text-small">
+                  <div>14/09/21</div>
+                  <div>03/37/45</div>
+                </td>
               </tr>
               <tr>
                 <td>3</td>
@@ -74,11 +100,21 @@ export class Backend extends Component {
                 <td>e</td>
                 <td>
                   <div class="d-flex">
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
                   </div>
                 </td>
                 <td>bkh13%e</td>
@@ -86,13 +122,21 @@ export class Backend extends Component {
                 <td>e</td>
                 <td>d/p</td>
                 <td>
-                  <div class="d-flex">
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
+                <div class="d-flex">
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
                   </div>
                 </td>
-                <td></td>
+                <td className="cb-text-small">
+                  N/A
+                </td>
               </tr>
               <tr>
                 <td>3</td>
@@ -100,11 +144,21 @@ export class Backend extends Component {
                 <td>e</td>
                 <td>
                   <div class="d-flex">
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
                   </div>
                 </td>
                 <td>bkh13%e</td>
@@ -112,13 +166,22 @@ export class Backend extends Component {
                 <td>e</td>
                 <td>d/p</td>
                 <td>
-                  <div class="d-flex">
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
-                    <div class="flex-fill">t</div>
+                <div class="d-flex">
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
+                    <div class="flex-fill form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+                    </div>
                   </div>
                 </td>
-                <td></td>
+                <td className="cb-text-small">
+                  <div>14/09/21</div>
+                  <div>03/37/45</div>
+                </td>
               </tr>
             </tbody>
           </table>
