@@ -30,9 +30,9 @@ body {
   color: var(--color-white);
   font-family: cadburyFont !important;
 }
-body>div{
+/* body>div{
   height: 100%;
-}
+} */
 /* Links */
 a{
   text-decoration: none !important;
