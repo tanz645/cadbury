@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class Play extends Component {
+export class Message extends Component {
   render() {
     return (
       <>
@@ -22,4 +22,4 @@ export class Play extends Component {
   }
 }
 
-export default Play;
+export default Message;

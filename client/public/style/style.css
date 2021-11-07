@@ -18,6 +18,9 @@
 html {
   height: 100%;
 }
+h2,h4{
+  font-family: cadburyFont !important;
+}
 
 body {
   background: var(--color-primary) !important;
@@ -32,7 +35,9 @@ a{
 li {
   list-style: none;
 }
-
+.desktop-qr{
+  border-radius: 20%;
+}
 /* Typography */
 .heading {
   color: var(--color-secondary);
@@ -63,7 +68,9 @@ li {
 .padding-top-20 {
   padding-top: 200px;
 }
-
+.padding-top-10 {
+  padding-top: 100px;
+}
 .margin-auto {
   margin: auto;
   display: block !important;
@@ -332,14 +339,24 @@ li {
 .desktop {
   background-image: url("../images/BG-04.png");
   background-size: cover;
-  padding-top: 100px;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100%;
 }
-
-.desktop > div {
-  background: url("../images/CDM.png") no-repeat 100% 0;
-  height: 100%;
+.text-right{
+  text-align: right !important;
 }
-
+.desktop-cadbury-pour {
+  /* background: url("../images/CDM.png") no-repeat 112% 0;  
+  max-height: 100vh;
+  background-size: 32% 100vh; */
+  max-height: 100vh;
+  width: 100%;
+  /* width: 100%; */
+}
+.desktop .heading h4{
+  font-size: 15px;
+}
 .page-navigation{
   position: absolute;
   bottom: 0;
@@ -362,7 +379,8 @@ button {
 }
 
 .cd-img-base {
-  max-width: 710px;
+  width: 100%;
+  margin-top: 100px;
 }
 
 

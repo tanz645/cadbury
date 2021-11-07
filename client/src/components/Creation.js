@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { useNavigate } from 'react-router-dom';
 export class Creation extends Component {
 
     constructor(props) {
-        super(props);        
+        super(props);       
+       
         this.state = {
             filterIds: [
                 {id:1, path:'../masks/Lion/lion'},
@@ -20,17 +22,19 @@ export class Creation extends Component {
     }
 
     startVideo(){   
-        if(this.state.recordingStarted){
-            this.setState({recordingStarted:false},() => {
-                this.state.deepAR.finishVideoRecording((e) => {
-                    console.log(e)
-                });
-            })            
-        }else{            
-            this.setState({recordingStarted:true},() => {
-                this.state.deepAR.startVideoRecording();
-            })
-        }
+        const { navigation } = this.props; 
+        navigation('/question-popup')
+        // if(this.state.recordingStarted){
+        //     this.setState({recordingStarted:false},() => {
+        //         this.state.deepAR.finishVideoRecording((e) => {
+        //             console.log(e)
+        //         });
+        //     })            
+        // }else{            
+        //     this.setState({recordingStarted:true},() => {
+        //         this.state.deepAR.startVideoRecording();
+        //     })
+        // }
         
     }
 
@@ -93,4 +97,10 @@ export class Creation extends Component {
     }
 }
 
-export default Creation;
+export default function(props) {
+    const navigation = useNavigate();
+  
+    return <Creation {...props} navigation={navigation} />;
+  }
+
+// export default Creation;
