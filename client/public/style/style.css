@@ -5,9 +5,11 @@
 /* Variables */
 :root{
   --color-primary: #471d7b;
+  --color-primary-light: #6e5294;
   --color-primary-dark: #2a0a49;
   --color-secondary: #e3b870;
   --color-white: #ffffff;
+  --color-black: #000000;
 
   --base-font-size: 14px;
   --heading-font-size: calc(var(--base-font-size) + 10px);
@@ -27,6 +29,9 @@ body {
   height: 100%;
   color: var(--color-white);
   font-family: cadburyFont !important;
+}
+body>div{
+  height: 100%;
 }
 /* Links */
 a{
@@ -55,6 +60,16 @@ li {
 
 .cd-text-3x{
   font-size: var(--font-3x);
+}
+
+.cb-text-small{
+  font-size: calc(var(--base-font-size) - 4px);
+}
+.cb-text-black{
+  color: var(--color-black) !important;
+}
+.cb-text-primary{
+  color: var(--color-primary);
 }
 
 .upload-recipet-text{
@@ -118,7 +133,7 @@ li {
 }
 
 .cd-img-stamp {
-  height: 100px;
+  height: 180px;
 }
 
 .family-img {
@@ -383,11 +398,27 @@ button {
   margin-top: 100px;
 }
 
-
+.cb-img-thank{
+  width: 180px;
+  margin: auto;
+  display: table;
+  padding-left: 20px;
+}
 /* Forms */
 .question-popup-textaria{
   border-radius: 16px;
   width: 100%;
+}
+/* Table */
+thead>tr{
+  border-top: 2px solid var(--color-secondary);
+}
+thead td{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+thead img{
+  max-height: 35px;
 }
 
 /* Device */
@@ -397,4 +428,41 @@ body > div > .desktop {
 
 .mobile-head{
   min-height: 700px;
+}
+
+/* Backend */
+.cb-backend{
+  background-color: var(--color-white);
+  height: 100%;
+}
+tbody *{
+  font-weight: normal;
+  text-align: center;
+}
+.table>:not(:first-child){
+  border-top: 0 none !important;
+}
+.table-striped>tbody>tr:nth-of-type(odd)>*{
+  background-color: var(--color-primary-light);
+  color: var(--color-white) !important;
+}
+.table-striped>tbody>tr>*{
+  padding: 25px 0;
+}
+.table-striped .svg-inline--fa{
+  background: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-secondary);
+    padding: 7px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.table-striped .svg-inline--fa + .svg-inline--fa{
+  margin-left: 5px;
+}
+
+/* Fixes */
+td .form-check .form-check-input{
+  margin: auto;
 }

@@ -10,6 +10,7 @@ import ScrollToTop  from './components/ScrollToTop';
 import QuestionPopup  from './components/QuestionPopup';
 import Thankyou from './components/Thankyou';
 import Message from './components/Message';
+import Backend from './components/Backend';
 export class App extends Component {
   constructor(props){
     super(props);
@@ -27,10 +28,11 @@ export class App extends Component {
             <Route path="/registration"  element={<Registration />} />
             <Route path="/permission"  element={<Permission />} />
             <Route path="/permission-required"  element={<PermissionDenied />} /> 
-            <Route path="/creation"  element={<Creation />} />                  
-            <Route path="/question-popup"  element={<QuestionPopup />} />                  
-            <Route path="/thankyou"  element={<Thankyou />} />                  
-            <Route path="/message"  element={<Message />} />                  
+            <Route path="/creation"  element={<Creation />} />
+            <Route path="/question-popup"  element={<QuestionPopup />} />
+            <Route path="/thankyou"  element={<Thankyou />} />
+            <Route path="/message"  element={<Message />} />
+            <Route path="/admin"  element={<Backend />} />
           </Routes>
         </ScrollToTop>        
       </BrowserRouter>
