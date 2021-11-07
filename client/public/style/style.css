@@ -299,3 +299,17 @@ li {
 .termsAndPrivacy{
   color: red;
 }
+
+/* Forms */
+.question-popup-textaria{
+  border-radius: 16px;
+  width: 100%;
+}
+/* Elements */
+/* Layout */
+.page-navigation{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 50px 0;
+}
