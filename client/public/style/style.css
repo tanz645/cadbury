@@ -299,3 +299,44 @@ li {
 .termsAndPrivacy{
   color: red;
 }
+.creation-body{
+  position: relative;
+  text-align: center;
+}
+.control-box{
+  position: absolute;
+  z-index: 1000;
+  bottom: 30px;  
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+.creation-camera-box{
+  margin: 10px;
+}
+.filter-selection{
+  display: inline-flex;
+  align-items: center;
+}
+.creation-camera-btn{
+  height: 50px;
+  width: 50px;
+  padding: 6px;
+  border-radius: 45%;
+  background: #471d7b;
+  border: 1px solid #E3B870;  
+}
+.creation-filter-btn{
+  position: relative;  
+  padding: 5px;
+  border-radius: 50%;
+  background: #471d7b;
+  color: white;
+  font-size: 15px;
+  border: 1px solid #E3B870;
+  margin: 5px;
+  height: 30px;
+  width: 30px;
+}
