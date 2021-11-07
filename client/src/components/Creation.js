@@ -19,7 +19,19 @@ export class Creation extends Component {
         this.changeFilter = this.changeFilter.bind(this);
     }
 
-    startVideo(){       
+    startVideo(){   
+        if(this.state.recordingStarted){
+            this.setState({recordingStarted:false},() => {
+                this.state.deepAR.finishVideoRecording((e) => {
+                    console.log(e)
+                });
+            })            
+        }else{            
+            this.setState({recordingStarted:true},() => {
+                this.state.deepAR.startVideoRecording();
+            })
+        }
+        
     }
 
     changeFilter(path){
@@ -47,6 +59,9 @@ export class Creation extends Component {
               });
             },
             onCameraPermissionDenied: (e) => {
+                console.log(e)
+            },
+            onVideoStarted: (e) => {
                 console.log(e)
             },
             onError: (e) => {
