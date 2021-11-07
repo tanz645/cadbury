@@ -9,6 +9,8 @@ import PermissionDenied from './components/PermissionDenied';
 import Creation from './components/Creation';
 import ScrollToTop  from './components/ScrollToTop';
 import QuestionPopup  from './components/QuestionPopup';
+import Thankyou from './components/Thankyou';
+import Play from './components/Play';
 export class App extends Component {
   constructor(props){
     super(props);
@@ -28,6 +30,8 @@ export class App extends Component {
             <Route path="/permission-required"  element={<PermissionDenied />} /> 
             <Route path="/creation"  element={<Creation />} />                  
             <Route path="/question-popup"  element={<QuestionPopup />} />                  
+            <Route path="/thankyou"  element={<Thankyou />} />                  
+            <Route path="/play"  element={<Play />} />                  
           </Routes>
         </ScrollToTop>        
       </BrowserRouter>

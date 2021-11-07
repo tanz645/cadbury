@@ -27,7 +27,7 @@ export class QuestionPopup extends Component {
               </div>
               <div class='page-navigation'>
                 <div className="mb-3">
-                  <Link to="/permission"><button className="btn-primary btn margin-auto">NEXT</button></Link>                                    
+                  <Link to="/thankyou"><button className="btn-primary btn margin-auto">NEXT</button></Link>                                    
                 </div>
               </div>
             </div>
