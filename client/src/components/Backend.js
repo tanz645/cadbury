@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faEye, faPrint } from '@fortawesome/free-solid-svg-icons'
 
 export class Backend extends Component {
   render() {
@@ -48,11 +48,12 @@ export class Backend extends Component {
                 <td>STATUS</td>
               </tr>
             </thead>
+            {/*  */}
             <tbody>
               <tr>
                 <td>3</td>
                 <td>cdm100003</td>
-                <td>e</td>
+                <td><FontAwesomeIcon icon={faEye} /></td>
                 <td>
                   <div class="d-flex">
                     <div class="flex-fill form-check">
@@ -74,8 +75,11 @@ export class Backend extends Component {
                 </td>
                 <td>bkh13%e</td>
                 <td>Gift from the heart</td>
-                <td>e</td>
-                <td>d/p</td>
+                <td><FontAwesomeIcon icon={faEye} /></td>
+                <td>
+                  <FontAwesomeIcon icon={faPrint} />
+                  <FontAwesomeIcon icon={faDownload} />
+                </td>
                 <td>
                 <div class="d-flex">
                     <div class="flex-fill form-check">
@@ -97,7 +101,7 @@ export class Backend extends Component {
               <tr>
                 <td>3</td>
                 <td>cdm100003</td>
-                <td>e</td>
+                <td><FontAwesomeIcon icon={faEye} /></td>
                 <td>
                   <div class="d-flex">
                     <div class="flex-fill form-check">
@@ -119,8 +123,11 @@ export class Backend extends Component {
                 </td>
                 <td>bkh13%e</td>
                 <td>Gift from the heart</td>
-                <td>e</td>
-                <td>d/p</td>
+                <td><FontAwesomeIcon icon={faEye} /></td>
+                <td>
+                  <FontAwesomeIcon icon={faPrint} />
+                  <FontAwesomeIcon icon={faDownload} />
+                </td>
                 <td>
                 <div class="d-flex">
                     <div class="flex-fill form-check">
@@ -141,7 +148,7 @@ export class Backend extends Component {
               <tr>
                 <td>3</td>
                 <td>cdm100003</td>
-                <td>e</td>
+                <td><FontAwesomeIcon icon={faEye} /></td>
                 <td>
                   <div class="d-flex">
                     <div class="flex-fill form-check">
@@ -163,8 +170,11 @@ export class Backend extends Component {
                 </td>
                 <td>bkh13%e</td>
                 <td>Gift from the heart</td>
-                <td>e</td>
-                <td>d/p</td>
+                <td><FontAwesomeIcon icon={faEye} /></td>
+                <td>
+                  <FontAwesomeIcon icon={faPrint} />
+                  <FontAwesomeIcon icon={faDownload} />
+                </td>
                 <td>
                 <div class="d-flex">
                     <div class="flex-fill form-check">

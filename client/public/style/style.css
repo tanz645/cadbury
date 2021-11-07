@@ -384,6 +384,18 @@ tbody *{
 .table-striped>tbody>tr>*{
   padding: 25px 0;
 }
+.table-striped .svg-inline--fa{
+  background: white;
+    color: var(--color-primary);
+    border: 1px solid var(--color-secondary);
+    padding: 7px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.table-striped .svg-inline--fa + .svg-inline--fa{
+  margin-left: 5px;
+}
 
 /* Fixes */
 td .form-check .form-check-input{
