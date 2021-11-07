@@ -11,7 +11,7 @@ export class Play extends Component {
               src='../images/Masthead-01.png'
               alt='Mast head image is missing'
             />
-            <h2 className='cd-text-primary cd-text-capitalize text-center cd-text-3x'>You have a message from someone special</h2>
+            <img src="../images/Special.gif" alt="Special message" className="margin-auto img-fluid" />
             <div class='page-navigation'>
               <button className='btn btn-primary margin-auto'>Play Now</button>
             </div>

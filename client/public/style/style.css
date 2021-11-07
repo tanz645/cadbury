@@ -126,7 +126,7 @@ li {
 }
 
 .cd-img-stamp {
-  height: 100px;
+  height: 180px;
 }
 
 .family-img {
@@ -339,7 +339,12 @@ button {
   max-width: 710px;
 }
 
-
+.cb-img-thank{
+  width: 180px;
+  margin: auto;
+  display: table;
+  padding-left: 20px;
+}
 /* Forms */
 .question-popup-textaria{
   border-radius: 16px;

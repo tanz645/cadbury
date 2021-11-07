@@ -11,7 +11,8 @@ export class Thankyou extends Component {
               src='../images/Masthead-01.png'
               alt='Mast head image is missing'
             />
-            <h2 className='cd-text-primary text-center cd-text-3x'>Thank you</h2>
+            {/* <h2 className='cd-text-primary text-center cd-text-3x'>Thank you</h2> */}
+            <img className="cb-img-thank" src="../images/Thank-You.gif" alt="Thank you" />
             <h4 className='cd-text-primary text-center'>
               We have recieved <br />
               your meaningful creation
@@ -23,7 +24,7 @@ export class Thankyou extends Component {
               <h2 className='text-center text-white'>
                 We will have a little gift shortly!
               </h2>
-              <p className='text-center text-white'>
+              <p className='text-center text-white cb-text-small'>
                 We will send you gift you through whatsApp link / contact you.
               </p>
               <img
