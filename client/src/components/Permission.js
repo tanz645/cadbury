@@ -9,7 +9,9 @@ export class Permission extends Component {
   }
 
   askPermission() {
-    alert(JSON.stringify(navigator))
+    console.log(navigator)
+    console.log(navigator.mediaDevices)
+    // alert(JSON.stringify(navigator))
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
         window.localStream = stream;
