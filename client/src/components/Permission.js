@@ -18,6 +18,8 @@ export class Permission extends Component {
       }).catch(err => {
         console.log("u got an error:" + err)
       });
+    }else{
+      console.log('no permission given')
     }
   }
 
