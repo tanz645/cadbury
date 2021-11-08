@@ -362,6 +362,11 @@ thead img{
   max-height: 35px;
 }
 
+.cb-video-player{
+  width: 100%;
+  height: 100%;
+}
+
 /* Device */
 body > div > .desktop {
   height: 100%;

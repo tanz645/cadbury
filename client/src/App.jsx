@@ -12,6 +12,7 @@ import QuestionPopup  from './components/QuestionPopup';
 import Thankyou from './components/Thankyou';
 import Play from './components/Play';
 import Backend from './components/Backend';
+import Player from './components/Player';
 export class App extends Component {
   constructor(props){
     super(props);
@@ -33,6 +34,7 @@ export class App extends Component {
             <Route path="/question-popup"  element={<QuestionPopup />} />                  
             <Route path="/thankyou"  element={<Thankyou />} />                  
             <Route path="/play"  element={<Play />} />                  
+            <Route path="/player"  element={<Player />} />                  
             <Route path="/admin"  element={<Backend />} />                  
           </Routes>
         </ScrollToTop>        
