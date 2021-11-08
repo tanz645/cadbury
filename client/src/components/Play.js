@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Link } from 'react-router-dom';
 export class Play extends Component {
   render() {
     return (
@@ -13,7 +13,7 @@ export class Play extends Component {
             />
             <img src="../images/Special.gif" alt="Special message" className="margin-auto img-fluid" />
             <div class='page-navigation'>
-              <button className='btn btn-primary margin-auto'>Play Now</button>
+              <Link to="player"><button className='btn btn-primary margin-auto'>Play Now</button></Link>
             </div>
           </div>
         </div>
