@@ -46,37 +46,47 @@ export class Creation extends Component {
     }
 
     componentDidMount() {
-        const deepAR = window.DeepAR({
-            licenseKey: 'b43be8a6cd952aa309661cfa1fb6f73788df4cf8f6dc2b879a61db63f428882932bc655c2220af02',
-            canvasWidth: window.innerWidth, 
-            canvasHeight: window.innerHeight,
-            canvas: document.getElementById('deepar-canvas'),
-            numberOfFaces: 1, // how many faces we want to track min 1, max 4
-            libPath: './lib',
-            onInitialize: function() {
-              // start video immediately after the initalization, mirror = true
-              deepAR.startVideo(true);
-              // load the aviators effect on the first face into slot 'slot'
-              deepAR.switchEffect(0, 'slot', '../masks/Lion/lion', function(e) {
-                // effect loaded
-                console.log(e)
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+            window.localStream = stream;
+            window.localAudio.srcObject = stream;
+            window.localAudio.autoplay = true;
+
+            const deepAR = window.DeepAR({
+                licenseKey: 'b43be8a6cd952aa309661cfa1fb6f73788df4cf8f6dc2b879a61db63f428882932bc655c2220af02',
+                canvasWidth: window.innerWidth, 
+                canvasHeight: window.innerHeight,
+                canvas: document.getElementById('deepar-canvas'),
+                numberOfFaces: 1, // how many faces we want to track min 1, max 4
+                libPath: './lib',
+                onInitialize: function() {
+                  // start video immediately after the initalization, mirror = true
+                  deepAR.startVideo(true);
+                  // load the aviators effect on the first face into slot 'slot'
+                  deepAR.switchEffect(0, 'slot', '../masks/Lion/lion', function(e) {
+                    // effect loaded
+                    console.log(e)
+                  });
+                },
+                onCameraPermissionDenied: (e) => {
+                    console.log(e)
+                },
+                onVideoStarted: (e) => {
+                    console.log(e)
+                },
+                onError: (e) => {
+                    console.log('here')
+                    console.log(e)
+                }
               });
-            },
-            onCameraPermissionDenied: (e) => {
-                console.log(e)
-            },
-            onVideoStarted: (e) => {
-                console.log(e)
-            },
-            onError: (e) => {
-                console.log('here')
-                console.log(e)
-            }
+            
+              // download the face tracking model
+              deepAR.downloadFaceTrackingModel('../lib/models/models-68-extreme.bin');
+              this.setState({deepAR})
+              
+          }).catch(err => {
+            console.log("u got an error:" + err)
           });
         
-          // download the face tracking model
-          deepAR.downloadFaceTrackingModel('../lib/models/models-68-extreme.bin');
-          this.setState({deepAR})
     }
     render() {
         return (

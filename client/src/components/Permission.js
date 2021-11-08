@@ -16,13 +16,7 @@ export class Permission extends Component {
     // console.log(devices); 
     // alert(JSON.stringify(navigator))
     // if (navigator.mediaDevices) {
-      navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-        window.localStream = stream;
-        window.localAudio.srcObject = stream;
-        window.localAudio.autoplay = true;
-      }).catch(err => {
-        console.log("u got an error:" + err)
-      });
+      
     // }else{
     //   console.log('no permission given')
     // }
@@ -53,7 +47,7 @@ export class Permission extends Component {
                 </div>
               </div>
               <div className="mb-3">
-                <Link to="/creation"><button className='btn btn-primary margin-auto mt-3' onClick={this.askPermission}>OKAY</button></Link>
+                <Link to="/creation"><button className='btn btn-primary margin-auto mt-3'>OKAY</button></Link>
               </div>
             </div>
           </div>
