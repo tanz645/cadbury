@@ -46,7 +46,7 @@ export class Permission extends Component {
                 </div>
               </div>
               <div className="mb-3">
-                <Link to="/creation"><button className='btn btn-primary margin-auto mt-3'>OKAY</button></Link>
+                <Link to="/creation"><button className='btn btn-primary margin-auto mt-3' onClick={this.askPermission}>OKAY</button></Link>
               </div>
             </div>
           </div>
