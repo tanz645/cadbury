@@ -12,7 +12,7 @@ export class Permission extends Component {
     console.log(navigator)
     console.log(navigator.mediaDevices)
     // alert(JSON.stringify(navigator))
-    if (navigator.mediaDevices) {
+    // if (navigator.mediaDevices) {
       navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
         window.localStream = stream;
         window.localAudio.srcObject = stream;
@@ -20,9 +20,9 @@ export class Permission extends Component {
       }).catch(err => {
         console.log("u got an error:" + err)
       });
-    }else{
-      console.log('no permission given')
-    }
+    // }else{
+    //   console.log('no permission given')
+    // }
   }
 
   render() {
