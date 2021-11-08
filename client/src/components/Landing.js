@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export class Landing extends Component {
 
   constructor(props) {
@@ -10,11 +10,17 @@ export class Landing extends Component {
       view: 'landing'
     };
     this.toggleModal = this.toggleModal.bind(this);
+    const width = window.innerWidth;
+    if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent)) || width >= 800) {
+      window.location.href = '/desktop'
+      console.log("not mobile device");
+    }
   }
 
   toggleModal() {
     this.setState({ modal: !this.state.modal })
   }
+
   render() {
     return (
       <>
@@ -62,4 +68,9 @@ export class Landing extends Component {
   }
 }
 
-export default Landing;
+export default function (props) {
+  const navigation = useNavigate();
+
+  return <Landing {...props} navigation={navigation} />;
+}
+

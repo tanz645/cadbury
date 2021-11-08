@@ -1,6 +1,37 @@
 import React, { Component } from 'react';
 
 export class Thankyou extends Component {
+
+  constructor(props) {
+    super(props);       
+   
+    this.state = {};
+    this.shareLink = this.shareLink.bind(this);
+}
+
+  async shareLink(){
+    const canonical = document.querySelector("link[rel=canonical]");
+  let url = canonical ? canonical.href : document.location.href;
+  console.log(url)
+    if(navigator.share){
+      const data ={
+        url: 'google.com',
+        title: 'Teting share',
+        text: 'shared my link'
+      }
+      try {
+        await navigator
+          .share(data)
+          .then(() =>
+            console.log("Hooray! Your content was shared to tha world")
+          );
+      } catch (error) {
+        console.log(`Oops! I couldn't share to the world because: ${error}`);
+      }
+    }else{
+      alert('share not supported')
+    }
+  }
   render() {
     return (
       <>
@@ -20,7 +51,7 @@ export class Thankyou extends Component {
             <p className='text-center text-white'>
               <strong>winner will be connected shortly</strong>
             </p>
-            <div>
+            <div className="mb-2">
               <h2 className='text-center text-white'>
                 We will have a little gift shortly!
               </h2>
@@ -31,11 +62,11 @@ export class Thankyou extends Component {
                 className='cd-img-stamp margin-auto'
                 src='../images/Grab.png'
                 alt='Grab image'
-              />
-              <div class='page-navigation'>
-                <button className='btn btn-primary margin-auto'>Share</button>
-              </div>
+              />              
             </div>
+            <div class='mb-2'>
+                <button className='btn btn-primary margin-auto' onClick={this.shareLink}>Share</button>
+              </div>
           </div>
         </div>
       </>
