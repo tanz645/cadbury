@@ -12,7 +12,7 @@ export class Permission extends Component {
     console.log(navigator)
     console.log(navigator.mediaDevices)
     // alert(JSON.stringify(navigator))
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    if (navigator.mediaDevices) {
       navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
         window.localStream = stream;
         window.localAudio.srcObject = stream;
