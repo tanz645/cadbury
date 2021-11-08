@@ -20,6 +20,9 @@
 html {
   height: 100%;
 }
+h2,h4{
+  font-family: cadburyFont !important;
+}
 
 body {
   background: var(--color-primary) !important;
@@ -27,9 +30,9 @@ body {
   color: var(--color-white);
   font-family: cadburyFont !important;
 }
-body>div{
+/* body>div{
   height: 100%;
-}
+} */
 /* Links */
 a{
   text-decoration: none !important;
@@ -37,7 +40,9 @@ a{
 li {
   list-style: none;
 }
-
+.desktop-qr{
+  border-radius: 20%;
+}
 /* Typography */
 .heading {
   color: var(--color-secondary);
@@ -50,7 +55,7 @@ li {
   color: var(--color-secondary);
   font-size: var(--sub-heading-font-size);
   font-family: Arial, Helvetica, sans-serif;
-  sub-line-height: 1.5;
+  /* sub-line-height: 1.5; */
 }
 
 .cd-text-3x{
@@ -78,7 +83,9 @@ li {
 .padding-top-20 {
   padding-top: 200px;
 }
-
+.padding-top-10 {
+  padding-top: 100px;
+}
 .margin-auto {
   margin: auto;
   display: block !important;
@@ -291,6 +298,47 @@ li {
 .termsAndPrivacy{
   color: red;
 }
+.creation-body{
+  position: relative;
+  text-align: center;
+}
+.control-box{
+  position: absolute;
+  z-index: 1000;
+  bottom: 30px;  
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+.creation-camera-box{
+  margin: 10px;
+}
+.filter-selection{
+  display: inline-flex;
+  align-items: center;
+}
+.creation-camera-btn{
+  height: 50px;
+  width: 50px;
+  padding: 6px;
+  border-radius: 45%;
+  background: #471d7b;
+  border: 1px solid #E3B870;  
+}
+.creation-filter-btn{
+  position: relative;  
+  padding: 5px;
+  border-radius: 50%;
+  background: #471d7b;
+  color: white;
+  font-size: 15px;
+  border: 1px solid #E3B870;
+  margin: 5px;
+  height: 30px;
+  width: 30px;
+}
 
 /* Layout */
 
@@ -306,14 +354,24 @@ li {
 .desktop {
   background-image: url("../images/BG-04.png");
   background-size: cover;
-  padding-top: 100px;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100%;
 }
-
-.desktop > div {
-  background: url("../images/CDM.png") no-repeat 100% 0;
-  height: 100%;
+.text-right{
+  text-align: right !important;
 }
-
+.desktop-cadbury-pour {
+  /* background: url("../images/CDM.png") no-repeat 112% 0;  
+  max-height: 100vh;
+  background-size: 32% 100vh; */
+  max-height: 100vh;
+  width: 100%;
+  /* width: 100%; */
+}
+.desktop .heading h4{
+  font-size: 15px;
+}
 .page-navigation{
   position: absolute;
   bottom: 0;
@@ -336,7 +394,8 @@ button {
 }
 
 .cd-img-base {
-  max-width: 710px;
+  width: 100%;
+  margin-top: 100px;
 }
 
 .cb-img-thank{
@@ -371,6 +430,7 @@ thead img{
 body > div > .desktop {
   height: 100%;
 }
+
 .mobile-head{
   min-height: 700px;
 }

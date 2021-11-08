@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { render } from "react-dom";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Landing from './components/Landing';
 import Desktop from './components/Desktop';
@@ -10,8 +9,8 @@ import Creation from './components/Creation';
 import ScrollToTop  from './components/ScrollToTop';
 import QuestionPopup  from './components/QuestionPopup';
 import Thankyou from './components/Thankyou';
-import Play from './components/Play';
-import Backend from './components/Backend';
+import Message from './components/Message';
+import Admin from './components/Admin';
 import Player from './components/Player';
 export class App extends Component {
   constructor(props){
@@ -30,12 +29,12 @@ export class App extends Component {
             <Route path="/registration"  element={<Registration />} />
             <Route path="/permission"  element={<Permission />} />
             <Route path="/permission-required"  element={<PermissionDenied />} /> 
-            <Route path="/creation"  element={<Creation />} />                  
-            <Route path="/question-popup"  element={<QuestionPopup />} />                  
-            <Route path="/thankyou"  element={<Thankyou />} />                  
-            <Route path="/play"  element={<Play />} />                  
+            <Route path="/creation"  element={<Creation />} />
+            <Route path="/question-popup"  element={<QuestionPopup />} />
+            <Route path="/thankyou"  element={<Thankyou />} />
+            <Route path="/message"  element={<Message />} />
             <Route path="/player"  element={<Player />} />                  
-            <Route path="/admin"  element={<Backend />} />                  
+            <Route path="/admin"  element={<Admin />} />
           </Routes>
         </ScrollToTop>        
       </BrowserRouter>

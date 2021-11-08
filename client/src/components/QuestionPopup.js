@@ -22,7 +22,7 @@ export class QuestionPopup extends Component {
                   name='question-popup'
                   id='question-popup'
                   cols='30'
-                  rows='10'
+                  rows='6'
                 ></textarea>
               </div>
               <div class='page-navigation'>
