@@ -25,16 +25,16 @@ export class App extends Component {
         <ScrollToTop>
           <Routes>
             <Route exact path="/"  element={<Landing />} />            
-            <Route path="/desktop"  element={<Desktop />} />  
-            <Route path="/registration"  element={<Registration />} />
-            <Route path="/permission"  element={<Permission />} />
-            <Route path="/permission-required"  element={<PermissionDenied />} /> 
-            <Route path="/creation"  element={<Creation />} />
-            <Route path="/question-popup"  element={<QuestionPopup />} />
-            <Route path="/thankyou"  element={<Thankyou />} />
-            <Route path="/message"  element={<Message />} />
-            <Route path="/player"  element={<Player />} />                  
-            <Route path="/admin"  element={<Admin />} />
+            <Route exact path="/desktop"  element={<Desktop />} />  
+            <Route exact path="/registration"  element={<Registration />} />
+            <Route exact path="/permission"  element={<Permission />} />
+            <Route exact path="/permission-required"  element={<PermissionDenied />} /> 
+            <Route exact path="/creation"  element={<Creation />} />
+            <Route exact path="/question-popup"  element={<QuestionPopup />} />
+            <Route exact path="/thankyou"  element={<Thankyou />} />
+            <Route exact path="/message"  element={<Message />} />
+            <Route exact path="/player"  element={<Player />} />                  
+            <Route exact path="/admin"  element={<Admin />} />
           </Routes>
         </ScrollToTop>        
       </BrowserRouter>
