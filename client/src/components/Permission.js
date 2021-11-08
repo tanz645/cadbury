@@ -11,18 +11,18 @@ export class Permission extends Component {
   async askPermission() {
     // console.log(navigator)
     // console.log(navigator.mediaDevices)
-    await navigator.mediaDevices.getUserMedia({audio: true, video: true});   
-    let devices = await navigator.mediaDevices.enumerateDevices();   
-    console.log(devices); 
+    // await navigator.mediaDevices.getUserMedia({audio: true, video: true});   
+    // let devices = await navigator.mediaDevices.enumerateDevices();   
+    // console.log(devices); 
     // alert(JSON.stringify(navigator))
     // if (navigator.mediaDevices) {
-      // navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-      //   window.localStream = stream;
-      //   window.localAudio.srcObject = stream;
-      //   window.localAudio.autoplay = true;
-      // }).catch(err => {
-      //   console.log("u got an error:" + err)
-      // });
+      navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
+        window.localStream = stream;
+        window.localAudio.srcObject = stream;
+        window.localAudio.autoplay = true;
+      }).catch(err => {
+        console.log("u got an error:" + err)
+      });
     // }else{
     //   console.log('no permission given')
     // }
