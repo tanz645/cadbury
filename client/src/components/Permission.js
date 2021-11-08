@@ -8,14 +8,12 @@ export class Permission extends Component {
     this.askPermission = this.askPermission.bind(this);
   }
 
-  askPermission() {
-    console.log(navigator)
-    console.log(navigator.mediaDevices)
-    (async () => {   
-      await navigator.mediaDevices.getUserMedia({audio: true, video: true});   
-      let devices = await navigator.mediaDevices.enumerateDevices();   
-      console.log(devices); 
-    })();
+  async askPermission() {
+    // console.log(navigator)
+    // console.log(navigator.mediaDevices)
+    await navigator.mediaDevices.getUserMedia({audio: true, video: true});   
+    let devices = await navigator.mediaDevices.enumerateDevices();   
+    console.log(devices); 
     // alert(JSON.stringify(navigator))
     // if (navigator.mediaDevices) {
       // navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
