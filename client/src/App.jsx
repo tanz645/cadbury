@@ -35,6 +35,7 @@ export class App extends Component {
             <Route exact path="/message"  element={<Message />} />
             <Route exact path="/player"  element={<Player />} />                  
             <Route exact path="/admin"  element={<Admin />} />
+            <Route path="*" element={<Landing />} />
           </Routes>
         </ScrollToTop>        
       </BrowserRouter>
