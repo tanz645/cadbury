@@ -46,8 +46,10 @@ export class Permission extends Component {
                   </p>
                 </div>
               </div>
-              <div className="mb-3">
-                <Link to="/creation"><button className='btn btn-primary margin-auto mt-3'>OKAY</button></Link>
+              <div className="page-navigation">
+                <div className="mb-3">
+                  <Link to="/creation"><button className='btn btn-primary margin-auto mt-3'>OKAY</button></Link>
+                </div>
               </div>
             </div>
           </div>

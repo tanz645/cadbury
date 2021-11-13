@@ -64,9 +64,11 @@ export class Thankyou extends Component {
                 alt='Grab image'
               />              
             </div>
-            <div class='mb-2'>
+            <div className="page-navigation">
+              <div class='mb-2'>
                 <button className='btn btn-primary margin-auto' onClick={this.shareLink}>Share</button>
               </div>
+            </div>
           </div>
         </div>
       </>
