@@ -7,9 +7,9 @@ export class Creation extends Component {
        
         this.state = {
             filterIds: [
-                {id:1, path:'../masks/Lion/lion'},
-                {id:2, path:'../masks/Aviators/aviators'},
-                {id:3, path:'../masks/Alien/alien'},
+                {id:1, path:'../masks/mask_1'},
+                {id:2, path:'../masks/mask_2'},
+                {id:3, path:'../masks/mask_3'},
                 {id:4, path:'../masks/Beard/beard'},
                 {id:5, path:'../masks/Frankenstein/frankenstein'},
                 {id:6, path:'../masks/Pumpkin/pumpkin'},            
