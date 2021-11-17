@@ -7,9 +7,9 @@ export class Creation extends Component {
        
         this.state = {
             filterIds: [
-                {id:1, path:'../masks/mask_1'},
-                {id:2, path:'../masks/mask_2'},
-                {id:3, path:'../masks/mask_3'},
+                {id:1, path:'../masks/f01'},
+                {id:2, path:'../masks/f02'},
+                {id:3, path:'../masks/f03'},
                 {id:4, path:'../masks/Beard/beard'},
                 {id:5, path:'../masks/Frankenstein/frankenstein'},
                 {id:6, path:'../masks/Pumpkin/pumpkin'},            
@@ -57,7 +57,7 @@ export class Creation extends Component {
               // start video immediately after the initalization, mirror = true
               deepAR.startVideo(true);
               // load the aviators effect on the first face into slot 'slot'
-              deepAR.switchEffect(0, 'slot', '../masks/Lion/lion', function(e) {
+              deepAR.switchEffect(0, 'slot', '../masks/f01', function(e) {
                 // effect loaded
                 console.log(e)
               });
