@@ -1,0 +1,24 @@
+{
+  "name": "cadbury",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start_local": "NODE_ENV=local nodemon server.js",
+    "start_dev": "NODE_ENV=development node server.js",
+    "watch": "nodemon server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "express-fileupload": "^1.2.1",
+    "express-validator": "^6.12.2",
+    "http-errors": "~1.6.3",
+    "joi": "^17.4.2",
+    "mongoose": "^6.0.12",
+    "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
