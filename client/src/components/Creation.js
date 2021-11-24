@@ -10,9 +10,9 @@ export class Creation extends Component {
                 {id:1, path:'../masks/f01'},
                 {id:2, path:'../masks/f02'},
                 {id:3, path:'../masks/f03'},
-                {id:4, path:'../masks/Beard/beard'},
-                {id:5, path:'../masks/Frankenstein/frankenstein'},
-                {id:6, path:'../masks/Pumpkin/pumpkin'},            
+                {id:4, path:'../masks/f04'},
+                {id:5, path:'../masks/f05'},
+                {id:6, path:'../masks/f06'},            
             ],
             deepAR: {},
             recordingStarted: false
