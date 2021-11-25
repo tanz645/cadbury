@@ -4,22 +4,30 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const fileUpload = require('express-fileupload');
+const helmet = require("helmet");
+const cors = require('cors');
 
 const config = require('./config');
 const { connectToMongo, setDb } = require('./client/mongodb');
 const app = express();
 
 (async () => {
-  // connectDB();
 
   app.use(logger('dev'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(fileUpload());
+  app.use(helmet());
+  app.use(cors());
   
+  app.options('/customers/receipt/upload', cors())
+
   // Routes
   app.use('/customers', require('./routes/customers'));
+
+  
+
 
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {

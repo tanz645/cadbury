@@ -51,10 +51,10 @@ export class Landing extends Component {
               <div className={this.state.modal ? "landing-modal show" : "landing-modal"} >
                 <div className="modal-body">
                   <span className="modal-close" onClick={this.toggleModal}> x </span>
-                  <a className="btn-pay lazada" href="">
+                  <a className="btn-pay lazada" href="https://www.lazada.com.my/mondelez/?spm=a2o4k.10415192.0.0.633a63e00iqlYZ&q=All-Products&shop_category_ids=924013&from=wangpu&sc=KVUG">
                     <img src="../images/Lazada.png" alt="" />
                   </a>
-                  <a className="btn-pay shopee" href="">
+                  <a className="btn-pay shopee" href="https://shopee.com.my/shop/59165532/search?shopCollection=12833653">
                     <img src="../images/Shopee.png" alt="" />
                   </a>
                 </div>

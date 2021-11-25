@@ -1,7 +1,7 @@
 const cluster = require('cluster');
 
 if (cluster.isMaster) {
-    var numWorkers = 2 || require('os').cpus().length;
+    var numWorkers = require('os').cpus().length;
 
     console.log('Master cluster setting up ' + numWorkers + ' workers...');
 

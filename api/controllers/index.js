@@ -38,10 +38,10 @@ const journey_state = [
     'verified'
 ];
 const CUSTOMER_COLLECTION = 'customers';
-const reciept_mime_type = ['image/png','image/jpeg'];
+const reciept_mime_type = ['image/png','image/jpeg', 'application/pdf'];
 const creation_mime_type = ['video/mp4','video/mpeg', 'video/ogg'];
-const reciept_max_file_size = 2097152;
-const creation_max_file_size = 4194304;
+const reciept_max_file_size = 10485760;
+const creation_max_file_size = 20971520;
 
 const register = async (body) => {
     try {
@@ -92,7 +92,7 @@ const receiptUpload = async (req, res) => {
         }
         receipt = req.files.receipt;    
         if(receipt.size > reciept_max_file_size){
-            return res.status(400).send('Max file size 2mb');
+            return res.status(400).send('Max file size 10mb');
         }    
         if(!reciept_mime_type.includes(receipt.mimetype)){
             return res.status(400).send('Only png and jpeg/jpg are allowed.');
@@ -148,7 +148,7 @@ const creationUpload = async (req, res) => {
         }
         creation = req.files.creation;    
         if(creation.size > creation_max_file_size){
-            return res.status(400).send('Max file size 4mb');
+            return res.status(400).send('Max file size 20mb');
         }    
         if(!creation_mime_type.includes(creation.mimetype)){
             return res.status(400).send('Only mp4, mpeg and ogg are allowed.');
