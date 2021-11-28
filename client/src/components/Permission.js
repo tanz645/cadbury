@@ -1,27 +1,30 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Configs from '../config';
 export class Permission extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
-    this.askPermission = this.askPermission.bind(this);
+    this.state = {
+      redirect: false
+    };
   }
 
-  async askPermission() {
-    // console.log(navigator)
-    // console.log(navigator.mediaDevices)
-    // await navigator.mediaDevices.getUserMedia({audio: true, video: true});   
-    // let devices = await navigator.mediaDevices.enumerateDevices();   
-    // console.log(devices); 
-    // alert(JSON.stringify(navigator))
-    // if (navigator.mediaDevices) {
-      
-    // }else{
-    //   console.log('no permission given')
-    // }
+  componentDidMount() {
+    const { navigation } = this.props;
+    const token = localStorage.getItem(Configs.local_cache_name);
+    if (!token) {
+      navigation('/')
+    }
+    fetch(`${Configs.api}/customers/${token}`)
+      .then(response => response.json())
+      .then(data => {
+        if (!data)
+          if (data && data.receipt_uploaded !== 'receipt_uploaded') {
+            navigation('/')
+          }
+      });
   }
-
   render() {
     return (
       <>
@@ -57,4 +60,9 @@ export class Permission extends Component {
   }
 }
 
-export default Permission;
+export default function (props) {
+  const navigation = useNavigate();
+
+  return <Permission {...props} navigation={navigation} />;
+}
+

@@ -64,9 +64,11 @@ const register = async (body) => {
             const insert = await userCol.insertOne(body)
             return Promise.resolve({ token: insert.insertedId });
         } catch (error) {
+            console.log(error)
             return Promise.reject('Server error')
         }
     } catch (e) {
+        console.log(e)
         return Promise.reject(e.details[0].message)
     }
 };
@@ -276,7 +278,7 @@ const verify = async (req, res) => {
             journey_state: journey_state[4],            
             updated_at: new Date(), 
             verified_at: new Date(),
-            verified: new Date(),
+            verified: true,
             verification_type:  req.body.type           
         }                       
         await userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate })
@@ -300,6 +302,25 @@ const getAllUsers = async (req, res) => {
         return res.status(500).send('Sorry can not process your request');
     }    
 }
+
+const getUser = async (req, res) => {
+    if(!req.params || !req.params.token){
+        return res.status(400).send('Token is required');
+    }    
+    try {
+        const db = getConnection(config.databases.mongo.db)
+        const userCol = db.collection(CUSTOMER_COLLECTION);
+        const userById = await userCol.findOne({ _id: new ObjectId(req.params.token)});    
+        if (!userById) {
+            return res.status(400).send('No user found');        
+        }
+        return res.json(userById);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send('Sorry can not process your request');
+    }       
+};
+
 module.exports = {
     register,
     receiptUpload,
@@ -308,5 +329,6 @@ module.exports = {
     getVideo,
     getRecipet,
     verify,
-    getAllUsers
+    getAllUsers,
+    getUser
 }

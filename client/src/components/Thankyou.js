@@ -35,7 +35,7 @@ export class Thankyou extends Component {
   render() {
     return (
       <>
-        <div className='cb-wrapper-app'>
+        <div className='cb-wrapper-app thankyou'>
           <div className='cb-content phone-layout'>
             <img
               className='mast-head-img'
@@ -44,18 +44,18 @@ export class Thankyou extends Component {
             />
             {/* <h2 className='cd-text-primary text-center cd-text-3x'>Thank you</h2> */}
             <img className="cb-img-thank" src="../images/Thank-You.gif" alt="Thank you" />
-            <h4 className='cd-text-primary text-center'>
+            <h4 className='cd-text-primary text-center main-msg'>
               We have recieved <br />
               your meaningful creation
             </h4>
-            <p className='text-center text-white'>
+            <p className='text-center text-white winner-msg'>
               <strong>winner will be connected shortly</strong>
             </p>
-            <div className="mb-2">
-              <h2 className='text-center text-white'>
+            <div className="">
+              <h2 className='text-center text-white margin-zero little-gift'>
                 We will have a little gift shortly!
               </h2>
-              <p className='text-center text-white cb-text-small'>
+              <p className='text-center text-white cb-text-small margin-zero'>
                 We will send you gift you through whatsApp link / contact you.
               </p>
               <img
@@ -64,8 +64,8 @@ export class Thankyou extends Component {
                 alt='Grab image'
               />              
             </div>
-            <div class='mb-2'>
-                <button className='btn btn-primary margin-auto' onClick={this.shareLink}>Share</button>
+            <div class=''>
+                <button className='btn btn-primary margin-auto share-btn' onClick={this.shareLink}>Share</button>
               </div>
           </div>
         </div>

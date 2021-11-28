@@ -1,7 +1,69 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Configs from '../config';
 
 export class QuestionPopup extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      answer: '',
+      error: ''
+    };
+    this.saveAnswer = this.saveAnswer.bind(this);
+    this.handleAnswer = this.handleAnswer.bind(this);
+  }
+  handleAnswer(e){
+    this.setState({answer:e.target.value, error: ''})
+  }
+
+  async saveAnswer() {
+    const { navigation } = this.props;
+    const token = localStorage.getItem(Configs.local_cache_name);
+    if(!this.state.answer){
+      this.setState({error: 'answer can not be empty'});
+      return ;
+    }
+    const data = {
+      token,
+      answer: this.state.answer
+    }
+    try {
+      const result = await fetch(Configs.api + '/customers/question/answer', {
+        method: 'POST',        
+        headers: {
+          'Content-Type': 'application/json'             
+        },            
+        body: JSON.stringify(data)
+      });
+      if (result.status >= 400) {
+          throw new Error("Bad response from server");
+      }
+      console.log(result);
+      localStorage.removeItem(Configs.local_cache_name);
+      navigation('/thankyou');
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    const token = localStorage.getItem(Configs.local_cache_name);
+    if (!token) {
+      navigation('/')
+    }
+    fetch(`${Configs.api}/customers/${token}`)
+      .then(response => response.json())
+      .then(data => {
+        if (!data)
+          if (data && data.receipt_uploaded !== 'creation_uploaded') {
+            navigation('/')
+          }
+      });
+  }
+
   render() {
     return (
       <>
@@ -23,11 +85,13 @@ export class QuestionPopup extends Component {
                   id='question-popup'
                   cols='30'
                   rows='6'
+                  onChange={this.handleAnswer}
                 ></textarea>
+                {this.state.error ? <p className="text-red text-small">({this.state.error})</p> : ''}
               </div>
               <div class='page-navigation'>
                 <div className="mb-3">
-                  <Link to="/thankyou"><button className="btn-primary btn margin-auto">NEXT</button></Link>                                    
+                  <button className="btn-primary btn margin-auto" onClick={this.saveAnswer}>NEXT</button>
                 </div>
               </div>
             </div>
@@ -38,4 +102,7 @@ export class QuestionPopup extends Component {
   }
 }
 
-export default QuestionPopup;
+export default function (props) {
+  const navigation = useNavigate();
+  return <QuestionPopup {...props} navigation={navigation} />;
+}

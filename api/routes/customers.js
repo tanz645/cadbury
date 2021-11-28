@@ -1,7 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const { register, receiptUpload, creationUpload, saveAnswer, getVideo, getRecipet, verify, getAllUsers } = require('../controllers');
+const { 
+    register, 
+    receiptUpload, 
+    creationUpload, 
+    saveAnswer, 
+    getVideo, 
+    getRecipet, 
+    verify, 
+    getAllUsers, 
+    getUser 
+} = require('../controllers');
 
 router.post('/login', (req, res) => {
     res.send('Login response');
@@ -34,6 +44,9 @@ router.put('/verify', (req, res) => {
 });
 router.get('/', (req, res) => {
     return getAllUsers(req, res);
+});
+router.get('/:token', (req, res) => {
+    return getUser(req, res);
 });
 
 module.exports = router;

@@ -3,7 +3,7 @@
 const activeEnv = process.env.NODE_ENV || "local";
 const envFile = `./envs/${activeEnv}`;
 const env = require(envFile);
-
+console.log(activeEnv)
 const config = {
 	env: activeEnv,
 	port: 5000,

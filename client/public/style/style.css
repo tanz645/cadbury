@@ -63,7 +63,7 @@ li {
 }
 
 .cb-text-small{
-  font-size: calc(var(--base-font-size) - 4px);
+  font-size: calc(var(--base-font-size) - 3px);
 }
 .cb-text-black{
   color: var(--color-black) !important;
@@ -188,7 +188,7 @@ li {
 }
 
 .cd-img-stamp {
-  height: 180px;
+  height: 22vh;
 }
 
 .family-img {
@@ -374,27 +374,48 @@ li {
   display: inline-flex;
   align-items: center;
 }
-.creation-camera-btn{
+.creation-camera-btn.vdo-start{
   height: 50px;
   width: 50px;
   padding: 6px;
   border-radius: 45%;
   background: #471d7b;
-  border: 1px solid #E3B870;  
+  border: 1px solid #E3B870; 
+}
+.creation-camera-btn.vdo-run {
+  height: 70px;
+  width: 70px;
+}
+.control-box-buffer{
+  position: absolute;
+  z-index: 1000;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+.creation-buffer-btn{
+  height: 50px;
+  width: 50px;
+  padding: 6px;
+  margin: 10px;
+  border-radius: 50%;
+  background: #471d7b;
+  border: 1px solid #E3B870;
 }
 .creation-filter-btn{
   position: relative;  
-  padding: 5px;
-  border-radius: 50%;
-  background: #471d7b;
-  color: white;
-  font-size: 15px;
-  border: 1px solid #E3B870;
   margin: 5px;
-  height: 30px;
-  width: 30px;
 }
-
+.creation-filter-btn img{
+  height: 32px;
+  width: 32px;
+}
+.thankyou .mast-head-img{
+  height: 30vh;
+  width: auto;
+}
 /* Layout */
 
 .phone-layout {
@@ -405,7 +426,9 @@ li {
   background-repeat: no-repeat;
   background-size: cover; 
 }
-
+.cursor-pointer{
+  cursor: pointer;
+}
 .desktop {
   background-image: url("../images/BG-04.png");
   background-position: center;
@@ -442,13 +465,17 @@ li {
   width: 100%;
   padding: 50px 0;
 }
-
+.margin-zero{
+  margin: 0 !important;
+}
 /* Elements */
 button {
   margin-left: 10px;
   margin-right: 10px;
 }
-
+.share-btn{
+  margin-top: -3vh;
+}
 /* Images */
 .mast-head-img {
   max-width: 80%;
@@ -456,16 +483,27 @@ button {
   display: block;
   height: 220px;
 }
-
+.main-msg{
+  margin-top: -4vh;  
+  margin-bottom: 0;
+}
+.winner-msg{
+  margin-bottom: 4vh;
+}
+.little-gift{
+  font-size: 1.2em;
+}
 .cd-img-base {
   width: 100%;
   margin-top: 100px;
 }
 
 .cb-img-thank{
-  width: 180px;
+  width: auto;
+  height: 23vh;
   margin: auto;
   display: table;
+  margin-top: -6vh;
   padding-left: 20px;
 }
 /* Forms */

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ReCAPTCHA from "react-google-recaptcha";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Configs from '../config';
@@ -23,7 +23,8 @@ export class Registration extends Component {
             dob: '',
             reciept: '',
             fileErrorMsg: '',
-            submitError: ''
+            submitError: '',
+            submitted: false,
         };
         this.handleFileUpload = this.handleFileUpload.bind(this);
         this.onCaptchaChange = this.onCaptchaChange.bind(this);
@@ -99,14 +100,21 @@ export class Registration extends Component {
                 body: formData
               });              
               localStorage.setItem(Configs.local_cache_name, result.token);
-              this.setState({submitError: ''});
+              this.setState({submitError: '', submitted: true});              
         } catch (error) {
-            this.setState({submitError: 'Can not process your request'})
+            this.setState({submitError: 'Can not process your request', submitted: false})
         }            
+    }
+    componentDidMount(){
+        const token = localStorage.getItem(Configs.local_cache_name);      
+        if(token)  {
+            this.setState({submitError: '', submitted: true}); 
+        }        
     }
     render() {
         return (
             <>
+                {this.state.submitted? <Navigate to="/permission" /> : ''}
                 <div className="cb-wrapper-app">
                     <div className="cb-content phone-layout">
                         <div className="">
@@ -148,10 +156,10 @@ export class Registration extends Component {
                                 </div>
                                 <div className="terms-condition-box mb-3 form-ele-box">
                                     <div>
-                                        <input className="text-white" onChange={this.onFormElementChange} name="terms" value={this.state.terms} type="checkbox" required /> I agree to <a class="termsAndPrivacy" href="">Terms & Condition</a>
+                                        <input className="text-white" onChange={this.onFormElementChange} name="terms" value={this.state.terms} type="checkbox" required /> I agree to <a className="termsAndPrivacy" href="">Terms & Condition</a>
                                     </div>
                                     <div>
-                                        <input className="text-white" onChange={this.onFormElementChange} name="privacy" value={this.state.privacy} type="checkbox" required /> I agree to <a class="termsAndPrivacy" href="">Privacy policy</a>
+                                        <input className="text-white" onChange={this.onFormElementChange} name="privacy" value={this.state.privacy} type="checkbox" required /> I agree to <a className="termsAndPrivacy" href="">Privacy policy</a>
                                     </div>
                                     <div>
                                         <input className="text-white" onChange={this.onFormElementChange} name="news" value={this.state.news} type="checkbox" required /> Sign me up to receive Cadbury's latest news via email &

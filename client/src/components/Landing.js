@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+
 export class Landing extends Component {
 
   constructor(props) {
@@ -14,7 +15,7 @@ export class Landing extends Component {
     if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent)) || width >= 800) {
       window.location.href = '/desktop'
       console.log("not mobile device");
-    }
+    }    
   }
 
   toggleModal() {
