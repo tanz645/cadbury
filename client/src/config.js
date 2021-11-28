@@ -15,6 +15,6 @@ const setConfig = () => {
     const common = {
         local_cache_name: 'cadbury_local_token' 
     }
-    return {...config.prod, ...common}
+    return {...config.dev, ...common}
 }
 export default setConfig()

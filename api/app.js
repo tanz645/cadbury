@@ -24,7 +24,7 @@ const app = express();
   app.options('/customers/receipt/upload', cors())
 
   // Routes
-  app.use('/customers', require('./routes/customers'));
+  app.use('/api/customers', require('./routes/customers'));
 
   
 
