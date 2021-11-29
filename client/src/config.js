@@ -5,8 +5,8 @@ const config = {
         static_files: 'http://192.168.100.6:4000' 
     },
     dev:{
-        api: 'https://165.232.169.146/api',       
-        static_files: 'https://165.232.169.146/cad_files'
+        api: 'https://snapapic.digital/api',       
+        static_files: 'https://snapapic.digital/cad_files'
     }
     
 }
