@@ -12,7 +12,7 @@ export class Creation extends Component {
                 { icon: 'thumbnails-02.png', path: '../masks/f2' },
                 { icon: 'thumbnails-03.png', path: '../masks/f3' },
                 { icon: 'thumbnails-04.png', path: '../masks/f4' },
-                { icon: 'thumbnails-05.png', path: '../masks/f5' },
+                { icon: 'thumbnails-05.png', path: '../masks/flow1' },
                 { icon: 'thumbnails-06.png', path: '../masks/f6' },
             ],
             deepAR: {},
@@ -70,7 +70,7 @@ export class Creation extends Component {
                 // start video immediately after the initalization, mirror = true
                 deepAR.startVideo(true);
                 // load the aviators effect on the first face into slot 'slot'
-                deepAR.switchEffect(0, 'slot', '../masks/f1', function (e) {
+                deepAR.switchEffect(0, 'slot', '../masks/flow1', function (e) {
                     // effect loaded
                     console.log(e)
                 });

@@ -37,11 +37,9 @@ export class Registration extends Component {
 
     }
     onFormElementChange(e) {        
-        if(e.target.name === 'terms' || e.target.name === 'privacy' || e.target.name === 'news'){
-            console.log(!this.state[e.target.name]) 
+        if(e.target.name === 'terms' || e.target.name === 'privacy' || e.target.name === 'news'){            
             this.setState({ [e.target.name]: !this.state[e.target.name] })
-        }else{
-            console.log(e.target.value) 
+        }else{        
             this.setState({ [e.target.name]: e.target.value })
         }
     }
@@ -121,7 +119,7 @@ export class Registration extends Component {
                             <img className="mast-head-img" src="../images/Masthead-01.png" alt="Mast head image is missing" />
                         </div>
                         <div className="registration-form">
-                            <form onSubmit={this.handleSubmit} autocomplete="off">
+                            <form onSubmit={this.handleSubmit} autoComplete="off">
                                 <div className="mb-3 form-ele-box">
                                     <select className="form-select" onChange={this.onFormElementChange} name="title" value={this.state.title} required aria-label="Default select example">
                                         <option value="" disabled selected hidden>Title</option>
