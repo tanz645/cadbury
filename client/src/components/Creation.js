@@ -9,13 +9,14 @@ export class Creation extends Component {
         this.state = {
             filterIds: [
                 { icon: 'thumbnails-01.png', path: '../masks/f1' },
-                { icon: 'thumbnails-02.png', path: '../masks/f2' },
-                { icon: 'thumbnails-03.png', path: '../masks/f3' },
+                { icon: 'thumbnails-02.png', path: '../masks/f2'},
+                { icon: 'thumbnails-03.png', path: '../masks/f3'},
                 { icon: 'thumbnails-04.png', path: '../masks/f4' },
-                { icon: 'thumbnails-05.png', path: '../masks/flow1' },
-                { icon: 'thumbnails-06.png', path: '../masks/f6' },
+                { icon: 'thumbnails-05.png', path: '../masks/flow1'},
+                { icon: 'thumbnails-06.png', path: '../masks/f6'},
             ],
             deepAR: {},
+            activeFilter: 'thumbnails-01.png',
             recordingStarted: false,
             bufferVideo: '',
             blob: ''
@@ -51,11 +52,9 @@ export class Creation extends Component {
 
     }
 
-    changeFilter(path) {
-        this.state.deepAR.switchEffect(0, 'slot', path, function (e) {
-            // effect loaded
-            console.log(e)
-        });
+    changeFilter(item) {
+        this.setState({activeFilter:item.icon})
+        this.state.deepAR.switchEffect(0, 'slot', item.path);
     }
 
     startEngine() {
@@ -70,7 +69,7 @@ export class Creation extends Component {
                 // start video immediately after the initalization, mirror = true
                 deepAR.startVideo(true);
                 // load the aviators effect on the first face into slot 'slot'
-                deepAR.switchEffect(0, 'slot', '../masks/flow1', function (e) {
+                deepAR.switchEffect(0, 'slot', '../masks/f1', function (e) {
                     // effect loaded
                     console.log(e)
                 });
@@ -153,7 +152,7 @@ export class Creation extends Component {
                 <div className="control-box">
                     {!this.state.recordingStarted ?
                         <div className="filter-selection">
-                            {this.state.filterIds.map(item => <div key={item.id} className="creation-filter-btn" onClick={() => this.changeFilter(item.path)}><img className="creation-camera-btn" src={`../images/${item.icon}`} /></div>)}
+                            {this.state.filterIds.map(item => <div key={item.icon} className={`creation-filter-btn${this.state.activeFilter === item.icon ? ' active': ''}`} onClick={() => this.changeFilter(item)}><img className="creation-camera-btn" src={`../images/${item.icon}`} /></div>)}
                         </div>
                         : ''
                     }

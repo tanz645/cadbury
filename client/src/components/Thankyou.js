@@ -15,7 +15,7 @@ export class Thankyou extends Component {
   console.log(url)
     if(navigator.share){
       const data ={
-        url: 'google.com',
+        url: '/',
         title: 'Teting share',
         text: 'shared my link'
       }
@@ -39,24 +39,24 @@ export class Thankyou extends Component {
           <div className='cb-content phone-layout'>
             <img
               className='mast-head-img'
-              src='../images/Masthead-01.png'
+              src='../images/Masthead-02.png'
               alt='Mast head image is missing'
             />
             {/* <h2 className='cd-text-primary text-center cd-text-3x'>Thank you</h2> */}
             <img className="cb-img-thank" src="../images/Thank-You.gif" alt="Thank you" />
             <h4 className='cd-text-primary text-center main-msg'>
-              We have recieved <br />
-              your meaningful creation
+              We have received <br />
+              your meaningful creation.
             </h4>
             <p className='text-center text-white winner-msg'>
-              <strong>winner will be connected shortly</strong>
+              Winners will be contacted shortly.
             </p>
             <div className="">
               <h2 className='text-center text-white margin-zero little-gift'>
-                We will have a little gift shortly!
+                We have a little gift for you!
               </h2>
               <p className='text-center text-white cb-text-small margin-zero'>
-                We will send you gift you through whatsApp link / contact you.
+                via WhatsApp link / contact you.
               </p>
               <img
                 className='cd-img-stamp margin-auto'

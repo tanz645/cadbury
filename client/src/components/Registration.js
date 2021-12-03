@@ -33,11 +33,12 @@ export class Registration extends Component {
         this.onFormElementChange = this.onFormElementChange.bind(this);
         this.fileSelected = this.fileSelected.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.makeStringDots = this.makeStringDots.bind(this);
         this.hiddenFileInput = React.createRef();
 
     }
     onFormElementChange(e) {        
-        if(e.target.name === 'terms' || e.target.name === 'privacy' || e.target.name === 'news'){            
+        if(e.target.name === 'terms' || e.target.name === 'news'){            
             this.setState({ [e.target.name]: !this.state[e.target.name] })
         }else{        
             this.setState({ [e.target.name]: e.target.value })
@@ -78,10 +79,60 @@ export class Registration extends Component {
             this.setState({fileErrorMsg: 'Please upload your reciept'});
             return;
         }
-        const data = {
-            "customer_id" : "testasd"
-        }
+        const hubspotData = {
+            submittedAt: Date.now(),
+            fields:[
+                {
+                    "name": "firstname",
+                    "value": this.state.name
+                },
+                {
+                    "name": "email",
+                    "value": this.state.email
+                },
+                {
+                    "name": "phone",
+                    "value": this.state.phone
+                },
+                {
+                    "name": "receipt_number",
+                    "value": "test"
+                },
+                {
+                    "name": "agree_to_terms_and_conditions",
+                    "value": "true"
+                },
+                {
+                    "name": "sign_me_up_to_receive_emails",
+                    "value": "true"
+                },
+                {
+                    "name": "cid",
+                    "value": Date.now()
+                }
+            ]
+        }        
         try {
+            // const hubspotPost = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
+            //     method: 'POST',        
+            //     headers: {
+            //     'Content-Type': 'application/json'             
+            //     },            
+            //     body: JSON.stringify(hubspotData)
+            // })
+            // if (hubspotPost.status >= 400) {
+            //     throw new Error("Bad response from server");
+            // }
+            // const hubspotResult = await hubspotPost.json();
+            // console.log(hubspotResult)
+            // fetch(`https://api.hubapi.com/contacts/v1/search/query?q=test&hapikey=eu1-5201-252e-4a0a-b86d-2b813d495bc0`)
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         console.log(data)
+            //     });
+            const data = {
+                "customer_id" : "testasd"
+            }
             const response = await fetch(Configs.api + '/customers/register', {
                 method: 'POST',        
                 headers: {
@@ -109,6 +160,12 @@ export class Registration extends Component {
             this.setState({submitError: '', submitted: true}); 
         }        
     }
+    makeStringDots(text){
+        if (text.length > 20) {
+            return text.substring(0, 20) + " ...";            
+        }
+        return text
+    }
     render() {
         return (
             <>
@@ -116,7 +173,7 @@ export class Registration extends Component {
                 <div className="cb-wrapper-app">
                     <div className="cb-content phone-layout">
                         <div className="">
-                            <img className="mast-head-img" src="../images/Masthead-01.png" alt="Mast head image is missing" />
+                            <img className="mast-head-img" src="../images/Masthead-02.png" alt="Mast head image is missing" />
                         </div>
                         <div className="registration-form">
                             <form onSubmit={this.handleSubmit} autoComplete="off">
@@ -140,36 +197,35 @@ export class Registration extends Component {
                                     <div className="mb-3 flex-fill form-ele-box">
                                         {/* <input type="date" id="form-dob" className="form-control" name="dob" value="test"
                                             min="1900-01-01" max="2022-01-01" /> */}
-                                        <DatePicker selected={this.state.dob} onChange={this.onDateSelect} showYearDropdown yearDropdownItemNumber={5} minDate={new Date('1800-01-01')} maxDate={new Date()} id="form-dob" />
+                                        <DatePicker selected={this.state.dob} onChange={this.onDateSelect} showYearDropdown yearDropdownItemNumber={121} scrollableYearDropdown={true} minDate={new Date('1800-01-01')} maxDate={new Date()} id="form-dob" />
                                         <img src="../images/Calendar.png" className="form-cal-icon" alt="" onClick={this.openDate} />
                                         {!this.state.dob ? <div className="date-placeholder" onClick={this.openDate}>Birthday <br /> (optional)</div> : ''}
                                     </div>
                                 </div>
-                                <div className="mb-3 form-ele-box">
-                                    <h2 className="cd-text-primary upload-recipet-text mb-2">Upload my reciept:</h2>
-                                    {this.state.reciept && this.state.reciept.name ? <h5 className="receipt-name">{this.state.reciept.name}</h5> : ''}
-                                    {this.state.fileErrorMsg ? <p className="text-red text-small">({this.state.fileErrorMsg})</p> : ''}
-                                    <button className="btn-primary btn mb-2 upload-button" onClick={this.handleFileUpload}>Upload</button>
-                                    <input type="file" ref={this.hiddenFileInput} onChange={this.fileSelected} style={{ display: 'none' }} className="file-upload-button" name="receipt" />
+                                <div className="mb-3 form-ele-box d-flex">
+                                    <div className="flex-fill">
+                                        <h2 className="cd-text-primary upload-recipet-text mb-2">Upload my reciept:</h2>
+                                        {this.state.reciept && this.state.reciept.name ? <h5 className="receipt-name">{this.makeStringDots(this.state.reciept.name)}</h5> : ''}
+                                    </div>
+                                    <div className="flex-fill text-right">
+                                        <button className="btn-primary btn mb-2 upload-button" onClick={this.handleFileUpload}>Upload</button>
+                                        <input type="file" ref={this.hiddenFileInput} onChange={this.fileSelected} style={{ display: 'none' }} className="file-upload-button" name="receipt" />
+                                    </div>                                                                                                            
                                 </div>
+                                <div>{this.state.fileErrorMsg ? <p className="text-red text-small">({this.state.fileErrorMsg})</p> : ''}</div>
                                 <div className="terms-condition-box mb-3 form-ele-box">
                                     <div>
-                                        <input className="text-white" onChange={this.onFormElementChange} name="terms" value={this.state.terms} type="checkbox" required /> I agree to <a className="termsAndPrivacy" href="">Terms & Condition</a>
-                                    </div>
+                                        <input className="text-white" onChange={this.onFormElementChange} name="terms" value={this.state.terms} type="checkbox" required /> I agree to <a className="termsAndPrivacy" target="_blank" href="../tandc.pdf">Terms & Condition </a> and <a className="termsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy policy</a>
+                                    </div>                                    
                                     <div>
-                                        <input className="text-white" onChange={this.onFormElementChange} name="privacy" value={this.state.privacy} type="checkbox" required /> I agree to <a className="termsAndPrivacy" href="">Privacy policy</a>
-                                    </div>
-                                    <div>
-                                        <input className="text-white" onChange={this.onFormElementChange} name="news" value={this.state.news} type="checkbox" required /> Sign me up to receive Cadbury's latest news via email &
-                                        WhatsApp
-                                        message
+                                        <input className="text-white" onChange={this.onFormElementChange} name="news" value={this.state.news} type="checkbox" required /> I agree to be contacted via WhatsApp and/or Email
                                     </div>
                                 </div>
                                 <div className="mb-3 form-ele-box">
-                                    <ReCAPTCHA
+                                    {/* <ReCAPTCHA
                                         sitekey="6Lfw-Q8dAAAAAObmc2DS2SuCaQt8Y24R9F8HcGJE"
                                         onChange={this.onCaptchaChange}
-                                    />
+                                    /> */}
                                 </div>
                                 <div className="mb-3 form-ele-box">
                                     {/* <Link to="/permission"><button className="btn-primary btn margin-auto">NEXT</button></Link> */}

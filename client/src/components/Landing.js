@@ -35,14 +35,12 @@ export class Landing extends Component {
               />
               <img
                 className='landing-family margin-auto'
-                src='../images/Family.png'
+                src='../images/Gift-Family.gif'
                 alt='Family image is missing!'
-              />
-              <h2 className='landing-slogan'>
-                Personalize your Gift <br /> Surprise Your Loved One!
-              </h2>
+              />              
+              <p className="require-min-purchase" >*requires min purchase of <br /> RM 15 of Cadbury products</p>
               <div className="landing-buttons">
-                <div className="landing-button">
+                <div className="landing-button">                  
                   <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={this.toggleModal}>PURCHASE</button>
                 </div>
                 <div className="landing-button">
@@ -51,7 +49,7 @@ export class Landing extends Component {
               </div>
               <div className={this.state.modal ? "landing-modal show" : "landing-modal"} >
                 <div className="modal-body">
-                  <span className="modal-close" onClick={this.toggleModal}> x </span>
+                  <span className="modal-close" onClick={this.toggleModal}> <img src="../images/Close.png" alt="" /> </span>
                   <a className="btn-pay lazada" href="https://www.lazada.com.my/mondelez/?spm=a2o4k.10415192.0.0.633a63e00iqlYZ&q=All-Products&shop_category_ids=924013&from=wangpu&sc=KVUG">
                     <img src="../images/Lazada.png" alt="" />
                   </a>

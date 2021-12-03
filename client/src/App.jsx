@@ -12,6 +12,7 @@ import Thankyou from './components/Thankyou';
 import Message from './components/Message';
 import Admin from './components/Admin';
 import Player from './components/Player';
+import ComingSoon from './components/ComingSoon';
 export class App extends Component {
   constructor(props){
     super(props);
@@ -24,7 +25,8 @@ export class App extends Component {
       <BrowserRouter>
         <ScrollToTop>
           <Routes>
-            <Route exact path="/"  element={<Landing />} />            
+            <Route exact path="/"  element={<Landing />} />        
+            <Route exact path="/coming-soon"  element={<ComingSoon />} />    
             <Route exact path="/desktop"  element={<Desktop />} />  
             <Route exact path="/registration"  element={<Registration />} />
             <Route exact path="/permission"  element={<Permission />} />

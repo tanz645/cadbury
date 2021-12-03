@@ -75,23 +75,21 @@ export class QuestionPopup extends Component {
                 src='../images/Masthead-02.png'
                 alt='Mast head image is missing'
               />
-              <div className='cb-border-box-golden margin-auto'>
-                <h3 className='cd-text-primary'>
-                  What is the Cadbury <br /> CNY campaign name?
+              <div className='cb-border-box-golden margin-auto question-box'>
+                <h3 className='cd-text-primary question-text'>
+                  What is the Cadbury <br /> CNY campaign name ?
                 </h3>
                 <textarea
                   className='question-popup-textaria'
                   name='question-popup'
-                  id='question-popup'
-                  cols='30'
-                  rows='6'
+                  id='question-popup'                  
                   onChange={this.handleAnswer}
                 ></textarea>
                 {this.state.error ? <p className="text-red text-small">({this.state.error})</p> : ''}
               </div>
-              <div class='page-navigation'>
+              <div class=''>
                 <div className="mb-3">
-                  <button className="btn-primary btn margin-auto" onClick={this.saveAnswer}>NEXT</button>
+                  <button className="btn-primary btn margin-auto save-anwser-btn" onClick={this.saveAnswer}>NEXT</button>
                 </div>
               </div>
             </div>
