@@ -93,6 +93,9 @@ export class QuestionPopup extends Component {
                 </div>
               </div>
             </div>
+            <footer className="text-center text-white text-small">
+                <p className="mt-3">Cadbury Confectionery Malaysia Sdn Bhd</p>
+            </footer>
           </div>
         </div>
       </>

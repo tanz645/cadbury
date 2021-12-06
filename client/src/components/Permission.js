@@ -53,6 +53,9 @@ export class Permission extends Component {
                 <Link to="/creation"><button className='btn btn-primary margin-auto mt-3'>OKAY</button></Link>
               </div>
             </div>
+            <footer className="text-center text-white text-small">
+                <p className="mt-4">Cadbury Confectionery Malaysia Sdn Bhd</p>
+            </footer>
           </div>
         </div>
       </>

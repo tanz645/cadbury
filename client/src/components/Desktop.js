@@ -22,7 +22,11 @@ export class Desktop extends Component {
                         <div className="cb-content col-md-4 text-right">
                             <img className="desktop-cadbury-pour" src="../images/CDM.png" alt="cadbury qr code!" />
                         </div>
+                        <footer className="text-center text-white text-small">
+                            <p className="">Cadbury Confectionery Malaysia Sdn Bhd</p>
+                        </footer>
                     </div>
+                    
                 </div>
             </div>
         )

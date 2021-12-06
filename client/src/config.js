@@ -1,7 +1,7 @@
 
 const config = {
     local: {
-        api: 'http://192.168.100.6:5000',       
+        api: 'http://192.168.100.6:5000/api',       
         static_files: 'http://192.168.100.6:4000' ,
         hubspot: {
             portalId: "25023018",

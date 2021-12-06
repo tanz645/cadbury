@@ -58,8 +58,12 @@ export class Landing extends Component {
                   </a>
                 </div>
               </div>
-            </div>
+              <footer className="text-center text-white text-small">
+                  <p className="">Cadbury Confectionery Malaysia Sdn Bhd</p>
+              </footer>            
+            </div>            
           </div>
+          
         </div>
 
       </>

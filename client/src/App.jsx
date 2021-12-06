@@ -13,6 +13,7 @@ import Message from './components/Message';
 import Admin from './components/Admin';
 import Player from './components/Player';
 import ComingSoon from './components/ComingSoon';
+import QR from './components/QR';
 export class App extends Component {
   constructor(props){
     super(props);
@@ -37,6 +38,7 @@ export class App extends Component {
             <Route exact path="/message"  element={<Message />} />
             <Route exact path="/player"  element={<Player />} />                  
             <Route exact path="/admin"  element={<Admin />} />
+            <Route exact path="/qr"  element={<QR />} />
             <Route path="*" element={<Landing />} />
           </Routes>
         </ScrollToTop>        

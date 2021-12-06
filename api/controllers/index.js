@@ -30,12 +30,22 @@ const userVerifySchema = Joi.object({
         .max(200)
         .required()
 });
+const userResultSchema = Joi.object({
+    type: Joi.string()        
+        .valid('video', 'bespoke','nationwide')
+        .required(),
+    token: Joi.string()        
+        .min(1)
+        .max(200)
+        .required()
+});
 const journey_state = [
     'registered',
     'receipt_uploaded',
     'creation_uploaded',
     'question_answered',
-    'verified'
+    'verified',
+    'result_published'
 ];
 const CUSTOMER_COLLECTION = 'customers';
 const reciept_mime_type = ['image/png','image/jpeg', 'application/pdf'];
@@ -59,6 +69,7 @@ const register = async (body) => {
             body.verified_at = null;
             body.verification_type = '';
             body.answer = '';
+            body.result_set_at = null;
             body.result = '';
             body.result_type = '';
             const insert = await userCol.insertOne(body)
@@ -289,6 +300,39 @@ const verify = async (req, res) => {
     }    
 }
 
+const setResult = async (req, res) => {
+    if(!req.body || !req.body.token){
+        return res.status(400).send('Token is required');
+    }    
+    try {
+        await userResultSchema.validateAsync(req.body);
+    } catch (error) {        
+        return res.status(400).send(error.details[0].message);        
+    }
+    try {
+        const db = getConnection(config.databases.mongo.db)
+        const userCol = db.collection(CUSTOMER_COLLECTION);
+        const userById = await userCol.findOne({ _id: new ObjectId(req.body.token)});    
+        if (!userById) {
+            return res.status(400).send('No user found');        
+        }
+        if(userById.journey_state !== journey_state[4]){
+            return res.status(400).send('Not in proper state to verify user'); 
+        }
+        const toUpdate = {
+            journey_state: journey_state[5],            
+            updated_at: new Date(), 
+            result_set_at: new Date(),            
+            result_type:  req.body.type           
+        }                       
+        await userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate })
+        return res.send('user result published');
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send('Sorry can not process your request');
+    }    
+}
+
 const getAllUsers = async (req, res) => {
     
     try {
@@ -329,6 +373,7 @@ module.exports = {
     getVideo,
     getRecipet,
     verify,
+    setResult,
     getAllUsers,
     getUser
 }

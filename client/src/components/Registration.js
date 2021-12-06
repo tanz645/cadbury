@@ -233,6 +233,9 @@ export class Registration extends Component {
                                     {this.state.submitError ? <p className="text-red text-small">({this.state.submitError})</p> : ''}
                                 </div>
                             </form>
+                            <footer className="text-center text-white text-small">
+                                <p className="mt-4">Cadbury Confectionery Malaysia Sdn Bhd</p>
+                            </footer>
                         </div>
                     </div>
                 </div>

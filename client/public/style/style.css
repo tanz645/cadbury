@@ -255,9 +255,6 @@ li {
   margin-top: 14px;
 }
 
-.cb-backend {
-  background: #fff;
-}
 
 .cb-backend thead {
   text-align: center;
@@ -425,7 +422,7 @@ li {
   margin: 10px;
   border-radius: 50%;
   background: #471d7b;
-  border: 1px solid #E3B870;
+  border: 1px solid   ;
 }
 .creation-filter-btn{
   position: relative;  
@@ -447,7 +444,7 @@ li {
 
 .phone-layout {
   min-height: 100vh;
-  max-height: 100%;
+  max-height: 100vh;
   background-image: url("../images/BG-02.png");  
   background-position: center;
   background-repeat: no-repeat;
@@ -583,11 +580,20 @@ body > div > .desktop {
 .mobile-head{
   min-height: 700px;
 }
-
+footer p{
+  font-size: 10px;
+}
+.landing-main-body footer p{
+  margin-top: 10vh;
+}
 /* Backend */
 .cb-backend{
   background-color: var(--color-white);
   height: 100%;
+  padding: 15px;
+}
+.cb-backend h2{
+  color: #2a0a49;
 }
 tbody *{
   font-weight: normal;
@@ -611,6 +617,7 @@ tbody *{
     width: 30px;
     height: 30px;
     border-radius: 50%;
+    
 }
 .table-striped .svg-inline--fa + .svg-inline--fa{
   margin-left: 5px;
@@ -619,4 +626,36 @@ tbody *{
 /* Fixes */
 td .form-check .form-check-input{
   margin: auto;
+}
+.admin-partion{
+  border-right: 2px solid #E3B870;
+  border-left: 2px solid #E3B870;
+  border-top: none;
+  border-bottom: none;
+  background: white !important;
+  opacity: 0;
+}
+.cb-backend table{
+  font-size: 14px;
+}
+.qr-page svg{
+  border: 2px solid #E3B870;
+  padding: 20px;
+  margin-top: 30vh;
+}
+.whiteWrapper{
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+}
+.qr-user-id{
+  margin: 30px auto;
+  border: 1px solid #2a0a49;
+  padding: 5px;
+  border-radius: 5px;
+  width: 300px;
+}
+.qr-user-id h2{
+  margin: 0;
+  font-size: 20px;
 }

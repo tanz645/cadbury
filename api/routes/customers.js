@@ -9,6 +9,7 @@ const {
     getVideo, 
     getRecipet, 
     verify, 
+    setResult,
     getAllUsers, 
     getUser 
 } = require('../controllers');
@@ -41,6 +42,9 @@ router.post('/question/answer', (req, res) => {
 });
 router.put('/verify', (req, res) => {
     return verify(req, res)
+});
+router.put('/result-set', (req, res) => {
+    return setResult(req, res)
 });
 router.get('/', (req, res) => {
     return getAllUsers(req, res);

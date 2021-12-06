@@ -8,12 +8,12 @@ export class Creation extends Component {
 
         this.state = {
             filterIds: [
-                { icon: 'thumbnails-01.png', path: '../masks/f1' },
-                { icon: 'thumbnails-02.png', path: '../masks/f2'},
-                { icon: 'thumbnails-03.png', path: '../masks/f3'},
-                { icon: 'thumbnails-04.png', path: '../masks/f4' },
-                { icon: 'thumbnails-05.png', path: '../masks/flow1'},
-                { icon: 'thumbnails-06.png', path: '../masks/f6'},
+                { icon: 'thumbnails-01.png', path: '../masks/a1' },
+                { icon: 'thumbnails-02.png', path: '../masks/a2'},
+                { icon: 'thumbnails-03.png', path: '../masks/a3'},
+                { icon: 'thumbnails-04.png', path: '../masks/a4' },
+                { icon: 'thumbnails-05.png', path: '../masks/a5'},
+                { icon: 'thumbnails-06.png', path: '../masks/a6'},
             ],
             deepAR: {},
             activeFilter: 'thumbnails-01.png',
@@ -69,7 +69,7 @@ export class Creation extends Component {
                 // start video immediately after the initalization, mirror = true
                 deepAR.startVideo(true);
                 // load the aviators effect on the first face into slot 'slot'
-                deepAR.switchEffect(0, 'slot', '../masks/f1', function (e) {
+                deepAR.switchEffect(0, 'slot', '../masks/a1', function (e) {
                     // effect loaded
                     console.log(e)
                 });
@@ -167,6 +167,13 @@ export class Creation extends Component {
         )
     }
     componentDidMount() {        
+        // navigator.mediaDevices.getUserMedia({video: false, audio: true}).then( stream => {
+        //     window.localStream = stream; // A
+        //     window.localAudio.srcObject = stream; // B
+        //     window.localAudio.autoplay = true; // C
+        // }).catch( err => {
+        //     console.log("u got an error:" + err)
+        // });
         this.startEngine();   
     }
     render() {
