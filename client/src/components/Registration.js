@@ -113,16 +113,16 @@ export class Registration extends Component {
             ]
         }        
         try {
-            // const hubspotPost = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
-            //     method: 'POST',        
-            //     headers: {
-            //     'Content-Type': 'application/json'             
-            //     },            
-            //     body: JSON.stringify(hubspotData)
-            // })
-            // if (hubspotPost.status >= 400) {
-            //     throw new Error("Bad response from server");
-            // }
+            const hubspotPost = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
+                method: 'POST',        
+                headers: {
+                'Content-Type': 'application/json'             
+                },            
+                body: JSON.stringify(hubspotData)
+            })
+            if (hubspotPost.status >= 400) {
+                throw new Error("Bad response from server");
+            }
             // const hubspotResult = await hubspotPost.json();
             // console.log(hubspotResult)
             // fetch(`https://api.hubapi.com/contacts/v1/search/query?q=test&hapikey=eu1-5201-252e-4a0a-b86d-2b813d495bc0`)
