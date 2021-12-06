@@ -68,7 +68,7 @@ export class Thankyou extends Component {
                 <button className='btn btn-primary margin-auto share-btn' onClick={this.shareLink}>Share</button>
             </div>
             <footer className="text-center text-white text-small">
-                <p className="mt-3">Cadbury Confectionery Malaysia Sdn Bhd</p>
+                <p className="mt-3">© 2021 Mondelēz International. All Rights Reserved.</p>
             </footer>
           </div>
         </div>

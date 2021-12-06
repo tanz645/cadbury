@@ -197,7 +197,7 @@ export class Registration extends Component {
                                     <div className="mb-3 flex-fill form-ele-box">
                                         {/* <input type="date" id="form-dob" className="form-control" name="dob" value="test"
                                             min="1900-01-01" max="2022-01-01" /> */}
-                                        <DatePicker selected={this.state.dob} onChange={this.onDateSelect} showYearDropdown yearDropdownItemNumber={121} scrollableYearDropdown={true} minDate={new Date('1800-01-01')} maxDate={new Date()} id="form-dob" />
+                                        <DatePicker dateFormat="dd/MM/yy" selected={this.state.dob} onChange={this.onDateSelect} showYearDropdown yearDropdownItemNumber={121} scrollableYearDropdown={true} minDate={new Date('1800-01-01')} maxDate={new Date()} id="form-dob" />
                                         <img src="../images/Calendar.png" className="form-cal-icon" alt="" onClick={this.openDate} />
                                         {!this.state.dob ? <div className="date-placeholder" onClick={this.openDate}>Birthday <br /> (optional)</div> : ''}
                                     </div>
@@ -215,7 +215,7 @@ export class Registration extends Component {
                                 <div>{this.state.fileErrorMsg ? <p className="text-red text-small">({this.state.fileErrorMsg})</p> : ''}</div>
                                 <div className="terms-condition-box mb-3 form-ele-box">
                                     <div>
-                                        <input className="text-white" onChange={this.onFormElementChange} name="terms" value={this.state.terms} type="checkbox" required /> I agree to <a className="termsAndPrivacy" target="_blank" href="../tandc.pdf">Terms & Condition </a> and <a className="termsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy policy</a>
+                                        <input className="text-white" onChange={this.onFormElementChange} name="terms" value={this.state.terms} type="checkbox" required /> I agree to <a className="termsAndPrivacy" target="_blank" href="../tandc.pdf">Terms & Conditions </a> and <a className="termsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy Policy</a>
                                     </div>                                    
                                     <div>
                                         <input className="text-white" onChange={this.onFormElementChange} name="news" value={this.state.news} type="checkbox" required /> I agree to be contacted via WhatsApp and/or Email
@@ -234,7 +234,7 @@ export class Registration extends Component {
                                 </div>
                             </form>
                             <footer className="text-center text-white text-small">
-                                <p className="mt-4">Cadbury Confectionery Malaysia Sdn Bhd</p>
+                                <p className="mt-4">© 2021 Mondelēz International. All Rights Reserved.</p>
                             </footer>
                         </div>
                     </div>

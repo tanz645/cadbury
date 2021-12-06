@@ -23,7 +23,7 @@ export class Desktop extends Component {
                             <img className="desktop-cadbury-pour" src="../images/CDM.png" alt="cadbury qr code!" />
                         </div>
                         <footer className="text-center text-white text-small">
-                            <p className="">Cadbury Confectionery Malaysia Sdn Bhd</p>
+                            <p className="">© 2021 Mondelēz International. All Rights Reserved.</p>
                         </footer>
                     </div>
                     

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import Configs from '../config';
 
 export class Landing extends Component {
 
@@ -20,6 +21,7 @@ export class Landing extends Component {
 
   toggleModal() {
     this.setState({ modal: !this.state.modal })
+    localStorage.removeItem(Configs.local_cache_name);
   }
 
   render() {
@@ -59,7 +61,7 @@ export class Landing extends Component {
                 </div>
               </div>
               <footer className="text-center text-white text-small">
-                  <p className="">Cadbury Confectionery Malaysia Sdn Bhd</p>
+                  <p className="">© 2021 Mondelēz International. All Rights Reserved.</p>
               </footer>            
             </div>            
           </div>

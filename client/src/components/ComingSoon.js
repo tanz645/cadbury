@@ -45,6 +45,9 @@ export class ComingSoon extends Component {
 Get ready and we will see you soon!
 </p>               
             </div>
+            <footer className="text-center text-white text-small">
+                <p className="">©️ 2021 Mondelēz International. All Rights Reserved.</p>
+            </footer>
           </div>
         </div>
 
