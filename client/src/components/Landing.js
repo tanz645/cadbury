@@ -20,8 +20,7 @@ export class Landing extends Component {
   }
 
   toggleModal() {
-    this.setState({ modal: !this.state.modal })
-    localStorage.removeItem(Configs.local_cache_name);
+    this.setState({ modal: !this.state.modal })    
   }
 
   render() {

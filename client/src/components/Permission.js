@@ -10,21 +10,6 @@ export class Permission extends Component {
     };
   }
 
-  componentDidMount() {
-    const { navigation } = this.props;
-    const token = localStorage.getItem(Configs.local_cache_name);
-    if (!token) {
-      navigation('/')
-    }
-    fetch(`${Configs.api}/customers/${token}`)
-      .then(response => response.json())
-      .then(data => {
-        if (!data)
-          if (data && data.receipt_uploaded !== 'receipt_uploaded') {
-            navigation('/')
-          }
-      });
-  }
   render() {
     return (
       <>

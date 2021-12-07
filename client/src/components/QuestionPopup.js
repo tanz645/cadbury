@@ -9,7 +9,8 @@ export class QuestionPopup extends Component {
 
     this.state = {
       answer: '',
-      error: ''
+      error: '',
+      submitting: false,
     };
     this.saveAnswer = this.saveAnswer.bind(this);
     this.handleAnswer = this.handleAnswer.bind(this);
@@ -19,11 +20,15 @@ export class QuestionPopup extends Component {
   }
 
   async saveAnswer() {
+    if(this.state.submitting){      
+      return 1;
+    }
+    this.setState({submitting: true});
     const { navigation } = this.props;
     const token = localStorage.getItem(Configs.local_cache_name);
     if(!this.state.answer){
-      this.setState({error: 'answer can not be empty'});
-      return ;
+      this.setState({error: 'answer can not be empty',submitting: false});
+      return 1;
     }
     const data = {
       token,
@@ -42,8 +47,10 @@ export class QuestionPopup extends Component {
       }
       console.log(result);
       localStorage.removeItem(Configs.local_cache_name);
+      this.setState({submitting: false});
       navigation('/thankyou');
     } catch (error) {
+      this.setState({submitting: false});
         console.log(error);
     }
   };
@@ -52,15 +59,15 @@ export class QuestionPopup extends Component {
     const { navigation } = this.props;
     const token = localStorage.getItem(Configs.local_cache_name);
     if (!token) {
-      navigation('/')
+      window.location.href = "/";        
+      return;
     }
     fetch(`${Configs.api}/customers/${token}`)
       .then(response => response.json())
       .then(data => {
         if (!data)
-          if (data && data.receipt_uploaded !== 'creation_uploaded') {
-            navigation('/')
-          }
+        window.location.href = "/";        
+        return;
       });
   }
 

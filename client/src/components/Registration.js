@@ -25,6 +25,7 @@ export class Registration extends Component {
             fileErrorMsg: '',
             submitError: '',
             submitted: false,
+            submitStarted: false
         };
         this.handleFileUpload = this.handleFileUpload.bind(this);
         this.onCaptchaChange = this.onCaptchaChange.bind(this);
@@ -74,9 +75,13 @@ export class Registration extends Component {
         console.log(value)
     }
     async handleSubmit(e){
+        if(this.state.submitStarted){
+            return 1;
+        }
+        this.setState({submitStarted: true});        
         e.preventDefault();
         if(!this.state.reciept){
-            this.setState({fileErrorMsg: 'Please upload your reciept'});
+            this.setState({fileErrorMsg: 'Please upload your reciept', submitStarted: false});
             return;
         }
         const hubspotData = {
@@ -113,16 +118,13 @@ export class Registration extends Component {
             ]
         }        
         try {
-            const hubspotPost = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
+            fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
                 method: 'POST',        
                 headers: {
                 'Content-Type': 'application/json'             
                 },            
                 body: JSON.stringify(hubspotData)
-            })
-            if (hubspotPost.status >= 400) {
-                throw new Error("Bad response from server");
-            }
+            })           
             // const hubspotResult = await hubspotPost.json();
             // console.log(hubspotResult)
             // fetch(`https://api.hubapi.com/contacts/v1/search/query?q=test&hapikey=eu1-5201-252e-4a0a-b86d-2b813d495bc0`)
@@ -149,9 +151,9 @@ export class Registration extends Component {
                 body: formData
               });              
               localStorage.setItem(Configs.local_cache_name, result.token);
-              this.setState({submitError: '', submitted: true});              
+              this.setState({submitError: '', submitted: true, submitStarted: false});              
         } catch (error) {
-            this.setState({submitError: 'Can not process your request', submitted: false})
+            this.setState({submitError: 'Can not process your request', submitted: false, submitStarted: false})
         }            
     }
     componentDidMount(){
@@ -204,7 +206,7 @@ export class Registration extends Component {
                                 </div>
                                 <div className="mb-3 form-ele-box d-flex">
                                     <div className="flex-fill">
-                                        <h2 className="cd-text-primary upload-recipet-text mb-2">Upload my reciept:</h2>
+                                        <h2 className="cd-text-primary upload-recipet-text mb-2">Upload my receipt:</h2>
                                         {this.state.reciept && this.state.reciept.name ? <h5 className="receipt-name">{this.makeStringDots(this.state.reciept.name)}</h5> : ''}
                                     </div>
                                     <div className="flex-fill text-right">

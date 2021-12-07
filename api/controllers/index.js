@@ -96,9 +96,9 @@ const receiptUpload = async (req, res) => {
         if (!userById) {
             return res.status(400).send('No user found');        
         }
-        if(userById.journey_state !== journey_state[0]){
-            return res.status(400).send('Not in proper state to upload receipt'); 
-        }
+        // if(userById.journey_state !== journey_state[0]){
+        //     return res.status(400).send('Not in proper state to upload receipt'); 
+        // }
         let uploadPath;
         if (!req.files || Object.keys(req.files).length === 0 || !req.files.receipt) {
             return res.status(400).send('No files were uploaded.');
@@ -152,9 +152,9 @@ const creationUpload = async (req, res) => {
         if (!userById) {
             return res.status(400).send('No user found');        
         }
-        if(userById.journey_state !== journey_state[1]){
-            return res.status(400).send('Not in proper state to upload video'); 
-        }
+        // if(userById.journey_state !== journey_state[1]){
+        //     return res.status(400).send('Not in proper state to upload video'); 
+        // }
         let uploadPath;
         if (!req.files || Object.keys(req.files).length === 0 || !req.files.creation) {
             return res.status(400).send('No files were uploaded.');
@@ -214,9 +214,9 @@ const saveAnswer = async (req, res) => {
         if (!userById) {
             return res.status(400).send('No user found');        
         }
-        if(userById.journey_state !== journey_state[2]){
-            return res.status(400).send('Not in proper state to answer question'); 
-        }
+        // if(userById.journey_state !== journey_state[2]){
+        //     return res.status(400).send('Not in proper state to answer question'); 
+        // }
         const toUpdate = {
             journey_state: journey_state[3],            
             updated_at: new Date(), 
@@ -282,9 +282,9 @@ const verify = async (req, res) => {
         if (!userById) {
             return res.status(400).send('No user found');        
         }
-        if(userById.journey_state !== journey_state[3]){
-            return res.status(400).send('Not in proper state to verify user'); 
-        }
+        // if(userById.journey_state !== journey_state[3]){
+        //     return res.status(400).send('Not in proper state to verify user'); 
+        // }
         const toUpdate = {
             journey_state: journey_state[4],            
             updated_at: new Date(), 
@@ -317,7 +317,7 @@ const setResult = async (req, res) => {
             return res.status(400).send('No user found');        
         }
         if(userById.journey_state !== journey_state[4]){
-            return res.status(400).send('Not in proper state to verify user'); 
+            return res.status(400).send('Need to be verified to publish result'); 
         }
         const toUpdate = {
             journey_state: journey_state[5],            

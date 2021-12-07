@@ -15,7 +15,7 @@ export class Desktop extends Component {
                         <div className="cb-content col-md-2">
                             <div className="heading padding-top-20">
                                 <h2 className="text-center">LOOKS LIKE YOU'RE ON DESKTOP</h2>
-                                <h4 className="text-center">Scan QR code to praticipate.</h4>
+                                <h4 className="text-center">Scan QR code to participate.</h4>
                             </div>
                             <img className="margin-auto desktop-qr img-fluid" src="../images/qr.jpeg" alt="cadbury qr code!" />
                         </div>

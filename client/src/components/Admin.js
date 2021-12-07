@@ -150,8 +150,7 @@ export class Admin extends Component {
                 <input className="form-check-input" type="radio" name={`verification_${item._id}`} value="invalid" checked={item.verification_type === 'invalid'} onChange={() => this.handleVerifyRadioButton(item, 'invalid', index)} />
               </div>
             </div>
-          </td>
-          <td>{item.promo_code || 'N/A'}</td>
+          </td>          
           <td>{item.verified_at ? new Date(item.verified_at).toLocaleString() : 'N/A'}</td>
           <td className="admin-partion">t</td>
           <td>{item.answer}</td>
@@ -191,7 +190,7 @@ export class Admin extends Component {
               <tr className="cb-text-primary">
                 <td>No.</td>
                 <td>SHOPPER ID</td>
-                <td>RECIEPT</td>
+                <td>RECEIPT</td>
                 <td>STATE</td>
                 <td>
                   <div>VERIFY</div>
@@ -212,15 +211,14 @@ export class Admin extends Component {
                       <img src="../images/Invalid.png" alt="" />
                     </div>
                   </div>
-                </td>
-                <td>RM8<br />PROMO<br />CODE</td>
+                </td>                
                 <td>STATUS</td>
                 <td className="admin-partion">t</td>
                 <td>ANSWER</td>
                 <td>VIDEO</td>
                 <td>QR CODE<br />(video)</td>
                 <td>
-                  <div>REASULT</div>
+                  <div>RESULT</div>
                   <div className="d-flex cb-text-small cb-text-black">
                     <div className="flex-fill">Video</div>
                     <div className="flex-fill">Bespoke</div>

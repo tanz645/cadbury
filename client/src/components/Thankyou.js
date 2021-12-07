@@ -3,21 +3,21 @@ import React, { Component } from 'react';
 export class Thankyou extends Component {
 
   constructor(props) {
-    super(props);       
-   
+    super(props);
+
     this.state = {};
     this.shareLink = this.shareLink.bind(this);
-}
+  }
 
-  async shareLink(){
+  async shareLink() {
     const canonical = document.querySelector("link[rel=canonical]");
-  let url = canonical ? canonical.href : document.location.href;
-  console.log(url)
-    if(navigator.share){
-      const data ={
+    let url = canonical ? canonical.href : document.location.href;
+    console.log(url)
+    if (navigator.share) {
+      const data = {
         url: '/',
-        title: 'Teting share',
-        text: 'shared my link'
+        title: 'Cadbury',
+        text: 'Gift From The Heart'
       }
       try {
         await navigator
@@ -28,7 +28,7 @@ export class Thankyou extends Component {
       } catch (error) {
         console.log(`Oops! I couldn't share to the world because: ${error}`);
       }
-    }else{
+    } else {
       alert('share not supported')
     }
   }
@@ -62,13 +62,13 @@ export class Thankyou extends Component {
                 className='cd-img-stamp margin-auto'
                 src='../images/Grab.png'
                 alt='Grab image'
-              />              
+              />
             </div>
             <div class=''>
-                <button className='btn btn-primary margin-auto share-btn' onClick={this.shareLink}>Share</button>
+              <button className='btn btn-primary margin-auto share-btn' onClick={this.shareLink}>Share</button>
             </div>
             <footer className="text-center text-white text-small">
-                <p className="mt-3">© 2021 Mondelēz International. All Rights Reserved.</p>
+              <p className="mt-3">© 2021 Mondelēz International. All Rights Reserved.</p>
             </footer>
           </div>
         </div>
