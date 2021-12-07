@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useNavigate} from "react-router-dom";
 import { faDownload, faEye, faPrint } from '@fortawesome/free-solid-svg-icons';
+// import { jsPDF } from "jspdf";
 import Configs from '../config';
 
 export class Admin extends Component {
@@ -18,6 +19,8 @@ export class Admin extends Component {
     this.reload = this.reload.bind(this);
     this.openReciept = this.openReciept.bind(this);
     this.openPrintPreview = this.openPrintPreview.bind(this);
+    this.downloadQR = this.downloadQR.bind(this);
+
   }
 
   reload() {
@@ -111,7 +114,24 @@ export class Admin extends Component {
       alert('Already verified')
     }
   }
-
+  downloadQR(id) {
+    // const doc = new jsPDF();
+    // fetch(`/qr?hash=${id}`)
+    // .then(async (response) => {
+    //     if (response.status && response.status === 200) {
+    //       const html = await response.text();
+    //       console.log(html)
+    //       doc.html(html, {
+    //         callback: function (doc) {
+    //           doc.save(`${id}_cadbury_gift_from_the_heart.pdf`);
+    //         },
+    //         x: 10,
+    //         y: 10
+    //     }); 
+    //     }
+    // });
+    window.open(`/qr?hash=${id}&download=true`,"_blank");
+  }
   openPrintPreview(id) {    
     window.open(`/qr?hash=${id}`,"_blank");
   }
@@ -157,7 +177,7 @@ export class Admin extends Component {
           <td><FontAwesomeIcon icon={faEye} className="cursor-pointer" onClick={() => this.openVideo(item)} /></td>
           <td>
             <FontAwesomeIcon className="cursor-pointer" icon={faPrint} onClick={() => this.openPrintPreview(item._id)}/>
-            <FontAwesomeIcon className="cursor-pointer" icon={faDownload} />
+            <FontAwesomeIcon className="cursor-pointer" icon={faDownload} onClick={() => this.downloadQR(item._id)}/>
           </td>
           <td>
             <div className="d-flex">

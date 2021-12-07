@@ -139,7 +139,7 @@ export class Creation extends Component {
         return (
             <div className='cb-wrapper-app'>
                 <div className='cb-content phone-layout'>
-                    <video className="cb-video-player" autoPlay>
+                    <video className="cb-video-player" autoPlay loop>
                         <source src={this.state.bufferVideo} type="video/mp4" />
                     </video>
                     <div className="control-box-buffer">
