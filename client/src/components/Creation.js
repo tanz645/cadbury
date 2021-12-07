@@ -92,6 +92,7 @@ export class Creation extends Component {
         this.setState({ deepAR })
     }
     replay() {
+        URL.revokeObjectURL(this.state.bufferVideo)
         this.setState({
             deepAR: {},
             recordingStarted: false,
@@ -121,9 +122,9 @@ export class Creation extends Component {
                     body: formData
                 });
                 if (result.status >= 400) {
-                    throw new Error("Bad response from server");
-                }
-                console.log(result);
+                    alert("Can not upload video");
+                }                
+                URL.revokeObjectURL(this.state.bufferVideo)
                 this.setState({ uploading: false });
                 navigation('/question-popup');
             } catch (error) {
@@ -138,7 +139,7 @@ export class Creation extends Component {
     renderBufferVideo() {
         return (
             <div className='cb-wrapper-app'>
-                <div className='cb-content phone-layout'>
+                <div className='cb-content'>
                     <video className="cb-video-player" autoPlay loop>
                         <source src={this.state.bufferVideo} type="video/mp4" />
                     </video>
