@@ -11,7 +11,7 @@ import QuestionPopup  from './components/QuestionPopup';
 import Thankyou from './components/Thankyou';
 import Message from './components/Message';
 import Admin from './components/Admin';
-import Player from './components/Player';
+import UserCreation from './components/UserCreation';
 import ComingSoon from './components/ComingSoon';
 import QR from './components/QR';
 export class App extends Component {
@@ -35,9 +35,9 @@ export class App extends Component {
             <Route exact path="/creation"  element={<Creation />} />
             <Route exact path="/question-popup"  element={<QuestionPopup />} />
             <Route exact path="/thankyou"  element={<Thankyou />} />
-            <Route exact path="/message"  element={<Message />} />
-            <Route exact path="/player"  element={<Player />} />                  
+            <Route exact path="/message"  element={<Message />} />                             
             <Route exact path="/admin"  element={<Admin />} />
+            <Route exact path="/user-creation"  element={<UserCreation />} />
             <Route exact path="/qr"  element={<QR />} />
             <Route path="*" element={<Landing />} />
           </Routes>

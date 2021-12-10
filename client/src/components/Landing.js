@@ -11,6 +11,7 @@ export class Landing extends Component {
       modal: false,
       view: 'landing'
     };
+    localStorage.removeItem(Configs.local_cache_name);
     this.toggleModal = this.toggleModal.bind(this);
     const width = window.innerWidth;
     if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent)) || width >= 800) {
@@ -36,7 +37,7 @@ export class Landing extends Component {
               />
               <img
                 className='landing-family margin-auto'
-                src='../images/Gift-Family.gif'
+                src='../images/Family-gif-o.gif'
                 alt='Family image is missing!'
               />              
               <p className="require-min-purchase" >*requires min purchase of <br /> RM 15 of Cadbury products</p>

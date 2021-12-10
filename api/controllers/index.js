@@ -50,6 +50,7 @@ const journey_state = [
 const CUSTOMER_COLLECTION = 'customers';
 const reciept_mime_type = ['image/png','image/jpeg', 'application/pdf'];
 const creation_mime_type = ['video/mp4','video/mpeg', 'video/ogg'];
+const creation_audio_mime_type = ['audio/mp3','audio/mpeg'];
 const reciept_max_file_size = 10485760;
 const creation_max_file_size = 20971520;
 
@@ -64,6 +65,7 @@ const register = async (body) => {
             body.journey_state = journey_state[0];
             body.receipt_link = '';
             body.video_link = '';
+            body.audio_link = '',
             body.promo_code = '';
             body.verified = false;
             body.verified_at = null;
@@ -141,7 +143,7 @@ const receiptUpload = async (req, res) => {
 };
 
 const creationUpload = async (req, res) => {
-    let creation;
+    let creation, creationAudio;
     if(!req.body || !req.body.token){
         return res.status(400).send('Token is required');
     }
@@ -156,37 +158,54 @@ const creationUpload = async (req, res) => {
         //     return res.status(400).send('Not in proper state to upload video'); 
         // }
         let uploadPath;
-        if (!req.files || Object.keys(req.files).length === 0 || !req.files.creation) {
+        if (!req.files || Object.keys(req.files).length === 0 || (!req.files.creation && !req.files.creationAudio)) {
             return res.status(400).send('No files were uploaded.');
         }
-        creation = req.files.creation;    
-        if(creation.size > creation_max_file_size){
+    
+        creation = req.files.creation;  
+        creationAudio = req.files.creationAudio;
+
+        if(creation.size > creation_max_file_size || creationAudio.size > creation_max_file_size){
             return res.status(400).send('Max file size 20mb');
         }    
         if(!creation_mime_type.includes(creation.mimetype)){
             return res.status(400).send('Only mp4, mpeg and ogg are allowed.');
         }
         
+        if(!creation_audio_mime_type.includes(creationAudio.mimetype)){
+            return res.status(400).send('Only mp3,mpeg');
+        }
         creation.name = `${req.body.token}_${creation.name}`;
+        creationAudio.name = `${req.body.token}_${creationAudio.name}`;
         const creationLink = '/creation/' + creation.name;
+        const creationAudioLink = '/creation/' + creationAudio.name;
         uploadPath = config.FILE_UPLOAD + creationLink;
+        audioPath = config.FILE_UPLOAD + creationAudioLink;
         creation.mv(uploadPath, async function(err) {
             if (err){
                 console.log(err)
                 return res.status(500).send('Can not upload video');
             }   
-            const toUpdate = {
-                journey_state: journey_state[2],
-                video_link: creationLink,
-                updated_at: new Date(), 
-            }                       
-            try {
-                await userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate })
-                return res.send('File uploaded!');
-            } catch (error) {
-                console.log(error)
-                return res.status(500).send('Sorry can not process your request');
-            }   
+            creationAudio.mv(audioPath, async function(err){
+                if (err){
+                    console.log(err)
+                    return res.status(500).send('Can not upload audio');
+                }
+                const toUpdate = {
+                    journey_state: journey_state[2],
+                    video_link: creationLink,
+                    audio_link: creationAudioLink,
+                    updated_at: new Date(), 
+                }                       
+                try {
+                    await userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate })
+                    return res.send('File uploaded!');
+                } catch (error) {
+                    console.log(error)
+                    return res.status(500).send('Sorry can not process your request');
+                }
+            })
+             
         });
     } catch (error) {
         console.log(error)

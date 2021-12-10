@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Configs from '../config';
+import MicRecorder from 'mic-recorder-to-mp3';
+
+let filterBuffers = {};
 export class Creation extends Component {
 
     constructor(props) {
         super(props);
 
+        const Mp3Recorder = new MicRecorder({ bitRate: 128 });
+
         this.state = {
             filterIds: [
-                { icon: 'thumbnails-01.png', path: '../masks/a1' },
-                { icon: 'thumbnails-02.png', path: '../masks/a2' },
-                { icon: 'thumbnails-03.png', path: '../masks/a3' },
-                { icon: 'thumbnails-04.png', path: '../masks/a4' },
-                { icon: 'thumbnails-05.png', path: '../masks/a5' },
-                { icon: 'thumbnails-06.png', path: '../masks/a6' },
+                { icon: 'thumbnails-01.png', path: 'masks/a1' },
+                { icon: 'thumbnails-02.png', path: 'masks/a2' },
+                { icon: 'thumbnails-03.png', path: 'masks/a3' },
+                { icon: 'thumbnails-04.png', path: 'masks/a4' },
+                { icon: 'thumbnails-05.png', path: 'masks/a5' },
+                { icon: 'thumbnails-06.png', path: 'masks/a6' },
             ],
+            Mp3Recorder,
+            filterBinary: [],
             deepAR: {},
             activeFilter: 'thumbnails-01.png',
             recordingStarted: false,
             bufferVideo: '',
             blob: '',
+            bufferAudio: '',
+            audioBlob: '',
             uploading: false,
             initialized: false
         };
@@ -36,17 +45,44 @@ export class Creation extends Component {
         let timeoutID;
         if (this.state.recordingStarted) {
             this.state.deepAR.finishVideoRecording((e) => {
-                this.state.deepAR.shutdown();
-                clearTimeout(timeoutID);
-                this.setState({ bufferVideo: URL.createObjectURL(e), blob: e, recordingStarted: false, initialized: false })
+                console.log(e)
+                this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {                    
+                    this.state.deepAR.shutdown();
+                    clearTimeout(timeoutID);
+                    this.setState({
+                        bufferVideo: URL.createObjectURL(e),
+                        bufferAudio: URL.createObjectURL(Audioblob),
+                        blob: e,
+                        audioBlob: Audioblob,
+                        recordingStarted: false,
+                        initialized: false
+                    })
+                });
             });
         } else {
             this.setState({ recordingStarted: true }, () => {
+                if (this.state.bufferVideo) {
+                    URL.revokeObjectURL(this.state.bufferVideo)
+                }
+                if (this.state.bufferAudio) {
+                    URL.revokeObjectURL(this.state.bufferAudio)
+                }
                 this.state.deepAR.startVideoRecording();
+                this.state.Mp3Recorder.start();
                 timeoutID = setTimeout(() => {
                     this.state.deepAR.finishVideoRecording((e) => {
-                        this.state.deepAR.shutdown();
-                        this.setState({ bufferVideo: URL.createObjectURL(e), blob: e, recordingStarted: false, initialized: false })
+                        this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {                    
+                            this.state.deepAR.shutdown();
+                            clearTimeout(timeoutID);
+                            this.setState({
+                                bufferVideo: URL.createObjectURL(e),
+                                bufferAudio: URL.createObjectURL(Audioblob),
+                                blob: e,
+                                audioBlob: Audioblob,
+                                recordingStarted: false,
+                                initialized: false
+                            })
+                        });
                     });
                 }, 1000 * 30)
             })
@@ -55,8 +91,10 @@ export class Creation extends Component {
     }
 
     changeFilter(item) {
-        this.setState({ activeFilter: item.icon })
-        this.state.deepAR.switchEffect(0, 'slot', item.path);
+        if (filterBuffers[item.icon]) {
+            this.state.deepAR.switchEffectByteArray(0, 'slot', filterBuffers[item.icon]);
+            this.setState({ activeFilter: item.icon })
+        }
     }
 
     startEngine() {
@@ -67,7 +105,7 @@ export class Creation extends Component {
             canvas: document.getElementById('deepar-canvas'),
             numberOfFaces: 1, // how many faces we want to track min 1, max 4
             libPath: './lib',
-            onInitialize:  () => {
+            onInitialize: () => {
                 // start video immediately after the initalization, mirror = true
                 deepAR.startVideo(true);
                 // load the aviators effect on the first face into slot 'slot'
@@ -114,7 +152,11 @@ export class Creation extends Component {
             const file = new File([this.state.blob], "creation.mp4", {
                 type: this.state.blob.type,
             });
+            const fileAudio = new File([this.state.audioBlob], "creation_audio.mp3", {
+                type: this.state.audioBlob.type,
+            });
             formData.append('creation', file);
+            formData.append('creationAudio', fileAudio);
             formData.append('token', token);
             try {
                 const result = await fetch(Configs.api + '/customers/creation/upload', {
@@ -123,8 +165,10 @@ export class Creation extends Component {
                 });
                 if (result.status >= 400) {
                     alert("Can not upload video");
-                }                
+                    return;
+                }
                 URL.revokeObjectURL(this.state.bufferVideo)
+                URL.revokeObjectURL(this.state.bufferAudio)
                 this.setState({ uploading: false });
                 navigation('/question-popup');
             } catch (error) {
@@ -143,6 +187,9 @@ export class Creation extends Component {
                     <video className="cb-video-player" autoPlay loop>
                         <source src={this.state.bufferVideo} type="video/mp4" />
                     </video>
+                    <audio autoPlay loop>
+                        <source src={this.state.bufferAudio} type="audio/mp3" />                        
+                    </audio>
                     <div className="control-box-buffer">
                         <div className="landing-button text-center">
                             <button className="btn btn-primary" onClick={this.replay}>RETAKE</button>
@@ -159,8 +206,8 @@ export class Creation extends Component {
     }
     renderAr() {
         return (
-            <div className="creation-body">
-                <canvas id="deepar-canvas" style={this.state.initialized ? {opacity: 1}: {opacity:0}}></canvas>
+            <>
+                <canvas id="deepar-canvas" style={this.state.initialized ? { opacity: 1 } : { opacity: 0 }}></canvas>
                 {this.state.initialized ?
                     (
                         <div className="control-box">
@@ -180,40 +227,49 @@ export class Creation extends Component {
                     )
                     : ''}
 
-            </div>
+            </>
         )
     }
     componentDidMount() {
-        const { navigation } = this.props;
         const token = localStorage.getItem(Configs.local_cache_name);
         if (!token) {
             window.location.href = "/";
             return;
         }
-        fetch(`${Configs.api}/customers/${token}`)
-            .then(response => response.json())
-            .then(data => {
-                if (!data) {
+        window.navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {                   
+            fetch(`${Configs.api}/customers/${token}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data) {
+                        window.location.href = "/";
+                        return;
+                    } else {
+                        this.state.filterIds.forEach((item, index) => {
+                            if (!filterBuffers[item.icon]) {
+                                fetch(item.path)
+                                    .then(response => response.arrayBuffer())
+                                    .then(data => {
+                                        const bytes = new Int8Array(data);
+                                        filterBuffers[item.icon] = bytes;
+                                    });
+                            }
+                        })
+                        this.startEngine();
+                    }
+                }).catch(e => {
                     window.location.href = "/";
                     return;
-                } else {
-                    this.startEngine();
-                }
-            });
-        // navigator.mediaDevices.getUserMedia({video: false, audio: true}).then( stream => {
-        //     window.localStream = stream; // A
-        //     window.localAudio.srcObject = stream; // B
-        //     window.localAudio.autoplay = true; // C
-        // }).catch( err => {
-        //     console.log("u got an error:" + err)
-        // });           
+                });
+        }).catch(err => {
+            console.log("u got an error:" + err)
+        });
     }
     render() {
         return (
-            <>
+            <div className="creation-body">
                 {this.state.bufferVideo ? this.renderBufferVideo() : this.renderAr()}
 
-            </>
+            </div>
         );
     }
 }

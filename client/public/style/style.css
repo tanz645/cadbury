@@ -395,16 +395,16 @@ li {
   align-items: center;
 }
 .creation-camera-btn.vdo-start{
-  height: 60px;
-  width: 60px;
+  height: 16vw;
+  width: 16vw;
   padding: 6px;
   border-radius: 46%;
   background: #2a0a49;
   border: 1px solid #E3B870; 
 }
 .creation-camera-btn.vdo-run {
-  height: 70px;
-  width: 70px;
+  height: 16vw;
+  width: 16vw;
 }
 .control-box-buffer{
   position: absolute;
@@ -426,11 +426,11 @@ li {
 }
 .creation-filter-btn{
   position: relative;  
-  margin: 5px;
+  margin: 2px;
 }
 .creation-filter-btn img{
-  height: 38px;
-  width: 38px;
+  height: 15vw;
+  width: 15vw;
   filter: grayscale(50%);
 }
 .creation-filter-btn.active img{

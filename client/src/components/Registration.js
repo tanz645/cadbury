@@ -217,7 +217,7 @@ export class Registration extends Component {
                                 <div>{this.state.fileErrorMsg ? <p className="text-red text-small">({this.state.fileErrorMsg})</p> : ''}</div>
                                 <div className="terms-condition-box mb-3 form-ele-box">
                                     <div>
-                                        <input className="text-white" onChange={this.onFormElementChange} name="terms" value={this.state.terms} type="checkbox" required /> I agree to <a className="termsAndPrivacy" target="_blank" href="../tandc.pdf">Terms & Conditions </a> and <a className="termsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy Policy</a>
+                                        <input className="text-white" onChange={this.onFormElementChange} name="terms" value={this.state.terms} type="checkbox" required /> I agree to <a className="termsAndPrivacy" target="_blank" href="../Terms_&_Conditions.pdf">Terms & Conditions </a> and <a className="termsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy Policy</a>
                                     </div>                                    
                                     <div>
                                         <input className="text-white" onChange={this.onFormElementChange} name="news" value={this.state.news} type="checkbox" required /> I agree to be contacted via WhatsApp and/or Email

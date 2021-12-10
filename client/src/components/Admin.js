@@ -41,7 +41,7 @@ export class Admin extends Component {
 
   openVideo(item) {
     if (item.video_link) {
-      window.open(`${Configs.static_files}${item.video_link}`, '_blank');
+      window.open(`/user-creation?hash=${item._id}`,"_blank");
     } else {
       alert('No video uploaded')
     }
