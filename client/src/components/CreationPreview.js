@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Configs from '../config';
-import MicRecorder from 'mic-recorder-to-mp3';
-
 export class CreationPreview extends Component {
 
     constructor(props) {
         super(props);
 
-        const Mp3Recorder = new MicRecorder({ bitRate: 128 });
-
-        this.state = {
-           
-            Mp3Recorder,
-            filterBinary: [],
-            deepAR: {},
-            activeFilter: 'thumbnails-01.png',
-            recordingStarted: false,
+        this.state = {                                                         
             a: '',
             v: '',
-            uploading: false,
-            initialized: false
+            uploading: false,            
         };
         this.renderBufferVideo = this.renderBufferVideo.bind(this);
         this.replay = this.replay.bind(this);
