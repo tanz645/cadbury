@@ -129,22 +129,27 @@ export class Creation extends Component {
             </>
         )
     }
-    componentDidMount() {
+    async componentDidMount() {
         const token = localStorage.getItem(Configs.local_cache_name);
         if (!token) {
             window.location.href = "/";
             return;
         }
+        if (!window.navigator.mediaDevices || !window.navigator.mediaDevices.enumerateDevices) {
+            console.log("enumerateDevices() not supported.");
+            return;
+          }
+          let devidIds = await window.navigator.mediaDevices.enumerateDevices();
+          devidIds = devidIds.map(item => item.deviceId);
+          console.log(await window.navigator.mediaDevices.enumerateDevices())
         const options = {
             video:
             {
-                facingMode: "user", height: window.innerHeight, width: window.innerWidth, frameRate: 60
+                deviceId: devidIds
             },
-            audio: {
-                channels: 1, autoGainControl: false, echoCancellation: false, noiseSuppression: false
-            }
+            audio: true
         }
-        window.navigator.mediaDevices.getUserMedia().then(stream => {
+        window.navigator.mediaDevices.getUserMedia(options).then(stream => {
             fetch(`${Configs.api}/customers/${token}`)
                 .then(response => response.json())
                 .then(data => {
