@@ -116,7 +116,10 @@ export class CreationPreview extends Component {
     }
     render() {
         return (
-            this.state.v && this.state.a ? this.renderBufferVideo() : ''            
+            <div className="video-preview-wrapper">
+                {this.state.v && this.state.a ? this.renderBufferVideo() : ''}
+            </div>
+            
         );
     }
 }

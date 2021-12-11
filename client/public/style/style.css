@@ -381,7 +381,7 @@ audio{
 .creation-body{
   /* position: relative; */
   text-align: center;
-  /* height: 100vh; */
+  height: 100vh;
 }
 .control-box{
   position: absolute;
@@ -449,7 +449,7 @@ audio{
 /* Layout */
 
 .phone-layout {
-  /* min-height: 100vh; */
+  min-height: 100vh;
   /* max-height: 100%; */
   background-image: url("../images/BG-02.png");  
   background-position: center;
@@ -574,10 +574,12 @@ thead img{
 }
 
 .cb-video-player{
-  width: 100vw;
-  height: 100vh;  
+  width: 100% !important;
+  height: auto !important;  
 }
-
+.video-preview-wrapper{
+  height: 100vh;
+}
 /* Device */
 body > div > .desktop {
   height: 100%;
