@@ -661,6 +661,10 @@ td .form-check .form-check-input{
   margin: 0;
   font-size: 20px;
 }
+.creation-preview-body{
+  width: 100vw;
+  height: 100vh;
+}
 /* #deepar-canvas{
   opacity: 0;;
 } */
