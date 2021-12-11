@@ -120,7 +120,7 @@ export class CreationPreview extends Component {
     }
     render() {
         return (
-            <div className="creation-body">
+            <div className="creation-preview-body">
                 {this.state.v && this.state.a ? this.renderBufferVideo() : ''}
             </div>
         );
