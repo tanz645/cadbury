@@ -41,8 +41,13 @@ export class Creation extends Component {
                 this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {
                     this.state.deepAR.shutdown();
                     clearTimeout(timeoutID);
-                    this.props.navigation(`/creation-preview?v=${URL.createObjectURL(e)}&a=${URL.createObjectURL(Audioblob)}`);
-                    return;
+                    const vid = URL.createObjectURL(e);
+                    const aud = URL.createObjectURL(Audioblob);
+                    setTimeout(() => {
+                        this.props.navigation(`/creation-preview?v=${vid}&a=${aud}`);
+                        return;
+                    },500)
+                    
                 });
             });
         } else {
