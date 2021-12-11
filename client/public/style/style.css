@@ -376,7 +376,7 @@ audio{
   color: red;
 }
 .creation-body{
-  position: relative;
+  /* position: relative; */
   text-align: center;
 }
 .control-box{

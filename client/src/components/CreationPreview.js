@@ -74,16 +74,14 @@ export class CreationPreview extends Component {
                     <audio autoPlay loop>
                         <source src={this.state.a} type="audio/mp3" />                        
                     </audio>
-                    <div className="control-box-buffer">
+                    {/* <div className="control-box-buffer">
                         <div className="landing-button text-center">
                             <button className="btn btn-primary" onClick={this.replay}>RETAKE</button>
                         </div>
                         <div className="landing-button">
                             <button className="btn btn-primary" onClick={this.upload}>UPLOAD</button>
-                        </div>
-                        {/* <img className="creation-buffer-btn replay" src="../images/Replay.png" onClick={this.replay}/>
-                        <img className="creation-buffer-btn next" src="../images/Next.png" /> */}
-                    </div>
+                        </div>                        
+                    </div> */}
                 </div>
             </div>
         )
