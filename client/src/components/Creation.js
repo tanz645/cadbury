@@ -135,7 +135,7 @@ export class Creation extends Component {
             window.location.href = "/";
             return;
         }
-        window.navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {                   
+        window.navigator.mediaDevices.getUserMedia({ video: {facingMode: "user"}, audio: {channels: 2, autoGainControl: false, echoCancellation: false, noiseSuppression: false} }).then(stream => {                   
             fetch(`${Configs.api}/customers/${token}`)
                 .then(response => response.json())
                 .then(data => {
