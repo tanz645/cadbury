@@ -378,6 +378,7 @@ audio{
 .creation-body{
   /* position: relative; */
   text-align: center;
+  height: 100vh;
 }
 .control-box{
   position: absolute;
