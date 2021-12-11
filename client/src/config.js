@@ -19,7 +19,6 @@ const config = {
     
 }
 const setConfig = () => {
-    console.log(process.NODE_ENV)
     const common = {
         local_cache_name: 'cadbury_local_token' 
     }

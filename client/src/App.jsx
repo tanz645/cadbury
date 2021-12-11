@@ -6,6 +6,7 @@ import Registration from './components/Registration';
 import Permission from './components/Permission';
 import PermissionDenied from './components/PermissionDenied';
 import Creation from './components/Creation';
+import CreationPreview from './components/CreationPreview';
 import ScrollToTop  from './components/ScrollToTop';
 import QuestionPopup  from './components/QuestionPopup';
 import Thankyou from './components/Thankyou';
@@ -33,6 +34,7 @@ export class App extends Component {
             <Route exact path="/permission"  element={<Permission />} />
             <Route exact path="/permission-required"  element={<PermissionDenied />} /> 
             <Route exact path="/creation"  element={<Creation />} />
+            <Route exact path="/creation-preview"  element={<CreationPreview />} />
             <Route exact path="/question-popup"  element={<QuestionPopup />} />
             <Route exact path="/thankyou"  element={<Thankyou />} />
             <Route exact path="/message"  element={<Message />} />                             

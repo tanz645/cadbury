@@ -409,7 +409,7 @@ li {
 .control-box-buffer{
   position: absolute;
   z-index: 1000;
-  bottom: 14px;
+  bottom: 4vh;
   left: 0;
   right: 0;
   margin-left: auto;

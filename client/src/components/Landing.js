@@ -11,7 +11,7 @@ export class Landing extends Component {
       modal: false,
       view: 'landing'
     };
-    localStorage.removeItem(Configs.local_cache_name);
+    // localStorage.removeItem(Configs.local_cache_name);
     this.toggleModal = this.toggleModal.bind(this);
     const width = window.innerWidth;
     if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent)) || width >= 800) {

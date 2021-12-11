@@ -24,21 +24,13 @@ export class Creation extends Component {
             filterBinary: [],
             deepAR: {},
             activeFilter: 'thumbnails-01.png',
-            recordingStarted: false,
-            bufferVideo: '',
-            blob: '',
-            bufferAudio: '',
-            audioBlob: '',
-            uploading: false,
+            recordingStarted: false,                                               
             initialized: false
         };
         this.startVideo = this.startVideo.bind(this);
         this.changeFilter = this.changeFilter.bind(this);
         this.startEngine = this.startEngine.bind(this);
-        this.renderAr = this.renderAr.bind(this);
-        this.renderBufferVideo = this.renderBufferVideo.bind(this);
-        this.replay = this.replay.bind(this);
-        this.upload = this.upload.bind(this);
+        this.renderAr = this.renderAr.bind(this);        
     }
 
     startVideo() {
@@ -49,24 +41,12 @@ export class Creation extends Component {
                 this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {                    
                     this.state.deepAR.shutdown();
                     clearTimeout(timeoutID);
-                    this.setState({
-                        bufferVideo: URL.createObjectURL(e),
-                        bufferAudio: URL.createObjectURL(Audioblob),
-                        blob: e,
-                        audioBlob: Audioblob,
-                        recordingStarted: false,
-                        initialized: false
-                    })
+                    this.props.navigation(`/creation-preview?v=${URL.createObjectURL(e)}&a=${URL.createObjectURL(Audioblob)}`);
+                    return;
                 });
             });
         } else {
-            this.setState({ recordingStarted: true }, () => {
-                if (this.state.bufferVideo) {
-                    URL.revokeObjectURL(this.state.bufferVideo)
-                }
-                if (this.state.bufferAudio) {
-                    URL.revokeObjectURL(this.state.bufferAudio)
-                }
+            this.setState({ recordingStarted: true }, () => {                
                 this.state.deepAR.startVideoRecording();
                 this.state.Mp3Recorder.start();
                 timeoutID = setTimeout(() => {
@@ -74,14 +54,8 @@ export class Creation extends Component {
                         this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {                    
                             this.state.deepAR.shutdown();
                             clearTimeout(timeoutID);
-                            this.setState({
-                                bufferVideo: URL.createObjectURL(e),
-                                bufferAudio: URL.createObjectURL(Audioblob),
-                                blob: e,
-                                audioBlob: Audioblob,
-                                recordingStarted: false,
-                                initialized: false
-                            })
+                            this.props.navigation(`/creation-preview?v=${URL.createObjectURL(e)}&a=${URL.createObjectURL(Audioblob)}`);
+                            return;
                         });
                     });
                 }, 1000 * 30)
@@ -128,81 +102,6 @@ export class Creation extends Component {
         });
         deepAR.downloadFaceTrackingModel('../lib/models/models-68-extreme.bin');
         this.setState({ deepAR })
-    }
-    replay() {
-        URL.revokeObjectURL(this.state.bufferVideo)
-        this.setState({
-            deepAR: {},
-            recordingStarted: false,
-            bufferVideo: '',
-            blob: ''
-        }, () => {
-            this.startEngine();
-        })
-    }
-    async upload() {
-        if (this.state.uploading) {
-            return 1;
-        }
-        this.setState({ uploading: true });
-        const token = localStorage.getItem(Configs.local_cache_name);
-        const { navigation } = this.props;
-        if (token && this.state.blob) {
-            const formData = new FormData();
-            const file = new File([this.state.blob], "creation.mp4", {
-                type: this.state.blob.type,
-            });
-            const fileAudio = new File([this.state.audioBlob], "creation_audio.mp3", {
-                type: this.state.audioBlob.type,
-            });
-            formData.append('creation', file);
-            formData.append('creationAudio', fileAudio);
-            formData.append('token', token);
-            try {
-                const result = await fetch(Configs.api + '/customers/creation/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                if (result.status >= 400) {
-                    alert("Can not upload video");
-                    return;
-                }
-                URL.revokeObjectURL(this.state.bufferVideo)
-                URL.revokeObjectURL(this.state.bufferAudio)
-                this.setState({ uploading: false });
-                navigation('/question-popup');
-            } catch (error) {
-                this.setState({ uploading: false });
-                console.log(error);
-            }
-
-        } else {
-            this.setState({ uploading: false });
-        }
-    }
-    renderBufferVideo() {
-        return (
-            <div className='cb-wrapper-app'>
-                <div className='cb-content'>
-                    <video className="cb-video-player" autoPlay loop>
-                        <source src={this.state.bufferVideo} type="video/mp4" />
-                    </video>
-                    <audio autoPlay loop>
-                        <source src={this.state.bufferAudio} type="audio/mp3" />                        
-                    </audio>
-                    <div className="control-box-buffer">
-                        <div className="landing-button text-center">
-                            <button className="btn btn-primary" onClick={this.replay}>RETAKE</button>
-                        </div>
-                        <div className="landing-button">
-                            <button className="btn btn-primary" onClick={this.upload}>UPLOAD</button>
-                        </div>
-                        {/* <img className="creation-buffer-btn replay" src="../images/Replay.png" onClick={this.replay}/>
-                        <img className="creation-buffer-btn next" src="../images/Next.png" /> */}
-                    </div>
-                </div>
-            </div>
-        )
     }
     renderAr() {
         return (
@@ -267,8 +166,7 @@ export class Creation extends Component {
     render() {
         return (
             <div className="creation-body">
-                {this.state.bufferVideo ? this.renderBufferVideo() : this.renderAr()}
-
+                {this.renderAr()}
             </div>
         );
     }
