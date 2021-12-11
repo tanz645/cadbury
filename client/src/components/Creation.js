@@ -9,7 +9,7 @@ export class Creation extends Component {
     constructor(props) {
         super(props);
 
-        const Mp3Recorder = new MicRecorder({ bitRate: 160 });
+       
 
         this.state = {
             filterIds: [
@@ -20,7 +20,7 @@ export class Creation extends Component {
                 { icon: 'thumbnails-05.png', path: 'masks/a5' },
                 { icon: 'thumbnails-06.png', path: 'masks/a6' },
             ],
-            Mp3Recorder,
+            Mp3Recorder: '',
             filterBinary: [],
             deepAR: {},
             activeFilter: 'thumbnails-01.png',
@@ -40,9 +40,9 @@ export class Creation extends Component {
                 console.log(e)
                 this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {
                     this.state.deepAR.shutdown();
-                    clearTimeout(timeoutID);
+                    clearTimeout(timeoutID);                                         
                     const vid = URL.createObjectURL(e);
-                    const aud = URL.createObjectURL(Audioblob);
+                    const aud = URL.createObjectURL(Audioblob);                    
                     setTimeout(() => {
                         this.props.navigation(`/creation-preview?v=${vid}&a=${aud}`);
                         return;
@@ -92,7 +92,8 @@ export class Creation extends Component {
                     // effect loaded
                     console.log(e)
                 });
-                this.setState({ initialized: true })
+                const Mp3Recorder = new MicRecorder({ bitRate: 128 });
+                this.setState({ initialized: true, Mp3Recorder })
             },
             onCameraPermissionDenied: (e) => {
                 console.log(e)
@@ -134,24 +135,15 @@ export class Creation extends Component {
             </>
         )
     }
-    async componentDidMount() {
+    componentDidMount() {
         const token = localStorage.getItem(Configs.local_cache_name);
         if (!token) {
             window.location.href = "/";
             return;
-        }
-        if (!window.navigator.mediaDevices || !window.navigator.mediaDevices.enumerateDevices) {
-            console.log("enumerateDevices() not supported.");
-            return;
-          }
-          let devidIds = await window.navigator.mediaDevices.enumerateDevices();
-          devidIds = devidIds.map(item => item.deviceId);
-          console.log(await window.navigator.mediaDevices.enumerateDevices())
+        }      
         const options = {
-            video:
-            {
-                deviceId: devidIds
-            },           
+            video: true,           
+            audio: true, 
         }
         window.navigator.mediaDevices.getUserMedia(options).then(stream => {
             fetch(`${Configs.api}/customers/${token}`)

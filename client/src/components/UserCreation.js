@@ -40,7 +40,7 @@ export class UserCreation extends Component {
     return (
       <>
         <div className='cb-wrapper-app'>
-          <div className='cb-content'>
+          <div className='cb-content text-center mt-4'>
             {this.state.videoLink ?
               (
                 <>
