@@ -46,7 +46,7 @@ export class Creation extends Component {
                     setTimeout(() => {
                         this.props.navigation(`/creation-preview?v=${vid}&a=${aud}`);
                         return;
-                    },500)
+                    },200)
                     
                 });
             });
@@ -151,8 +151,7 @@ export class Creation extends Component {
             video:
             {
                 deviceId: devidIds
-            },
-            audio: true
+            },           
         }
         window.navigator.mediaDevices.getUserMedia(options).then(stream => {
             fetch(`${Configs.api}/customers/${token}`)
