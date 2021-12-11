@@ -17,21 +17,21 @@
   --font-3x: calc(var(--base-font-size) * 4);
 }
 /* Global */
-/* html {
-  height: 100%;
-} */
+html {
+  /* height: 100vh; */
+}
 h2,h4{
   font-family: cadburyFont !important;
 }
 
 body {
   background: var(--color-primary) !important;
-  /* height: 100%; */
+  /* height: 100vh; */
   color: var(--color-white);
   font-family: cadburyFont !important;
 }
 #root{
-  height: 100vh;
+  /* height: 100vh; */
 }
 /* body>div{
   height: 100%;
@@ -381,7 +381,7 @@ audio{
 .creation-body{
   /* position: relative; */
   text-align: center;
-  height: 100vh;
+  /* height: 100vh; */
 }
 .control-box{
   position: absolute;
@@ -449,8 +449,8 @@ audio{
 /* Layout */
 
 .phone-layout {
-  min-height: 100vh;
-  max-height: 100%;
+  /* min-height: 100vh; */
+  /* max-height: 100%; */
   background-image: url("../images/BG-02.png");  
   background-position: center;
   background-repeat: no-repeat;
@@ -666,8 +666,8 @@ td .form-check .form-check-input{
   font-size: 20px;
 }
 .creation-preview-body{
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw;
+  height: 100vh; */
 }
 /* #deepar-canvas{
   opacity: 0;;
