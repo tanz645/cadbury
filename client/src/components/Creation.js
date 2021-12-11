@@ -24,13 +24,13 @@ export class Creation extends Component {
             filterBinary: [],
             deepAR: {},
             activeFilter: 'thumbnails-01.png',
-            recordingStarted: false,                                               
+            recordingStarted: false,
             initialized: false
         };
         this.startVideo = this.startVideo.bind(this);
         this.changeFilter = this.changeFilter.bind(this);
         this.startEngine = this.startEngine.bind(this);
-        this.renderAr = this.renderAr.bind(this);        
+        this.renderAr = this.renderAr.bind(this);
     }
 
     startVideo() {
@@ -38,7 +38,7 @@ export class Creation extends Component {
         if (this.state.recordingStarted) {
             this.state.deepAR.finishVideoRecording((e) => {
                 console.log(e)
-                this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {                    
+                this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {
                     this.state.deepAR.shutdown();
                     clearTimeout(timeoutID);
                     this.props.navigation(`/creation-preview?v=${URL.createObjectURL(e)}&a=${URL.createObjectURL(Audioblob)}`);
@@ -46,12 +46,12 @@ export class Creation extends Component {
                 });
             });
         } else {
-            this.setState({ recordingStarted: true }, () => {                
+            this.setState({ recordingStarted: true }, () => {
                 this.state.deepAR.startVideoRecording();
                 this.state.Mp3Recorder.start();
                 timeoutID = setTimeout(() => {
                     this.state.deepAR.finishVideoRecording((e) => {
-                        this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {                    
+                        this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {
                             this.state.deepAR.shutdown();
                             clearTimeout(timeoutID);
                             this.props.navigation(`/creation-preview?v=${URL.createObjectURL(e)}&a=${URL.createObjectURL(Audioblob)}`);
@@ -135,7 +135,16 @@ export class Creation extends Component {
             window.location.href = "/";
             return;
         }
-        window.navigator.mediaDevices.getUserMedia({ video: {facingMode: "user", height: window.innerHeight, width: window.innerWidth, frameRate: 60}, audio: {channels: 2, autoGainControl: false, echoCancellation: false, noiseSuppression: false} }).then(stream => {                   
+        const options = {
+            video:
+            {
+                facingMode: "user", height: window.innerHeight, width: window.innerWidth, frameRate: 60
+            },
+            audio: {
+                channels: 1, autoGainControl: false, echoCancellation: false, noiseSuppression: false
+            }
+        }
+        window.navigator.mediaDevices.getUserMedia().then(stream => {
             fetch(`${Configs.api}/customers/${token}`)
                 .then(response => response.json())
                 .then(data => {
