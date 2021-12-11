@@ -9,7 +9,7 @@ export class Creation extends Component {
     constructor(props) {
         super(props);
 
-        const Mp3Recorder = new MicRecorder({ bitRate: 128 });
+        const Mp3Recorder = new MicRecorder({ bitRate: 160 });
 
         this.state = {
             filterIds: [
@@ -135,7 +135,7 @@ export class Creation extends Component {
             window.location.href = "/";
             return;
         }
-        window.navigator.mediaDevices.getUserMedia({ video: {facingMode: "user"}, audio: {channels: 2, autoGainControl: false, echoCancellation: false, noiseSuppression: false} }).then(stream => {                   
+        window.navigator.mediaDevices.getUserMedia({ video: {facingMode: "user", height: window.innerHeight, width: window.innerWidth, frameRate: 60}, audio: {channels: 2, autoGainControl: false, echoCancellation: false, noiseSuppression: false} }).then(stream => {                   
             fetch(`${Configs.api}/customers/${token}`)
                 .then(response => response.json())
                 .then(data => {

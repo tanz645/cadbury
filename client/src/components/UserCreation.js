@@ -40,16 +40,16 @@ export class UserCreation extends Component {
     return (
       <>
         <div className='cb-wrapper-app'>
-          <div className='cb-content phone-layout'>
+          <div className='cb-content'>
             {this.state.videoLink ?
               (
                 <>
-                  <video onPlay={this.onPlayHandler} onPause={this.onPauseHandler} className="cb-video-player" autoPlay controls name="media" id="video-player-view">
+                  <video onPlay={this.onPlayHandler} onPause={this.onPauseHandler} className="cb-video-player-user-creation" autoPlay controls name="media" id="video-player-view">
                     <source src={this.state.videoLink} type="video/mp4" />
                     <source src={this.state.videoLink} type="video/mpeg" />
                     <source src={this.state.videoLink} type="video/ogg" />
                   </video>
-                  <audio className="cb-video-player" id="audio-player-view">
+                  <audio id="audio-player-view">
                     <source src={this.state.audioLink} type="audio/mp3" />
                     <source src={this.state.audioLink} type="audio/mpeg" />
                   </audio>
