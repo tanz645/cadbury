@@ -66,24 +66,22 @@ export class CreationPreview extends Component {
     }
     renderBufferVideo() {
         return (
-            <div className='cb-wrapper-app'>
-                <div className='cb-content'>
-                    <video className="cb-video-player" autoPlay loop>
-                        <source src={this.state.v} type="video/mp4" />
-                    </video>
-                    <audio autoPlay loop>
-                        <source src={this.state.a} type="audio/mp3" />                        
-                    </audio>
-                    {/* <div className="control-box-buffer">
-                        <div className="landing-button text-center">
-                            <button className="btn btn-primary" onClick={this.replay}>RETAKE</button>
-                        </div>
-                        <div className="landing-button">
-                            <button className="btn btn-primary" onClick={this.upload}>UPLOAD</button>
-                        </div>                        
-                    </div> */}
+           <>
+           <video className="cb-video-player" autoPlay loop>
+                <source src={this.state.v} type="video/mp4" />
+            </video>
+            <audio autoPlay loop>
+                <source src={this.state.a} type="audio/mp3" />                        
+            </audio>
+            <div className="control-box-buffer">
+                <div className="landing-button text-center">
+                    <button className="btn btn-primary" onClick={this.replay}>RETAKE</button>
                 </div>
+                <div className="landing-button">
+                    <button className="btn btn-primary" onClick={this.upload}>UPLOAD</button>
+                </div>                        
             </div>
+           </>
         )
     }
     componentDidMount() {

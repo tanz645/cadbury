@@ -570,7 +570,7 @@ thead img{
 }
 
 .cb-video-player{
-  width: 100%;
+  width: 100vh;
   height: 100vh;  
 }
 
