@@ -17,9 +17,9 @@
   --font-3x: calc(var(--base-font-size) * 4);
 }
 /* Global */
-html {
+/* html {
   height: 100%;
-}
+} */
 h2,h4{
   font-family: cadburyFont !important;
 }
@@ -29,6 +29,9 @@ body {
   height: 100%;
   color: var(--color-white);
   font-family: cadburyFont !important;
+}
+#root{
+  height: 100vh;
 }
 /* body>div{
   height: 100%;
