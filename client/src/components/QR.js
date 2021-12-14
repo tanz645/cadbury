@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
-import QRCode from "react-qr-code";
 import Configs from '../config';
-import { jsPDF } from "jspdf";
 export class QR extends Component {
 
     constructor(props) {
@@ -10,45 +8,48 @@ export class QR extends Component {
         this.state = {
             hash: '',
             wantToVerify: false,
+            pngLink: '',
+            download: false
         };
     }
 
 
     componentDidMount() {
         const hash = this.props.urlQuery.get('hash');
-        const download = this.props.urlQuery.get('download');
-        // if(download && (download === true || download === 'true')){
-        //     const doc = new jsPDF();
-        //     setTimeout(() => {
-        //         doc.html(window.document.body, {
-        //             callback: function (doc) {
-        //                 doc.save(`${hash}_cadbury_gift_from_the_heart.pdf`);
-        //             },
-        //             x: 10,
-        //             y: 10
-        //         }); 
-        //     },1000)
-           
-        // }
-        // fetch(`/qr?hash=${id}`)
-        //     .then(async (response) => {
-        //         if (response.status && response.status === 200) {
-        //         const html = await response.text();
-        //         console.log(html)
-        //         doc.html(html, {
-        //             callback: function (doc) {
-        //             doc.save(`${id}_cadbury_gift_from_the_heart.pdf`);
-        //             },
-        //             x: 10,
-        //             y: 10
-        //         }); 
-        //         }
-        //     });
-        // }
-        console.log(download)
-        console.log(hash)
-        this.setState({hash})
-        // window.print();
+        const download = this.props.urlQuery.get('download');              
+        const data = {
+            "data": `${Configs.domain}//message-play?hash=${hash}`,
+            "config":{
+                "body":"circle",
+                "eye": "frame13",
+                "eyeBall": "ball14"
+            },
+            "size":256,
+            "download": false,
+            "file":"png"
+            }
+        fetch(`https://qrcode-monkey.p.rapidapi.com/qr/custom`,{            
+                method: 'post',                
+                headers: {
+                  'content-type': 'application/json',
+                  'x-rapidapi-host': 'qrcode-monkey.p.rapidapi.com',
+                  'x-rapidapi-key': 'c48b243870mshf737c56fddf557cp11074ajsn061008a6f7c7'
+                },
+                body: JSON.stringify(data)
+        })
+        .then(async (response) => {
+            if (response.status && response.status === 200) {
+                const png = await response.blob();
+                const pngLink = URL.createObjectURL(png);             
+                this.setState({pngLink, download: download || false, hash});
+                setTimeout(() => {
+                    window.print();
+                },500)
+                       
+            }
+        }).catch(e => {
+            alert('can not generate QR code, third party api error')
+        });                        
     }
 
     render() {
@@ -56,13 +57,15 @@ export class QR extends Component {
             <>
                 <div className="whiteWrapper">
                     <div className='cb-wrapper-app qr-page text-center'>
-                        <QRCode size={256} value="https://snapapic.digital" />
+                        {this.state.pngLink ? 
+                        (
+                            <img className="mt-4" src={this.state.pngLink} alt="qr code generating" />
+                        ) : 'Generating QR'}
                         <div className="qr-user-id">
                             <h2>{this.state.hash}</h2>
                         </div>
                     </div>
                 </div>
-
             </>
         );
     }

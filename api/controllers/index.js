@@ -5,10 +5,9 @@ const ObjectId = require('mongodb').ObjectId;
 const path = require('path');
 
 const userRegisterSchema = Joi.object({
-    customer_id: Joi.string()
-        .alphanum()
-        .min(3)
-        .max(100)
+    cid: Joi.string()        
+        .min(1)
+        .max(200)
         .required()
 });
 const userAnswerSchema = Joi.object({
@@ -63,6 +62,7 @@ const register = async (body) => {
             body.created_at = new Date();
             body.updated_at = new Date();
             body.journey_state = journey_state[0];
+            body.cid = '',
             body.receipt_link = '';
             body.video_link = '';
             body.audio_link = '',
@@ -74,6 +74,7 @@ const register = async (body) => {
             body.result_set_at = null;
             body.result = '';
             body.result_type = '';
+            body.customer_id = '';
             const insert = await userCol.insertOne(body)
             return Promise.resolve({ token: insert.insertedId });
         } catch (error) {
@@ -384,6 +385,33 @@ const getUser = async (req, res) => {
     }       
 };
 
+const handleHubspotCallback = async (req, res) => {
+    if(!req.body || !req.body.cid){
+        return res.status(400).send('cid is required');
+    }
+    if(!req.body || !req.body.id){
+        return res.status(400).send('id is required');
+    }
+    try {
+        const db = getConnection(config.databases.mongo.db)
+        const userCol = db.collection(CUSTOMER_COLLECTION);
+        const userById = await userCol.findOne({ cid: req.body.cid});    
+        if (!userById) {
+            return res.status(400).send('No user found');        
+        }
+        
+        const toUpdate = {
+            customer_id: req.body.id,            
+            updated_at: new Date(),                      
+        }                       
+        await userCol.updateOne({ cid: req.body.cid },{ $set: toUpdate })
+        return res.send('customer id added');
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send('Sorry can not process your request');
+    }  
+};
+
 module.exports = {
     register,
     receiptUpload,
@@ -394,5 +422,6 @@ module.exports = {
     verify,
     setResult,
     getAllUsers,
-    getUser
+    getUser,
+    handleHubspotCallback
 }

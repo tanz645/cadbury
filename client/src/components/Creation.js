@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Configs from '../config';
 import MicRecorder from 'mic-recorder-to-mp3';
+import PermissionDenied from './PermissionDenied';
 
 let filterBuffers = {};
 export class Creation extends Component {
 
     constructor(props) {
         super(props);
-
-       
 
         this.state = {
             filterIds: [
@@ -25,7 +24,8 @@ export class Creation extends Component {
             deepAR: {},
             activeFilter: 'thumbnails-01.png',
             recordingStarted: false,
-            initialized: false
+            initialized: false,
+            permissionDenied: false,
         };
         this.startVideo = this.startVideo.bind(this);
         this.changeFilter = this.changeFilter.bind(this);
@@ -166,17 +166,17 @@ export class Creation extends Component {
                         this.startEngine();
                     }
                 }).catch(e => {
-                    window.location.href = "/";
-                    return;
+                    console.log(e)
                 });
         }).catch(err => {
+            this.setState({permissionDenied: true})
             console.log("u got an error:" + err)
         });
     }
     render() {
         return (
             <div className="creation-body">
-                {this.renderAr()}
+                {this.state.permissionDenied ? <PermissionDenied />: this.renderAr()}
             </div>
         );
     }

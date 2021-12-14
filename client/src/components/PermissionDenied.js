@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 export class PermissionDenied extends Component {
+
   render() {
     return (
       <>

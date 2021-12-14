@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "cadbury-gift-from-the-heart",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,13 +9,11 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "jspdf": "^2.4.0",
     "mic-recorder-to-mp3": "^2.2.2",
     "react": "^17.0.2",
     "react-datepicker": "^4.3.0",
     "react-dom": "^17.0.2",
     "react-google-recaptcha": "^2.1.0",
-    "react-qr-code": "^2.0.3",
     "react-router-dom": "^6.0.1",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"

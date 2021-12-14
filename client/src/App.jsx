@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Landing from './components/Landing';
+import Message from './components/Message';
 import Desktop from './components/Desktop';
 import Registration from './components/Registration';
 import Permission from './components/Permission';
-import PermissionDenied from './components/PermissionDenied';
 import Creation from './components/Creation';
 import CreationPreview from './components/CreationPreview';
 import ScrollToTop  from './components/ScrollToTop';
 import QuestionPopup  from './components/QuestionPopup';
 import Thankyou from './components/Thankyou';
-import Message from './components/Message';
+import MessagePlay from './components/MessagePlay';
 import Admin from './components/Admin';
 import UserCreation from './components/UserCreation';
 import ComingSoon from './components/ComingSoon';
@@ -31,8 +31,7 @@ export class App extends Component {
             <Route exact path="/coming-soon"  element={<ComingSoon />} />    
             <Route exact path="/desktop"  element={<Desktop />} />  
             <Route exact path="/registration"  element={<Registration />} />
-            <Route exact path="/permission"  element={<Permission />} />
-            <Route exact path="/permission-required"  element={<PermissionDenied />} /> 
+            <Route exact path="/permission"  element={<Permission />} />            
             <Route exact path="/creation"  element={<Creation />} />
             <Route exact path="/creation-preview"  element={<CreationPreview />} />
             <Route exact path="/question-popup"  element={<QuestionPopup />} />
@@ -41,6 +40,7 @@ export class App extends Component {
             <Route exact path="/admin"  element={<Admin />} />
             <Route exact path="/user-creation"  element={<UserCreation />} />
             <Route exact path="/qr"  element={<QR />} />
+            <Route exact path="/message-play"  element={<MessagePlay />} />            
             <Route path="*" element={<Landing />} />
           </Routes>
         </ScrollToTop>        

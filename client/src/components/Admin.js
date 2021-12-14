@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useNavigate} from "react-router-dom";
 import { faDownload, faEye, faPrint } from '@fortawesome/free-solid-svg-icons';
-// import { jsPDF } from "jspdf";
 import Configs from '../config';
 
 export class Admin extends Component {
@@ -114,22 +113,7 @@ export class Admin extends Component {
       alert('Already verified')
     }
   }
-  downloadQR(id) {
-    // const doc = new jsPDF();
-    // fetch(`/qr?hash=${id}`)
-    // .then(async (response) => {
-    //     if (response.status && response.status === 200) {
-    //       const html = await response.text();
-    //       console.log(html)
-    //       doc.html(html, {
-    //         callback: function (doc) {
-    //           doc.save(`${id}_cadbury_gift_from_the_heart.pdf`);
-    //         },
-    //         x: 10,
-    //         y: 10
-    //     }); 
-    //     }
-    // });
+  downloadQR(id) {    
     window.open(`/qr?hash=${id}&download=true`,"_blank");
   }
   openPrintPreview(id) {    

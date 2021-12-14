@@ -84,12 +84,13 @@ export class Registration extends Component {
             this.setState({fileErrorMsg: 'Please upload your reciept', submitStarted: false});
             return;
         }
+        const cid = Date.now().toString();
         const hubspotData = {
             submittedAt: Date.now(),
             fields:[
                 {
                     "name": "firstname",
-                    "value": this.state.name
+                    "value": `${this.state.title} ${this.state.name}`
                 },
                 {
                     "name": "email",
@@ -98,11 +99,7 @@ export class Registration extends Component {
                 {
                     "name": "phone",
                     "value": this.state.phone
-                },
-                {
-                    "name": "receipt_number",
-                    "value": "test"
-                },
+                },                
                 {
                     "name": "agree_to_terms_and_conditions",
                     "value": "true"
@@ -113,7 +110,7 @@ export class Registration extends Component {
                 },
                 {
                     "name": "cid",
-                    "value": Date.now()
+                    "value": cid
                 }
             ]
         }        
@@ -133,7 +130,7 @@ export class Registration extends Component {
             //         console.log(data)
             //     });
             const data = {
-                "customer_id" : "testasd"
+                "cid" : cid
             }
             const response = await fetch(Configs.api + '/customers/register', {
                 method: 'POST',        
