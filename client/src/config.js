@@ -28,9 +28,9 @@ const config = {
         }
     },
     prod:{
-        api: 'https://snapapic.digital/api',       
-        static_files: 'https://snapapic.digital/cad_files',
-        domain: 'https://snapapic.digital',
+        api: 'https://cadbury.cnygiftfromtheheart.com/api',       
+        static_files: 'https://cadbury.cnygiftfromtheheart.com/cad_files',
+        domain: 'https://cadbury.cnygiftfromtheheart.com',
         hubspot: {
             portalId: "25023018",
             formId: "c1929aea-3230-44c9-940c-767fc42acd66"
@@ -42,6 +42,6 @@ const setConfig = () => {
     const common = {
         local_cache_name: 'cadbury_local_token' 
     }
-    return {...config.dev, ...common}
+    return {...config.prod, ...common}
 }
 export default setConfig()
