@@ -100,8 +100,13 @@ export class QuestionPopup extends Component {
                 </div>
               </div>
             </div>
-            <footer className="text-center text-white text-small">
-                <p className="mt-3">© 2021 Mondelēz International. All Rights Reserved.</p>
+            <footer className="text-center text-white text-small mt-3">
+              <p className="generalTC">
+                  <a className="generalTermsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy Policy</a>
+                  | 
+                  <a className="generalTermsAndPrivacy" target="_blank" href="../Terms_&_Conditions.pdf">Terms and Conditions </a>  
+              </p>
+                <p className="">© 2021 Mondelēz International. All Rights Reserved.</p>
             </footer>
           </div>
         </div>

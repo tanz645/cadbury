@@ -38,8 +38,13 @@ export class Permission extends Component {
                 <Link to="/creation"><button className='btn btn-primary margin-auto mt-3'>OKAY</button></Link>
               </div>
             </div>
-            <footer className="text-center text-white text-small">
-                <p className="mt-4">© 2021 Mondelēz International. All Rights Reserved.</p>
+            <footer className="text-center text-white text-small mt-4">
+              <p className="generalTC">
+                  <a className="generalTermsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy Policy</a>
+                  | 
+                  <a className="generalTermsAndPrivacy" target="_blank" href="../Terms_&_Conditions.pdf">Terms and Conditions </a>  
+              </p>
+              <p className="">© 2021 Mondelēz International. All Rights Reserved.</p>
             </footer>
           </div>
         </div>

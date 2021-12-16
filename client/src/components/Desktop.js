@@ -23,6 +23,11 @@ export class Desktop extends Component {
                             <img className="desktop-cadbury-pour" src="../images/CDM.png" alt="cadbury qr code!" />
                         </div>
                         <footer className="text-center text-white text-small">
+                            <p className="generalTC">
+                                <a className="generalTermsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy Policy</a>
+                                | 
+                                <a className="generalTermsAndPrivacy" target="_blank" href="../Terms_&_Conditions.pdf">Terms and Conditions </a>  
+                            </p>
                             <p className="">© 2021 Mondelēz International. All Rights Reserved.</p>
                         </footer>
                     </div>

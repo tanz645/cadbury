@@ -13,11 +13,11 @@ export class Message extends Component {
 
   componentDidMount(){
     const hash = this.props.urlQuery.get('hash');
-    if(!hash){
-      window.location.href = "/";
-      return;
-    }
-    this.setState({hash:hash})
+    // if(!hash){
+    //   window.location.href = "/";
+    //   return;
+    // }
+    // this.setState({hash:hash})
   }
   render() {
     return (
@@ -32,8 +32,16 @@ export class Message extends Component {
             <img src="../images/Special.gif" alt="Special message" className="special-message-img" />
             <div class='page-navigation'>
               <Link to={`/message-play?hash=${this.state.hash}`}><button className='btn btn-primary margin-auto'>Play Now</button></Link>
-            </div>
-          </div>
+              <footer className="text-center text-white text-small mt-3">
+            <p className="generalTC">
+                  <a className="generalTermsAndPrivacy" target="_blank" href="https://my.mondelezinternational.com/privacy-policy">Privacy Policy</a>
+                  | 
+                  <a className="generalTermsAndPrivacy" target="_blank" href="../Terms_&_Conditions.pdf">Terms and Conditions </a>  
+              </p>
+              <p className="">© 2021 Mondelēz International. All Rights Reserved.</p>
+            </footer>
+            </div>            
+          </div>          
         </div>
       </>
     );

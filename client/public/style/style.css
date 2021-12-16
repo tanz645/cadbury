@@ -599,8 +599,8 @@ body > div > .desktop {
 footer p{
   font-size: 10px;
 }
-.landing-main-body footer p{
-  margin-top: 10vh;
+.landing-main-body footer{
+  margin-top: 9vh;
 }
 /* Backend */
 .cb-backend{
@@ -706,3 +706,11 @@ td .form-check .form-check-input{
 /* .message-play-button img.dwn{
   margin: 2px
 } */
+.generalTC{
+  margin-bottom: 0 !important;
+}
+a.generalTermsAndPrivacy{
+  color: white;
+  margin: 3px;
+  text-decoration: underline !important;
+}

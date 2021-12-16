@@ -18,7 +18,7 @@ export class QR extends Component {
         const hash = this.props.urlQuery.get('hash');
         const download = this.props.urlQuery.get('download');              
         const data = {
-            "data": `${Configs.domain}/message-play?hash=${hash}`,
+            "data": `${Configs.domain}/message?hash=${hash}`,
             "config":{
                 "body":"circle",
                 "eye": "frame13",
