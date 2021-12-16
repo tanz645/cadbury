@@ -100,17 +100,20 @@ export class Registration extends Component {
                 },            
                 body: JSON.stringify(captchaBody)
             });
+            console.log(captchRequest)
             if (!captchRequest.ok) {
                 alert('Captcha error');
                 return;
             }
             const captchJson = await captchRequest.json();
+            console.log(captchJson)
             if(!captchJson.success || captchJson.success === 'false'){
                 alert('Captcha error');
                 return;
             }
 
         }catch(e){
+            console.log(e)
             alert('Captcha error');
             return;
         }
