@@ -59,9 +59,13 @@ const register = async (body) => {
     try {
         await userRegisterSchema.validateAsync(body);        
         try {
-            const captchaResposne = await axios.post('https://www.google.com/recaptcha/api/siteverify', {
-                secret: '6Lf7VaUdAAAAAKFoMzlLqvMmAavta_rUemqAm2Ah',
-                response: body.captcha
+            const captchaResposne = await axios({
+                method: 'POST',
+                url: 'https://www.google.com/recaptcha/api/siteverify',
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `secret=6Lf7VaUdAAAAAKFoMzlLqvMmAavta_rUemqAm2Ah&response=${body.captcha}`               
               })
               console.log(captchaResposne.data)
             if(!captchaResposne.data.success || captchaResposne.data.success === 'false'){

@@ -71,8 +71,7 @@ export class Registration extends Component {
         console.log(date)
         this.setState({ dob: date })
     }
-    onCaptchaChange(value) {
-        console.log(value)
+    onCaptchaChange(value) {        
         this.setState({captcha: value})
     }
     async handleSubmit(e){
