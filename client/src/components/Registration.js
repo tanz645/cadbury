@@ -103,7 +103,7 @@ export class Registration extends Component {
             console.log(captchRequest)
             if (!captchRequest.ok) {
                 alert('Captcha error');
-                return;
+                // return;
             }
             const captchJson = await captchRequest.json();
             console.log(captchJson)
