@@ -92,9 +92,11 @@ export class Registration extends Component {
                 response: this.state.captcha
             }
             const captchRequest = await fetch(`https://www.google.com/recaptcha/api/siteverify`,{
-                method: 'POST',        
+                method: 'POST',  
+                mode: 'no-cors',      
                 headers: {
-                'Content-Type': 'application/json'             
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'      
                 },            
                 body: JSON.stringify(captchaBody)
             });
