@@ -63,7 +63,7 @@ export class Registration extends Component {
     openDate(e) {
         document.getElementById('form-dob').click()
     }
-    handleFileUpload(e) {
+    handleFileUpload(e) {        
         e.preventDefault();
         this.hiddenFileInput.current.click();
     }
@@ -76,6 +76,7 @@ export class Registration extends Component {
         this.setState({captcha: value})
     }
     async handleSubmit(e){
+        
         if(this.state.submitStarted){
             return 1;
         }
@@ -181,7 +182,7 @@ export class Registration extends Component {
         const token = localStorage.getItem(Configs.local_cache_name);      
         if(token)  {
             this.setState({submitError: '', submitted: true}); 
-        }        
+        }                
     }
     makeStringDots(text){
         if (text.length > 20) {
