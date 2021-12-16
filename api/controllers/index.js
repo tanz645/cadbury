@@ -65,7 +65,7 @@ const register = async (body) => {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                 },
-                body: `secret=6Lf7VaUdAAAAAKFoMzlLqvMmAavta_rUemqAm2Ah&response=${body.captcha}`               
+                data: `secret=6Lf7VaUdAAAAAKFoMzlLqvMmAavta_rUemqAm2Ah&response=${body.captcha}`               
               })
               console.log(captchaResposne.data)
             if(!captchaResposne.data.success || captchaResposne.data.success === 'false'){
