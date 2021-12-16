@@ -27,6 +27,8 @@ export class Admin extends Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ records: data })
+      }).catch(e => {
+        console.log(e)
       });
   }
 
@@ -119,18 +121,12 @@ export class Admin extends Component {
   openPrintPreview(id) {    
     window.open(`/qr?hash=${id}`,"_blank");
   }
-  componentDidMount() {
-    const { navigation } = this.props;
-    const token = localStorage.getItem(Configs.local_cache_name);
-    if (!token) {
-      navigation('/')
-    }
+  componentDidMount() {   
     this.reload()
   }
 
   renderItems(item, index) {
-    return (
-      <>        
+    return (      
         <tr key={item._id}>
           <td>{index + 1}</td>
           <td>{item._id}</td>
@@ -180,8 +176,6 @@ export class Admin extends Component {
             <div>{item.result_set_at ? new Date(item.result_set_at).toLocaleString() : 'N/A'}</div>
           </td>
         </tr>
-      </>
-
     )
   }
   render() {

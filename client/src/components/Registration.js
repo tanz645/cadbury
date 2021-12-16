@@ -94,8 +94,12 @@ export class Registration extends Component {
             submittedAt: Date.now(),
             fields:[
                 {
+                    "name": "title",
+                    "value": this.state.title
+                },
+                {
                     "name": "firstname",
-                    "value": `${this.state.title} ${this.state.name}`
+                    "value": this.state.name
                 },
                 {
                     "name": "email",
@@ -183,6 +187,7 @@ export class Registration extends Component {
                                     <select className="form-select" onChange={this.onFormElementChange} name="title" value={this.state.title} required aria-label="Default select example">
                                         <option value="" disabled selected hidden>Title</option>
                                         <option value="Mr.">Mr.</option>
+                                        <option value="Ms.">Ms.</option>
                                         <option value="Mrs.">Mrs.</option>
                                     </select>
                                 </div>

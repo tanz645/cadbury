@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Configs from '../config';
 import MicRecorder from 'mic-recorder-to-mp3';
 import PermissionDenied from './PermissionDenied';
-
+import Loading from './Loading'
 let filterBuffers = {};
 export class Creation extends Component {
 
@@ -82,14 +82,11 @@ export class Creation extends Component {
             canvasWidth: window.innerWidth,
             canvasHeight: window.innerHeight,
             canvas: document.getElementById('deepar-canvas'),
-            numberOfFaces: 1, // how many faces we want to track min 1, max 4
+            numberOfFaces: 1,
             libPath: './lib',
-            onInitialize: () => {
-                // start video immediately after the initalization, mirror = true
-                deepAR.startVideo(true);
-                // load the aviators effect on the first face into slot 'slot'
-                deepAR.switchEffect(0, 'slot', '../masks/a1', function (e) {
-                    // effect loaded
+            onInitialize: () => {                
+                deepAR.startVideo(true);                
+                deepAR.switchEffect(0, 'slot', '../masks/a1', function (e) {                   
                     console.log(e)
                 });
                 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
@@ -112,7 +109,7 @@ export class Creation extends Component {
     renderAr() {
         return (
             <>
-                <canvas id="deepar-canvas" style={this.state.initialized ? { opacity: 1 } : { opacity: 0 }}></canvas>
+                <canvas id="deepar-canvas" style={this.state.initialized ? { display: 'block' } : { display: 'none' }}></canvas>
                 {this.state.initialized ?
                     (
                         <div className="control-box">
@@ -130,7 +127,7 @@ export class Creation extends Component {
                             </div>
                         </div>
                     )
-                    : ''}
+                    : <Loading />}
 
             </>
         )
@@ -174,7 +171,7 @@ export class Creation extends Component {
         });
     }
     render() {
-        return (
+        return (            
             <div className="creation-body">
                 {this.state.permissionDenied ? <PermissionDenied />: this.renderAr()}
             </div>

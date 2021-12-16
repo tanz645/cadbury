@@ -36,7 +36,7 @@ export class Landing extends Component {
               />
               <img
                 className='landing-family margin-auto'
-                src='../images/Family-gif-o.gif'
+                src='../images/Gift-Family.gif'
                 alt='Family image is missing!'
               />              
               <p className="require-min-purchase" >*requires min purchase of <br /> RM 15 of Cadbury products</p>
