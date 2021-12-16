@@ -13,11 +13,11 @@ export class Message extends Component {
 
   componentDidMount(){
     const hash = this.props.urlQuery.get('hash');
-    // if(!hash){
-    //   window.location.href = "/";
-    //   return;
-    // }
-    // this.setState({hash:hash})
+    if(!hash){
+      window.location.href = "/";
+      return;
+    }
+    this.setState({hash:hash})
   }
   render() {
     return (
