@@ -78,6 +78,10 @@ export class Registration extends Component {
         if(this.state.submitStarted){
             return 1;
         }
+        if(!this.state.captcha){
+            alert('Please verify using captcha')
+            return;
+        }
         this.setState({submitStarted: true});        
         e.preventDefault();
         if(!this.state.reciept){
