@@ -76,7 +76,6 @@ export class Registration extends Component {
         this.setState({captcha: value})
     }
     async handleSubmit(e){
-        
         if(this.state.submitStarted){
             return 1;
         }
@@ -86,37 +85,7 @@ export class Registration extends Component {
             this.setState({fileErrorMsg: 'Please upload your reciept', submitStarted: false});
             return;
         }
-        try{
-            const captchaBody = {
-                secret: '6Lf7VaUdAAAAAKFoMzlLqvMmAavta_rUemqAm2Ah',
-                response: this.state.captcha
-            }
-            const captchRequest = await fetch(`https://www.google.com/recaptcha/api/siteverify`,{
-                method: 'POST',  
-                mode: 'no-cors',      
-                headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'      
-                },            
-                body: JSON.stringify(captchaBody)
-            });
-            console.log(captchRequest)
-            if (!captchRequest.ok) {
-                alert('Captcha error');
-                // return;
-            }
-            const captchJson = await captchRequest.json();
-            console.log(captchJson)
-            if(!captchJson.success || captchJson.success === 'false'){
-                alert('Captcha error');
-                return;
-            }
-
-        }catch(e){
-            console.log(e)
-            alert('Captcha error');
-            return;
-        }
+        
         const cid = Date.now().toString();
         const hubspotData = {
             submittedAt: Date.now(),
@@ -160,7 +129,8 @@ export class Registration extends Component {
                 console.log({clientId})
               });          
             const data = {
-                "cid" : cid
+                "cid" : cid,
+                "captcha": this.state.captcha
             }
             const response = await fetch(Configs.api + '/customers/register', {
                 method: 'POST',        

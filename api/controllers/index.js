@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const axios = require('axios');
 const { getConnection } = require('../client/mongodb')
 const config = require('../config');
 const ObjectId = require('mongodb').ObjectId; 
@@ -8,7 +9,8 @@ const userRegisterSchema = Joi.object({
     cid: Joi.string()        
         .min(1)
         .max(200)
-        .required()
+        .required(),
+    captcha: Joi.string().required(),
 });
 const userAnswerSchema = Joi.object({
     answer: Joi.string()        
@@ -57,6 +59,14 @@ const register = async (body) => {
     try {
         await userRegisterSchema.validateAsync(body);        
         try {
+            const captchaResposne = await axios.post('https://www.google.com/recaptcha/api/siteverify', {
+                secret: '6Lf7VaUdAAAAAKFoMzlLqvMmAavta_rUemqAm2Ah',
+                response: body.captcha
+              })
+              console.log(captchaResposne.data)
+            if(!captchaResposne.data.success || captchaResposne.data.success === 'false'){
+                throw new Error('Captcha not valid')
+            }
             const db = getConnection(config.databases.mongo.db)
             const userCol = db.collection(CUSTOMER_COLLECTION);       
             body.created_at = new Date();
