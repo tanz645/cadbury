@@ -19,13 +19,13 @@ export class Registration extends Component {
             terms: false,
             privacy: false,
             news: false,
-            captcha: null,
+            captcha: '',
             dob: '',
             reciept: '',
             fileErrorMsg: '',
             submitError: '',
             submitted: false,
-            submitStarted: false
+            submitStarted: false,            
         };
         this.handleFileUpload = this.handleFileUpload.bind(this);
         this.onCaptchaChange = this.onCaptchaChange.bind(this);
@@ -73,6 +73,7 @@ export class Registration extends Component {
     }
     onCaptchaChange(value) {
         console.log(value)
+        this.setState({captcha: value})
     }
     async handleSubmit(e){
         if(this.state.submitStarted){
@@ -82,6 +83,32 @@ export class Registration extends Component {
         e.preventDefault();
         if(!this.state.reciept){
             this.setState({fileErrorMsg: 'Please upload your reciept', submitStarted: false});
+            return;
+        }
+        try{
+            const captchaBody = {
+                secret: '6Lf7VaUdAAAAAKFoMzlLqvMmAavta_rUemqAm2Ah',
+                response: this.state.captcha
+            }
+            const captchRequest = await fetch(`https://www.google.com/recaptcha/api/siteverify`,{
+                method: 'POST',        
+                headers: {
+                'Content-Type': 'application/json'             
+                },            
+                body: JSON.stringify(captchaBody)
+            });
+            if (!captchRequest.ok) {
+                alert('Captcha error');
+                return;
+            }
+            const captchJson = await captchRequest.json();
+            if(!captchJson.success || captchJson.success === 'false'){
+                alert('Captcha error');
+                return;
+            }
+
+        }catch(e){
+            alert('Captcha error');
             return;
         }
         const cid = Date.now().toString();
@@ -121,14 +148,11 @@ export class Registration extends Component {
                 'Content-Type': 'application/json'             
                 },            
                 body: JSON.stringify(hubspotData)
-            })           
-            // const hubspotResult = await hubspotPost.json();
-            // console.log(hubspotResult)
-            // fetch(`https://api.hubapi.com/contacts/v1/search/query?q=test&hapikey=eu1-5201-252e-4a0a-b86d-2b813d495bc0`)
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         console.log(data)
-            //     });
+            })             
+            window.ga(function(tracker) {
+                var clientId = tracker.get('clientId');
+                console.log({clientId})
+              });          
             const data = {
                 "cid" : cid
             }
@@ -221,10 +245,10 @@ export class Registration extends Component {
                                     </div>
                                 </div>
                                 <div className="mb-3 form-ele-box">
-                                    {/* <ReCAPTCHA
-                                        sitekey="6Lfw-Q8dAAAAAObmc2DS2SuCaQt8Y24R9F8HcGJE"
+                                    <ReCAPTCHA
+                                        sitekey="6Lf7VaUdAAAAAHLabJlpTrfefzqcKwxovMHEMDUZ"
                                         onChange={this.onCaptchaChange}
-                                    /> */}
+                                    />
                                 </div>
                                 <div className="mb-3 form-ele-box">
                                     {/* <Link to="/permission"><button className="btn-primary btn margin-auto">NEXT</button></Link> */}

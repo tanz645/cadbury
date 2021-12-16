@@ -78,7 +78,7 @@ export class Creation extends Component {
 
     startEngine() {
         const deepAR = window.DeepAR({
-            licenseKey: '83c8b73c80fa427dc93b7109a0f38c44fb177479f2873f8d6647be174470d08272a5d31c5e04399e',
+            licenseKey: '0360c561b0cef3a68742c258b9fe62a1f2a6f644abb3d2b16be3cc4c837c93b1fe825c438f7a6a5e',
             canvasWidth: window.innerWidth,
             canvasHeight: window.innerHeight,
             canvas: document.getElementById('deepar-canvas'),
