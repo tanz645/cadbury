@@ -47,7 +47,7 @@ router.put('/verify', (req, res) => {
 router.put('/result-set', (req, res) => {
     return setResult(req, res)
 });
-router.put('/hubspot/callback', (req, res) => {
+router.post('/hubspot/callback', (req, res) => {
     return handleHubspotCallback(req, res)
 });
 router.get('/', (req, res) => {

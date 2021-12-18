@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Configs from '../config';
-import MicRecorder from 'mic-recorder-to-mp3';
 import PermissionDenied from './PermissionDenied';
 import Loading from './Loading'
 let filterBuffers = {};
 export class Creation extends Component {
-
     constructor(props) {
         super(props);
 
@@ -18,8 +16,7 @@ export class Creation extends Component {
                 { icon: 'thumbnails-04.png', path: 'masks/a4' },
                 { icon: 'thumbnails-05.png', path: 'masks/a5' },
                 { icon: 'thumbnails-06.png', path: 'masks/a6' },
-            ],
-            Mp3Recorder: '',
+            ],            
             filterBinary: [],
             deepAR: {},
             activeFilter: 'thumbnails-01.png',
@@ -36,32 +33,30 @@ export class Creation extends Component {
     startVideo() {
         let timeoutID;
         if (this.state.recordingStarted) {
-            this.state.deepAR.finishVideoRecording((e) => {
-                console.log(e)
-                this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {
-                    this.state.deepAR.shutdown();
-                    clearTimeout(timeoutID);                                         
-                    const vid = URL.createObjectURL(e);
-                    const aud = URL.createObjectURL(Audioblob);                    
-                    setTimeout(() => {
-                        this.props.navigation(`/creation-preview?v=${vid}&a=${aud}`);
-                        return;
-                    },200)
-                    
-                });
+            this.state.deepAR.finishVideoRecording((e) => {                
+                this.state.deepAR.shutdown();
+                clearTimeout(timeoutID);                                                                          
+                const vid = URL.createObjectURL(e);
+                const aud = window.audioBlobLink;                              
+                setTimeout(() => {
+                    this.props.navigation(`/creation-preview?v=${vid}&a=${aud}`);
+                    return;
+                },200)
             });
         } else {
-            this.setState({ recordingStarted: true }, () => {
-                this.state.deepAR.startVideoRecording();
-                this.state.Mp3Recorder.start();
+            this.setState({ recordingStarted: true },async () => {
+                this.state.deepAR.startVideoRecording();                
                 timeoutID = setTimeout(() => {
                     this.state.deepAR.finishVideoRecording((e) => {
-                        this.state.Mp3Recorder.stop().getMp3().then(([buffer, Audioblob]) => {
-                            this.state.deepAR.shutdown();
-                            clearTimeout(timeoutID);
-                            this.props.navigation(`/creation-preview?v=${URL.createObjectURL(e)}&a=${URL.createObjectURL(Audioblob)}`);
+                        this.state.deepAR.shutdown();
+                        clearTimeout(timeoutID);
+                        const vid = URL.createObjectURL(e);
+                        const aud = window.audioBlobLink;   
+                        setTimeout(() => {
+                            this.props.navigation(`/creation-preview?v=${vid}&a=${aud}`);
                             return;
-                        });
+                        },200)
+                        return;
                     });
                 }, 1000 * 30)
             })
@@ -78,7 +73,7 @@ export class Creation extends Component {
 
     startEngine() {
         const deepAR = window.DeepAR({
-            licenseKey: '4cd3ccfdd1c1d66fdd436df2c6821adee73949b9e400db2d0aece985d97d3c1b81fe243c9ae5d5a3',
+            licenseKey: '0fbd35eb6980c5f59bfb31b7de3f62c53096f01289d8e9be2fcfc03d93501b07b2572d0750e5b2ac',
             canvasWidth: window.innerWidth,
             canvasHeight: window.innerHeight,
             canvas: document.getElementById('deepar-canvas'),
@@ -88,9 +83,8 @@ export class Creation extends Component {
                 deepAR.startVideo(true);                
                 deepAR.switchEffect(0, 'slot', '../masks/a1', function (e) {                   
                     console.log(e)
-                });
-                const Mp3Recorder = new MicRecorder({ bitRate: 128 });
-                this.setState({ initialized: true, Mp3Recorder })
+                });                
+                this.setState({ initialized: true })
             },
             onCameraPermissionDenied: (e) => {
                 console.log(e)
@@ -143,6 +137,7 @@ export class Creation extends Component {
             audio: true, 
         }
         window.navigator.mediaDevices.getUserMedia(options).then(stream => {
+            window.EnabledMediaStream = stream
             fetch(`${Configs.api}/customers/${token}`)
                 .then(response => response.json())
                 .then(data => {
