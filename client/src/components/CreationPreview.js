@@ -14,11 +14,18 @@ export class CreationPreview extends Component {
         this.renderBufferVideo = this.renderBufferVideo.bind(this);
         this.replay = this.replay.bind(this);
         this.upload = this.upload.bind(this);
+        this.handleEnd = this.handleEnd.bind(this);
     }
     replay() {
         URL.revokeObjectURL(this.state.a)
         URL.revokeObjectURL(this.state.v)
         this.props.navigation('/creation')        
+    }
+    handleEnd(){        
+        setTimeout(() => {
+            this.state.ae.play();
+            this.state.ve.play();
+        },100)
     }
     async upload() {
         if (this.state.uploading) {
@@ -67,10 +74,10 @@ export class CreationPreview extends Component {
     renderBufferVideo() {
         return (
            <>
-           <video className="cb-video-player" autoPlay loop>
+           <video className="cb-video-player" id="video-player-view" autoPlay>
                 <source src={this.state.v} type="video/mp4" />
             </video>
-            <audio autoPlay loop>
+            <audio id="audio-player-view" autoPlay onEnded={this.handleEnd}>
                 <source src={this.state.a} type="audio/mp3" />                        
             </audio>
             <div className="control-box-buffer">
@@ -89,21 +96,26 @@ export class CreationPreview extends Component {
         if (!token) {
             window.location.href = "/";
             return;
-        }        
+        }                
         const a = this.props.urlQuery.get('a');
         const v = this.props.urlQuery.get('v');
+        const ae = window.document.getElementById('audio-player-view');
+        const ve = window.document.getElementById('video-player-view');
         console.log({a,v})
         if(!a || !v){
             window.location.href = "/";
             return;
         }
         fetch(v).then(r => r.blob())
-        .then(vblob => {
-            console.log(vblob)
+        .then(vblob => {            
             if(vblob){
                 fetch(a).then(r => r.blob())
-                .then(ablob => {
-                    this.setState({a,v,ablob,vblob})
+                .then(ablob => {           
+                    ae.src = a;
+                    ve.src = v;
+                    ae.load() 
+                    ve.load()                     
+                    this.setState({a,v,ablob,vblob, ae, ve })
                 }).catch(e => {
                     console.log(e)
                     this.props.navigation('/creation')
@@ -117,7 +129,8 @@ export class CreationPreview extends Component {
     render() {
         return (
             <div className="video-preview-wrapper">
-                {this.state.v && this.state.a ? this.renderBufferVideo() : ''}
+                {/* {this.state.v && this.state.a ? this.renderBufferVideo() : ''} */}
+                {this.renderBufferVideo()}
             </div>
             
         );

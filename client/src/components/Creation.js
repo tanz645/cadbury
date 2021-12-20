@@ -4,6 +4,7 @@ import Configs from '../config';
 import PermissionDenied from './PermissionDenied';
 import Loading from './Loading'
 let filterBuffers = {};
+let timeoutID;
 export class Creation extends Component {
     constructor(props) {
         super(props);
@@ -30,8 +31,7 @@ export class Creation extends Component {
         this.renderAr = this.renderAr.bind(this);
     }
 
-    startVideo() {
-        let timeoutID;
+    startVideo() {        
         if (this.state.recordingStarted) {
             this.state.deepAR.finishVideoRecording((e) => {                
                 this.state.deepAR.shutdown();
@@ -134,11 +134,17 @@ export class Creation extends Component {
         }      
         const options = {
             video: true,           
+            audio: false, 
+        };
+        const optionsAud = {
+            video: false,           
             audio: true, 
-        }
+        };
         window.navigator.mediaDevices.getUserMedia(options).then(stream => {
-            window.EnabledMediaStream = stream
-            fetch(`${Configs.api}/customers/${token}`)
+            window.EnabledMediaStream = stream;            
+            window.navigator.mediaDevices.getUserMedia(optionsAud).then(stream =>{  
+                window.EnabledMediaStreamA = stream;
+                fetch(`${Configs.api}/customers/${token}`)
                 .then(response => response.json())
                 .then(data => {
                     if (!data) {
@@ -155,11 +161,15 @@ export class Creation extends Component {
                                     });
                             }
                         })
-                        this.startEngine();
                     }
+                    this.startEngine();                
                 }).catch(e => {
                     console.log(e)
                 });
+            }).catch(err => {
+                this.setState({permissionDenied: true})
+                console.log("u got an error:" + err)
+            });                     
         }).catch(err => {
             this.setState({permissionDenied: true})
             console.log("u got an error:" + err)
