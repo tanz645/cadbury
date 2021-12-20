@@ -16,13 +16,13 @@ export class UserCreation extends Component {
 
   onPlayHandler(e){
     console.log('start playing')
-    const audioEle = window.document.getElementById('audio-player-view');
-    audioEle.play()
+    const videoEle = window.document.getElementById('video-player-view');
+    videoEle.play()
   }
   onPauseHandler(e){
     console.log('start playing')
-    const audioEle = window.document.getElementById('audio-player-view');
-    audioEle.pause()
+    const videoEle = window.document.getElementById('video-player-view');
+    videoEle.pause()
   }
 
   componentDidMount() {
@@ -44,14 +44,11 @@ export class UserCreation extends Component {
             {this.state.videoLink ?
               (
                 <>
-                  <video onPlay={this.onPlayHandler} onPause={this.onPauseHandler} className="cb-video-player-user-creation" autoPlay controls name="media" id="video-player-view">
-                    <source src={this.state.videoLink} type="video/mp4" />
-                    <source src={this.state.videoLink} type="video/mpeg" />
-                    <source src={this.state.videoLink} type="video/ogg" />
+                  <video className="cb-video-player-user-creation" autoPlay name="media" id="video-player-view">
+                    <source src={this.state.videoLink} type="video/mp4" />                    
                   </video>
-                  <audio id="audio-player-view">
-                    <source src={this.state.audioLink} type="audio/mp3" />
-                    <source src={this.state.audioLink} type="audio/mpeg" />
+                  <audio id="admin-control-audio" controlsList="nodownload" autoPlay controls onPlaying={this.onPlayHandler} onPause={this.onPauseHandler}>
+                    <source src={this.state.audioLink} type="audio/mp3" />                    
                   </audio>
                 </>
 

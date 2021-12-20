@@ -211,8 +211,12 @@ li {
 .container {
   min-width: 90% !important;
 }
-audio{
+#audio-player-view{
   display: none !important;
+}
+#admin-control-audio{
+  display: block;
+  margin: 10px auto;
 }
 .btn-primary {
   background: #2a0a49 !important;

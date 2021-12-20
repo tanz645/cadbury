@@ -129,7 +129,8 @@ export class Admin extends Component {
     return (      
         <tr key={item._id}>
           <td>{index + 1}</td>
-          <td>{item._id}</td>
+          {/* <td>{item._id}</td> */}
+          <td>{item.customer_id || ''}</td>
           <td><FontAwesomeIcon className="cursor-pointer" icon={faEye} onClick={() => this.openReciept(item)} /></td>
           <td>{item.journey_state}</td>
           <td>
@@ -187,7 +188,7 @@ export class Admin extends Component {
             <thead>
               <tr className="cb-text-primary">
                 <td>No.</td>
-                <td>SHOPPER ID</td>
+                <td>SHOPPER ID</td>                
                 <td>RECEIPT</td>
                 <td>STATE</td>
                 <td>
