@@ -399,31 +399,32 @@ const getUser = async (req, res) => {
     }       
 };
 
-const handleHubspotCallback = async (req, res) => {
-    if(!req.body || !req.body.cid){
-        return res.status(400).send('cid is required');
-    }
-    if(!req.body || !req.body.id){
-        return res.status(400).send('id is required');
-    }
-    try {
+const handleHubspotCallback = (req, res) => {    
+    if(req.body && req.body.vid && req.body.properties && req.body.properties.cid && req.body.properties.cid.value){
         const db = getConnection(config.databases.mongo.db)
         const userCol = db.collection(CUSTOMER_COLLECTION);
-        const userById = await userCol.findOne({ cid: req.body.cid});    
-        if (!userById) {
-            return res.status(400).send('No user found');        
-        }
-        
-        const toUpdate = {
-            customer_id: req.body.id,            
-            updated_at: new Date(),                      
-        }                       
-        await userCol.updateOne({ cid: req.body.cid },{ $set: toUpdate })
-        return res.send('customer id added');
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send('Sorry can not process your request');
-    }  
+        userCol.findOne({ cid: req.body.properties.cid.value}).then(userById => {
+            if (!userById) {
+                console.log('webhook error ===> No user found');        
+            }
+            const toUpdate = {
+                customer_id: req.body.vid,            
+                updated_at: new Date(),                      
+            }                       
+            userCol.updateOne({ cid: req.body.properties.cid.value },{ $set: toUpdate }).then(result => {
+                console.log('webhook: updated user cid')
+                return res.status(200).send('webhook triggered');
+            }).catch(err => {
+                console.log('webhook error ===> Can not update: ', err); 
+            })            
+        }).catch(err => {
+            console.log('webhook error ===> No user found: ', err);  
+        });
+    }else{
+        console.log('webhook error ===> Not valid request: ', req.body); 
+        return res.status(400).json({message: 'Not valid request', request: req.body});
+    }
+    return res.status(200).send('webhook triggered'); 
 };
 
 module.exports = {
