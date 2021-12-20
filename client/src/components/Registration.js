@@ -4,6 +4,10 @@ import { Link, Navigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Configs from '../config';
+
+const hubspotCookie = () => {
+    return window.document.cookie.replace(/(?:(?:^|.*;\s*)hubspotutk\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+}
 export class Registration extends Component {
 
     constructor(props) {
@@ -24,6 +28,7 @@ export class Registration extends Component {
             reciept: '',
             fileErrorMsg: '',
             submitError: '',
+            cid: '',
             submitted: false,
             submitStarted: false,            
         };
@@ -88,8 +93,8 @@ export class Registration extends Component {
             this.setState({fileErrorMsg: 'Please upload your reciept', submitStarted: false});
             return;
         }
-        
-        const cid = Date.now().toString();
+        const hutk = hubspotCookie() || '';
+        const cid = window.document.cookie.match(/_ga=(.+?);/)[1].split('.').slice(-2).join(".") || '';
         const hubspotData = {
             submittedAt: Date.now(),
             fields:[
@@ -121,8 +126,21 @@ export class Registration extends Component {
                     "name": "cid",
                     "value": cid
                 }
-            ]
-        }        
+            ],
+            context: {                
+                "pageUri": "cadbury.cnygiftfromtheheart.com/registration",
+                "pageName": "Registration page"
+            }
+        }     
+        if(this.state.dob){
+            hubspotData.fields.push({
+                "name": "date_of_birth",
+                "value": this.state.dob
+            })
+        }   
+        if(hutk){
+            hubspotData.context.hutk = hutk
+        }
         try {
             fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
                 method: 'POST',        
@@ -130,11 +148,7 @@ export class Registration extends Component {
                 'Content-Type': 'application/json'             
                 },            
                 body: JSON.stringify(hubspotData)
-            })             
-            window.ga(function(tracker) {
-                var clientId = tracker.get('clientId');
-                console.log({clientId})
-              });          
+            })                                  
             const data = {
                 "cid" : cid,
                 "captcha": this.state.captcha
@@ -160,7 +174,7 @@ export class Registration extends Component {
             this.setState({submitError: 'Can not process your request', submitted: false, submitStarted: false})
         }            
     }
-    componentDidMount(){
+    componentDidMount(){            
         const token = localStorage.getItem(Configs.local_cache_name);      
         if(token)  {
             this.setState({submitError: '', submitted: true}); 
