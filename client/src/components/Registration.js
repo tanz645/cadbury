@@ -135,7 +135,7 @@ export class Registration extends Component {
         if(this.state.dob){
             hubspotData.fields.push({
                 "name": "date_of_birth",
-                "value": this.state.dob
+                "value": this.state.dob.toString()
             })
         }   
         if(hutk){
