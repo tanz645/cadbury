@@ -76,7 +76,7 @@ const register = async (body) => {
             body.created_at = new Date();
             body.updated_at = new Date();
             body.journey_state = journey_state[0];
-            body.cid = '',
+            body.cid = body.cid,
             body.receipt_link = '';
             body.video_link = '';
             body.audio_link = '',
@@ -403,6 +403,7 @@ const handleHubspotCallback = (req, res) => {
     if(req.body && req.body.vid && req.body.properties && req.body.properties.cid && req.body.properties.cid.value){
         const db = getConnection(config.databases.mongo.db)
         const userCol = db.collection(CUSTOMER_COLLECTION);
+        console.log('webhook: userID:', req.body.properties.cid.value)
         userCol.findOne({ cid: req.body.properties.cid.value}).then(userById => {
             if (!userById) {
                 console.log('webhook error ===> No user found');        
@@ -412,19 +413,19 @@ const handleHubspotCallback = (req, res) => {
                 updated_at: new Date(),                      
             }                       
             userCol.updateOne({ cid: req.body.properties.cid.value },{ $set: toUpdate }).then(result => {
-                console.log('webhook: updated user cid')
-                return res.status(200).send('webhook triggered');
+                console.log('webhook: updated user cid', result)                
             }).catch(err => {
                 console.log('webhook error ===> Can not update: ', err); 
             })            
         }).catch(err => {
             console.log('webhook error ===> No user found: ', err);  
         });
+        return res.status(200).send('webhook triggered'); 
     }else{
         console.log('webhook error ===> Not valid request: ', req.body); 
         return res.status(400).json({message: 'Not valid request', request: req.body});
     }
-    return res.status(200).send('webhook triggered'); 
+    
 };
 
 module.exports = {
