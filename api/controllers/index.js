@@ -333,8 +333,7 @@ const verify = async (req, res) => {
                     }
                 ]                
             })               
-          })
-          console.log(hubspotResposne)
+          })          
         // if(userById.journey_state !== journey_state[3]){
         //     return res.status(400).send('Not in proper state to verify user'); 
         // }
@@ -373,6 +372,24 @@ const setResult = async (req, res) => {
         if(userById.journey_state !== journey_state[4]){
             return res.status(400).send('Need to be verified to publish result'); 
         }
+        if(!userById.customer_id){
+            return res.status(400).send('No customer id found');
+        }
+        const hubspotResposne = await axios({
+            method: 'POST',
+            url: `https://api.hubapi.com/contacts/v1/contact/vid/${userById.customer_id}/profile?hapikey=${config.hubspot_api_key}`,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            data: JSON.stringify({
+                properties: [
+                    {
+                        "property": "result",
+                        "value": req.body.type
+                    }
+                ]                
+            })               
+          });          
         const toUpdate = {
             journey_state: journey_state[5],            
             updated_at: new Date(), 
