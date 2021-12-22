@@ -319,6 +319,16 @@ const verify = async (req, res) => {
         if(!userById.customer_id){
             return res.status(400).send('No customer id found');
         }
+        const properties = [
+            {
+                "property": "verify",
+                "value": req.body.type
+            }
+        ];
+        properties.push({
+            "property": "video_url",
+            "value": `https://www.cadbury.cnygiftfromtheheart.com/message-play?hash=${userById._id}`
+        })
         const hubspotResposne = await axios({
             method: 'POST',
             url: `https://api.hubapi.com/contacts/v1/contact/vid/${userById.customer_id}/profile?hapikey=${config.hubspot_api_key}`,
@@ -326,12 +336,7 @@ const verify = async (req, res) => {
                 "Content-Type": "application/json"
             },
             data: JSON.stringify({
-                properties: [
-                    {
-                        "property": "verify",
-                        "value": req.body.type
-                    }
-                ]                
+                properties             
             })               
           })          
         // if(userById.journey_state !== journey_state[3]){
