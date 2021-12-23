@@ -228,7 +228,7 @@ const creationUpload = async (req, res) => {
                         // fs.unlinkSync(audioPath);
                         return res.status(500).send('Sorry can not process your request');
                     })
-                    .on('end', async function() {
+                    .on('end', function() {
                         // fs.unlinkSync(uploadPath)
                         // fs.unlinkSync(audioPath)  
                         console.log(`Conversion Processing finished: ${req.body.token}!`);
@@ -237,13 +237,12 @@ const creationUpload = async (req, res) => {
                             video_link: actualLink,                            
                             updated_at: new Date(), 
                         }                       
-                        try {
-                            await userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate })
+                        userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
                             return res.send('File uploaded!');
-                        } catch (error) {
+                        }).catch(error => {
                             console.log(error)
                             return res.status(500).send('Sorry can not process your request');
-                        }
+                        })
                     })
                     .save(actualLinkPath)                                                                  
             })
