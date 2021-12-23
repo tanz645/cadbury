@@ -29,6 +29,7 @@ export class MessagePlay extends Component {
     }
 
     handleVideoEnd(e) {
+        console.log('video ended')
         this.setState({ videoEnded: true })
     }
 
@@ -68,7 +69,7 @@ export class MessagePlay extends Component {
     renderVd() {
         return (
             <>
-                <video className="mp-video-player" playsInline id="vd-palyer">
+                <video className="mp-video-player" playsInline id="vd-palyer" onEnded={this.handleVideoEnd}>
                     <source src={this.state.videoLink} type="video/mp4" />
                 </video>
                 <audio id="au-palyer" playsInline>
