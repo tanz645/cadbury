@@ -9,30 +9,16 @@ export class UserCreation extends Component {
     this.state = {
       videoLink: '',
       audioLink: ''
-    }
-    this.onPlayHandler = this.onPlayHandler.bind(this);
-    this.onPauseHandler = this.onPauseHandler.bind(this);
+    }    
   }
 
-  onPlayHandler(e){
-    console.log('start playing')
-    const videoEle = window.document.getElementById('video-player-view');
-    videoEle.play()
-  }
-  onPauseHandler(e){
-    console.log('start playing')
-    const videoEle = window.document.getElementById('video-player-view');
-    videoEle.pause()
-  }
-
-  componentDidMount() {
+  componentDidMount() {    
     const hash = this.props.urlQuery.get('hash');
 
     fetch(`${Configs.api}/customers/${hash}`)
       .then(response => response.json())
-      .then(data => {
-        console.log(Configs.static_files + data.video_link)
-        this.setState({ videoLink: Configs.static_files + data.video_link, audioLink: Configs.static_files + data.audio_link })
+      .then(data => {        
+        this.setState({ videoLink: Configs.static_files + data.video_link })
       });      
   }
 
@@ -44,14 +30,10 @@ export class UserCreation extends Component {
             {this.state.videoLink ?
               (
                 <>
-                  <video className="cb-video-player-user-creation" autoPlay name="media" id="video-player-view">
+                  <video className="cb-video-player-user-creation" autoPlay controls name="media" id="video-player-view">
                     <source src={this.state.videoLink} type="video/mp4" />                    
-                  </video>
-                  <audio id="admin-control-audio" controlsList="nodownload" autoPlay controls onPlaying={this.onPlayHandler} onPause={this.onPauseHandler}>
-                    <source src={this.state.audioLink} type="audio/mp3" />                    
-                  </audio>
+                  </video>                  
                 </>
-
               ) : ''}
           </div>
         </div>

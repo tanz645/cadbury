@@ -36,6 +36,11 @@ export class MessagePlay extends Component {
         })
     }
     componentDidMount() {
+        const width = window.innerWidth;
+        if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent)) || width >= 800) {
+            window.location.href = '/desktop'
+            console.log("not mobile device");
+        } 
         const hash = this.props.urlQuery.get('hash');
         if (!hash) {
             window.location.href = "/";

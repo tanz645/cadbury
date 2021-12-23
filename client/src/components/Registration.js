@@ -180,7 +180,12 @@ export class Registration extends Component {
             this.setState({submitError: 'Can not process your request', submitted: false, submitStarted: false})
         }            
     }
-    componentDidMount(){            
+    componentDidMount(){      
+        const width = window.innerWidth;
+        if (!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent)) || width >= 800) {
+            window.location.href = '/desktop'
+            console.log("not mobile device");
+        }       
         const token = localStorage.getItem(Configs.local_cache_name);      
         if(token)  {
             this.setState({submitError: '', submitted: true}); 
