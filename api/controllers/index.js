@@ -229,7 +229,7 @@ const creationUpload = async (req, res) => {
                         return res.status(500).send('Sorry can not process your request');
                     })
                     .on('end', function() {
-                        console.log(`Ended ${req.body.token} : ` + err.message);
+                        console.log(`Ended ${req.body.token} : `);
                         // fs.unlinkSync(uploadPath)
                         // fs.unlinkSync(audioPath)  
                     })
