@@ -194,8 +194,8 @@ const creationUpload = async (req, res) => {
         if(!creation_audio_mime_type.includes(creationAudio.mimetype)){
             return res.status(400).send('Only mp3,mpeg');
         }
-        creation.name = `${req.body.token}_${creation.name}`;
         actualLinkName = `${req.body.token}_actual_${creation.name}`;
+        creation.name = `${req.body.token}_${creation.name}`;        
         console.log({
             actualLinkName
         })
@@ -220,8 +220,7 @@ const creationUpload = async (req, res) => {
                 const actualLink = `/creation/${actualLinkName}`;
                 command
                     .input(audioPath)
-                    .input(uploadPath)   
-                    .save(actualLinkPath)                 
+                    .input(uploadPath)                                     
                     // .keepDAR()
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
@@ -230,21 +229,24 @@ const creationUpload = async (req, res) => {
                         return res.status(500).send('Sorry can not process your request');
                     })
                     .on('end', function() {
+                        console.log(`Ended ${req.body.token} : ` + err.message);
                         // fs.unlinkSync(uploadPath)
                         // fs.unlinkSync(audioPath)  
-                        console.log(`Conversion Processing finished: ${req.body.token}!`);
-                        const toUpdate = {
-                            journey_state: journey_state[2],
-                            video_link: actualLink,                            
-                            updated_at: new Date(), 
-                        }                       
-                        userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
-                            return res.send('File uploaded!');
-                        }).catch(error => {
-                            console.log(error)
-                            return res.status(500).send('Sorry can not process your request');
-                        })
                     })
+                    .save(actualLinkPath)  
+                
+                    console.log(`Conversion Processing finished: ${req.body.token}!`);
+                    const toUpdate = {
+                        journey_state: journey_state[2],
+                        video_link: actualLink,                            
+                        updated_at: new Date(), 
+                    }                       
+                    userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
+                        return res.send('File uploaded!');
+                    }).catch(error => {
+                        console.log(error)
+                        return res.status(500).send('Sorry can not process your request');
+                    }) 
                                                                                       
             })
              
