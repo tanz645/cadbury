@@ -45,6 +45,8 @@ export class CreationPreview extends Component {
         this.setState({ uploading: true });
         const token = localStorage.getItem(Configs.local_cache_name);
         const { navigation } = this.props;
+        const vh = window.innerHeight || '726';
+        const vw = window.innerWidth || '414';
         if (token && this.state.vblob) {
             const formData = new FormData();
             const file = new File([this.state.vblob], "creation.mp4", {
@@ -56,6 +58,7 @@ export class CreationPreview extends Component {
             formData.append('creation', file);
             formData.append('creationAudio', fileAudio);
             formData.append('token', token);
+            formData.append('size', `${vw}x${vh}`);
             try {
                 const result = await fetch(Configs.api + '/customers/creation/upload', {
                     method: 'POST',
