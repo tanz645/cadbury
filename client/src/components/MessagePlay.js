@@ -6,13 +6,11 @@ export class MessagePlay extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            audioLink: '',
+        this.state = {           
             videoLink: '',
             videoEnded: false,
             tapped: false,
-            vd: null,
-            au: null
+            vd: null,           
         };
         this.handleVideoEnd = this.handleVideoEnd.bind(this);
         this.replay = this.replay.bind(this);
@@ -21,8 +19,7 @@ export class MessagePlay extends Component {
 
     handleTap() {
         if (!this.state.tapped) {            
-            this.setState({ tapped: true}, () => {
-                this.state.au.play();
+            this.setState({ tapped: true}, () => {                
                 this.state.vd.play();
             })
         }
@@ -35,8 +32,7 @@ export class MessagePlay extends Component {
 
     replay() {
         this.setState({ videoEnded: false, }, () => {
-            this.state.vd.play();
-            this.state.au.play();
+            this.state.vd.play();            
         })
     }
     componentDidMount() {
@@ -45,22 +41,15 @@ export class MessagePlay extends Component {
             window.location.href = "/";
             return;
         }
-        const vd = window.document.getElementById('vd-palyer');
-        const au = window.document.getElementById('au-palyer');
+        const vd = window.document.getElementById('vd-palyer');       
         fetch(`${Configs.api}/customers/${hash}`)
             .then(response => response.json())
-            .then(data => {
-                const vid = Configs.static_files + data.video_link;
-                const aud = Configs.static_files + data.audio_link;
-                vd.src = vid;
-                au.src = aud;
-                vd.load();
-                au.load();
+            .then(data => {     
+                vd.src = Configs.static_files + data.video_link;
+                vd.load();             
                 this.setState({
-                    videoLink: Configs.static_files + data.video_link,
-                    audioLink: Configs.static_files + data.audio_link,
-                    vd,
-                    au
+                    videoLink: Configs.static_files + data.video_link,                    
+                    vd
                 })
             }).catch(err => {
                 console.log(err)
@@ -69,12 +58,9 @@ export class MessagePlay extends Component {
     renderVd() {
         return (
             <>
-                <video className="mp-video-player" playsInline id="vd-palyer" onEnded={this.handleVideoEnd}>
+                <video className="mp-video-player" playsInline id="vd-palyer" controls onEnded={this.handleVideoEnd}>
                     <source src={this.state.videoLink} type="video/mp4" />
-                </video>
-                <audio id="au-palyer" playsInline>
-                    <source src={this.state.audioLink} type="audio/mp3" />
-                </audio>
+                </video>                
                 {this.state.videoEnded ? (
                     <div className="control-box-buffer text-center">
                         <div className="message-play-button" onClick={this.replay}>

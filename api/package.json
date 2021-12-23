@@ -15,6 +15,7 @@
     "express": "~4.16.1",
     "express-fileupload": "^1.2.1",
     "express-validator": "^6.12.2",
+    "fluent-ffmpeg": "^2.1.2",
     "helmet": "^4.6.0",
     "http-errors": "~1.6.3",
     "joi": "^17.4.2",

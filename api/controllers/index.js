@@ -1,10 +1,12 @@
 const Joi = require('joi');
 const axios = require('axios');
+const fs = require('fs')
 const { getConnection } = require('../client/mongodb')
 const config = require('../config');
 const ObjectId = require('mongodb').ObjectId; 
 const path = require('path');
-
+const ffmpeg = require('fluent-ffmpeg');
+const command = ffmpeg();
 const userRegisterSchema = Joi.object({
     cid: Joi.string()        
         .min(1)
@@ -78,8 +80,7 @@ const register = async (body) => {
             body.journey_state = journey_state[0];
             body.cid = body.cid,
             body.receipt_link = '';
-            body.video_link = '';
-            body.audio_link = '',
+            body.video_link = '';                   
             body.promo_code = '';
             body.verified = false;
             body.verified_at = null;
@@ -191,6 +192,7 @@ const creationUpload = async (req, res) => {
             return res.status(400).send('Only mp3,mpeg');
         }
         creation.name = `${req.body.token}_${creation.name}`;
+        actualLinkName = `${req.body.token}_actual_${creation.name}`;
         creationAudio.name = `${req.body.token}_${creationAudio.name}`;
         const creationLink = '/creation/' + creation.name;
         const creationAudioLink = '/creation/' + creationAudio.name;
@@ -206,19 +208,34 @@ const creationUpload = async (req, res) => {
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
                 }
-                const toUpdate = {
-                    journey_state: journey_state[2],
-                    video_link: creationLink,
-                    audio_link: creationAudioLink,
-                    updated_at: new Date(), 
-                }                       
-                try {
-                    await userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate })
-                    return res.send('File uploaded!');
-                } catch (error) {
-                    console.log(error)
-                    return res.status(500).send('Sorry can not process your request');
-                }
+                const actualLink = config.FILE_UPLOAD+`/creation/${actualLinkName}`;
+                command
+                    .input(uploadPath)
+                    .input(audioPath)
+                    .on('error', function(err) {
+                        console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
+                        fs.unlinkSync(uploadPath);
+                        fs.unlinkSync(audioPath);
+                        return res.status(500).send('Sorry can not process your request');
+                    })
+                    .on('end', async function() {
+                        fs.unlinkSync(uploadPath)
+                        fs.unlinkSync(audioPath)  
+                        console.log(`Conversion Processing finished: ${req.body.token}!`);
+                        const toUpdate = {
+                            journey_state: journey_state[2],
+                            video_link: actualLink,                            
+                            updated_at: new Date(), 
+                        }                       
+                        try {
+                            await userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate })
+                            return res.send('File uploaded!');
+                        } catch (error) {
+                            console.log(error)
+                            return res.status(500).send('Sorry can not process your request');
+                        }
+                    })
+                    .save(actualLink)                                                                  
             })
              
         });
