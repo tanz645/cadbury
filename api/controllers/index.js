@@ -199,8 +199,10 @@ const creationUpload = async (req, res) => {
         creationAudio.name = `${req.body.token}_${creationAudio.name}`;
         const creationLink = '/creation/' + creation.name;
         const creationAudioLink = '/creation/' + creationAudio.name;
+        const actualLink = `/creation/${actualLinkName}`;
         uploadPath = config.FILE_UPLOAD + creationLink;
         audioPath = config.FILE_UPLOAD + creationAudioLink;
+        const actualLinkPath = config.FILE_UPLOAD +actualLink;
         creation.mv(uploadPath, async function(err) {
             if (err){
                 console.log(err)
@@ -238,7 +240,7 @@ const creationUpload = async (req, res) => {
                             return res.status(500).send('Sorry can not process your request');
                         }
                     })
-                    .save(actualLink)                                                                  
+                    .save(actualLinkPath)                                                                  
             })
              
         });
