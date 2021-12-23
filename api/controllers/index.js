@@ -233,7 +233,7 @@ const creationUpload = async (req, res) => {
                         // fs.unlinkSync(uploadPath)
                         // fs.unlinkSync(audioPath)  
                     })
-                    .save(actualLinkPath)  
+                    .mergeToFile(actualLinkPath,config.FILE_UPLOAD)  
                 
                     console.log(`Conversion Processing finished: ${req.body.token}!`);
                     const toUpdate = {
