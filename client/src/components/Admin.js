@@ -115,11 +115,11 @@ export class Admin extends Component {
       alert('Already verified')
     }
   }
-  downloadQR(id) {    
-    window.open(`/qr?hash=${id}&download=true`,"_blank");
+  downloadQR(id,customer_id) {    
+    window.open(`/qr?hash=${id}&customer_id=${customer_id}&download=true`,"_blank");
   }
-  openPrintPreview(id) {    
-    window.open(`/qr?hash=${id}`,"_blank");
+  openPrintPreview(id,customer_id) {    
+    window.open(`/qr?hash=${id}&customer_id=${customer_id}`,"_blank");
   }
   componentDidMount() {   
     this.reload()

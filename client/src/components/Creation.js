@@ -32,12 +32,12 @@ export class Creation extends Component {
     }
 
     startVideo() {        
-        if (this.state.recordingStarted) {
-            this.state.deepAR.finishVideoRecording((e) => {                
+        if (this.state.recordingStarted) {                      
+            this.state.deepAR.finishVideoRecording((e) => {                                              
                 this.state.deepAR.shutdown();
                 clearTimeout(timeoutID);                                                                          
                 const vid = URL.createObjectURL(e);
-                const aud = window.audioBlobLink;                              
+                const aud = window.audioBlobLink;                                                          
                 setTimeout(() => {
                     this.props.navigation(`/creation-preview?v=${vid}&a=${aud}`);
                     return;
@@ -140,6 +140,14 @@ export class Creation extends Component {
             video: false,           
             audio: true, 
         };
+        if(!window.navigator || !window.navigator.mediaDevices || !window.navigator.mediaDevices.getUserMedia){
+            alert('Media device not supported in this browser');
+            return;
+        }
+        if("function" !== typeof HTMLCanvasElement.prototype.captureStream){
+            alert('Canvas captureStream in this browser');
+            return;
+        }
         window.navigator.mediaDevices.getUserMedia(options).then(stream => {
             window.EnabledMediaStream = stream;            
             window.navigator.mediaDevices.getUserMedia(optionsAud).then(stream =>{  
@@ -161,8 +169,8 @@ export class Creation extends Component {
                                     });
                             }
                         })
-                    }
-                    this.startEngine();                
+                        this.startEngine();
+                    }                                
                 }).catch(e => {
                     console.log(e)
                 });

@@ -7,6 +7,7 @@ export class QR extends Component {
         super(props);
         this.state = {
             hash: '',
+            customer_id: '',
             wantToVerify: false,
             pngLink: '',
             download: false
@@ -16,7 +17,8 @@ export class QR extends Component {
 
     componentDidMount() {
         const hash = this.props.urlQuery.get('hash');
-        const download = this.props.urlQuery.get('download');              
+        const download = this.props.urlQuery.get('download');   
+        const customer_id = this.props.urlQuery.get('customer_id');           
         const data = {
             "data": `${Configs.domain}/message?hash=${hash}`,
             "config":{
@@ -41,7 +43,7 @@ export class QR extends Component {
             if (response.status && response.status === 200) {
                 const png = await response.blob();
                 const pngLink = URL.createObjectURL(png);             
-                this.setState({pngLink, download: download || false, hash});
+                this.setState({pngLink, download: download || false, hash, customer_id});
                 setTimeout(() => {
                     window.print();
                 },500)
@@ -62,7 +64,7 @@ export class QR extends Component {
                             <img className="mt-4" src={this.state.pngLink} alt="qr code generating" />
                         ) : 'Generating QR'}
                         <div className="qr-user-id">
-                            <h2>{this.state.hash}</h2>
+                            <h2>{this.state.customer_id}</h2>
                         </div>
                     </div>
                 </div>

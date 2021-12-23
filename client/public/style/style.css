@@ -692,8 +692,8 @@ td .form-check .form-check-input{
   opacity: 0;;
 } */
 .message-play-wrapper .mp-video-player{
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 .message-play-button {
   display: inline-flex;
@@ -732,4 +732,13 @@ a.generalTermsAndPrivacy{
   height: 46vh;
   width: 100vw;
   z-index: 0;
+}
+.tap-on-the-screen{
+  position: absolute;
+  font-size: 3em;
+  color: white;
+  text-shadow: 0px 1px 10px black;
+  top: 40vh;
+  left: 0;
+  right: 0;
 }

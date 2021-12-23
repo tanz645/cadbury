@@ -80,6 +80,7 @@ export class Registration extends Component {
         this.setState({captcha: value})
     }
     async handleSubmit(e){
+        e.preventDefault();
         if(this.state.submitStarted){
             return 1;
         }
@@ -87,8 +88,7 @@ export class Registration extends Component {
             alert('Please verify using captcha')
             return;
         }
-        this.setState({submitStarted: true});        
-        e.preventDefault();
+        this.setState({submitStarted: true});                
         if(!this.state.reciept){
             this.setState({fileErrorMsg: 'Please upload your reciept', submitStarted: false});
             return;

@@ -9,12 +9,23 @@ export class CreationPreview extends Component {
         this.state = {                                                         
             a: '',
             v: '',
-            uploading: false,            
+            uploading: false,     
+            tapped: false       
         };
         this.renderBufferVideo = this.renderBufferVideo.bind(this);
         this.replay = this.replay.bind(this);
         this.upload = this.upload.bind(this);
         this.handleEnd = this.handleEnd.bind(this);
+        this.handleTap = this.handleTap.bind(this);
+    }
+    
+    handleTap(){
+        if(!this.state.tapped){
+            this.setState({tapped:true}, () => {
+                this.state.ae.play();
+                this.state.ve.play();
+            })
+        }        
     }
     replay() {
         URL.revokeObjectURL(this.state.a)
@@ -74,10 +85,10 @@ export class CreationPreview extends Component {
     renderBufferVideo() {
         return (
            <>
-           <video className="cb-video-player" id="video-player-view" autoPlay>
+           <video className="cb-video-player" id="video-player-view" playsInline>
                 <source src={this.state.v} type="video/mp4" />
             </video>
-            <audio id="audio-player-view" autoPlay onEnded={this.handleEnd}>
+            <audio id="audio-player-view" onEnded={this.handleEnd} playsInline>
                 <source src={this.state.a} type="audio/mp3" />                        
             </audio>
             <div className="control-box-buffer">
@@ -100,8 +111,7 @@ export class CreationPreview extends Component {
         const a = this.props.urlQuery.get('a');
         const v = this.props.urlQuery.get('v');
         const ae = window.document.getElementById('audio-player-view');
-        const ve = window.document.getElementById('video-player-view');
-        console.log({a,v})
+        const ve = window.document.getElementById('video-player-view');        
         if(!a || !v){
             window.location.href = "/";
             return;
@@ -114,8 +124,8 @@ export class CreationPreview extends Component {
                     ae.src = a;
                     ve.src = v;
                     ae.load() 
-                    ve.load()                     
-                    this.setState({a,v,ablob,vblob, ae, ve })
+                    ve.load()                                                            
+                    this.setState({a,v,ablob,vblob, ae, ve })                    
                 }).catch(e => {
                     console.log(e)
                     this.props.navigation('/creation')
@@ -128,7 +138,8 @@ export class CreationPreview extends Component {
     }
     render() {
         return (
-            <div className="video-preview-wrapper">
+            <div className="video-preview-wrapper text-center" onClick={this.handleTap}>
+                {!this.state.tapped? <h2 className="tap-on-the-screen">Tap on the screen to replay</h2> : ''}                
                 {/* {this.state.v && this.state.a ? this.renderBufferVideo() : ''} */}
                 {this.renderBufferVideo()}
             </div>
