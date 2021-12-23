@@ -217,7 +217,7 @@ const creationUpload = async (req, res) => {
                 command
                     .input(uploadPath)
                     .input(audioPath)
-                    .size(req.body.size || '320x240')
+                    .size(req.body.size || '414x726')
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
                         fs.unlinkSync(uploadPath);
