@@ -5,6 +5,7 @@
   "scripts": {
     "start_local": "NODE_ENV=local nodemon server.js",
     "start_dev": "NODE_ENV=development node server.js",
+    "start_prod": "NODE_ENV=production node server.js",
     "watch": "nodemon server.js"
   },
   "dependencies": {
