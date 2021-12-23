@@ -219,8 +219,9 @@ const creationUpload = async (req, res) => {
                 }
                 const actualLink = `/creation/${actualLinkName}`;
                 command
-                    .input(uploadPath)
-                    .input(audioPath)
+                    .input(fs.createReadStream(audioPath))
+                    .input(fs.createReadStream(uploadPath))   
+                    .save(actualLinkPath)                 
                     // .keepDAR()
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
@@ -244,7 +245,7 @@ const creationUpload = async (req, res) => {
                             return res.status(500).send('Sorry can not process your request');
                         })
                     })
-                    .save(actualLinkPath)                                                                  
+                                                                                      
             })
              
         });
