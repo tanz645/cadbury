@@ -207,12 +207,12 @@ const creationUpload = async (req, res) => {
         audioPath = config.FILE_UPLOAD + creationAudioLink;
         const actualLinkPath = config.FILE_UPLOAD +actualLink;
         console.log(req.body.size)
-        creation.mv(uploadPath, async function(err) {
+        creation.mv(uploadPath, function(err) {
             if (err){
                 console.log(err)
                 return res.status(500).send('Can not upload video');
             }   
-            creationAudio.mv(audioPath, async function(err){
+            creationAudio.mv(audioPath, function(err){
                 if (err){
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
@@ -221,7 +221,7 @@ const creationUpload = async (req, res) => {
                 command
                     .input(uploadPath)
                     .input(audioPath)
-                    .keepDAR()
+                    // .keepDAR()
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
                         fs.unlinkSync(uploadPath);
