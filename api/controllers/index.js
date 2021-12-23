@@ -196,6 +196,9 @@ const creationUpload = async (req, res) => {
         }
         creation.name = `${req.body.token}_${creation.name}`;
         actualLinkName = `${req.body.token}_actual_${creation.name}`;
+        console.log({
+            actualLinkName
+        })
         creationAudio.name = `${req.body.token}_${creationAudio.name}`;
         const creationLink = '/creation/' + creation.name;
         const creationAudioLink = '/creation/' + creationAudio.name;
@@ -203,6 +206,7 @@ const creationUpload = async (req, res) => {
         uploadPath = config.FILE_UPLOAD + creationLink;
         audioPath = config.FILE_UPLOAD + creationAudioLink;
         const actualLinkPath = config.FILE_UPLOAD +actualLink;
+        console.log(req.body.size)
         creation.mv(uploadPath, async function(err) {
             if (err){
                 console.log(err)
@@ -217,7 +221,7 @@ const creationUpload = async (req, res) => {
                 command
                     .input(uploadPath)
                     .input(audioPath)
-                    .size(req.body.size || '414x726')
+                    .keepDAR()
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
                         fs.unlinkSync(uploadPath);
