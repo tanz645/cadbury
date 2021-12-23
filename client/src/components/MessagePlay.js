@@ -63,7 +63,7 @@ export class MessagePlay extends Component {
     renderVd() {
         return (
             <>
-                <video className="mp-video-player" playsInline id="vd-palyer" controls onEnded={this.handleVideoEnd}>
+                <video className="mp-video-player" playsInline id="vd-palyer" onEnded={this.handleVideoEnd}>
                     <source src={this.state.videoLink} type="video/mp4" />
                 </video>                
                 {this.state.videoEnded ? (
