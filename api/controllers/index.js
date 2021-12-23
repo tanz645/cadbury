@@ -219,8 +219,8 @@ const creationUpload = async (req, res) => {
                 }
                 const actualLink = `/creation/${actualLinkName}`;
                 command
-                    .input(fs.createReadStream(audioPath))
-                    .input(fs.createReadStream(uploadPath))   
+                    .input(audioPath)
+                    .input(uploadPath)   
                     .save(actualLinkPath)                 
                     // .keepDAR()
                     .on('error', function(err) {
