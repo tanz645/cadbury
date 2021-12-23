@@ -49,28 +49,18 @@ export class MessagePlay extends Component {
         fetch(`${Configs.api}/customers/${hash}`)
             .then(response => response.json())
             .then(data => {
-                fetch(Configs.static_files + data.video_link)
-                .then(response => response.blob())
-                .then(vddata => {
-                    fetch(Configs.static_files + data.audio_link)
-                    .then(response => response.blob())
-                    .then(audata => {
-                        const vid = URL.createObjectURL(vddata);
-                        const aud = URL.createObjectURL(audata);
-                        console.log(aud)
-                        vd.src = vid;
-                        au.src = aud;
-                        vd.load();
-                        au.load();
-                        this.setState({
-                            videoLink: vid,
-                            audioLink: aud,
-                            vd,
-                            au
-                        })
-                    })
+                const vid = Configs.static_files + data.video_link;
+                const aud = Configs.static_files + data.audio_link;
+                vd.src = vid;
+                au.src = aud;
+                vd.load();
+                au.load();
+                this.setState({
+                    videoLink: Configs.static_files + data.video_link,
+                    audioLink: Configs.static_files + data.audio_link,
+                    vd,
+                    au
                 })
-                
             }).catch(err => {
                 console.log(err)
             });
