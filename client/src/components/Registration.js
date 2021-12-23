@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReCAPTCHA from "react-google-recaptcha";
 import { Link, Navigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import uuid from 'react-uuid'
 import "react-datepicker/dist/react-datepicker.css";
 import Configs from '../config';
 
@@ -11,8 +12,7 @@ const hubspotCookie = () => {
 export class Registration extends Component {
 
     constructor(props) {
-        super(props);
-        // Don't call this.setState() here!
+        super(props);        
         this.state = {
             modal: false,
             view: 'landing',
@@ -95,9 +95,14 @@ export class Registration extends Component {
         }
         const hutk = hubspotCookie() || '';
         const cid = window.document.cookie.match(/_ga=(.+?);/)[1].split('.').slice(-2).join(".") || '';
+        const uid = uuid();
         const hubspotData = {
             submittedAt: Date.now(),
             fields:[
+                {
+                    "name": "uid",
+                    "value": uid
+                },
                 {
                     "name": "title",
                     "value": this.state.title
@@ -145,12 +150,13 @@ export class Registration extends Component {
             fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
                 method: 'POST',        
                 headers: {
-                'Content-Type': 'application/json'             
+                    'Content-Type': 'application/json'             
                 },            
                 body: JSON.stringify(hubspotData)
             })                                  
             const data = {
                 "cid" : cid,
+                "uid": uid,
                 "captcha": this.state.captcha
             }
             const response = await fetch(Configs.api + '/customers/register', {

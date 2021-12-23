@@ -12,6 +12,8 @@ const userRegisterSchema = Joi.object({
         .min(1)
         .max(200)
         .required(),
+    uid: Joi.string()
+        .required(),
     captcha: Joi.string().required(),
 });
 const userAnswerSchema = Joi.object({
@@ -79,6 +81,7 @@ const register = async (body) => {
             body.updated_at = new Date();
             body.journey_state = journey_state[0];
             body.cid = body.cid,
+            body.uid = body.uid,
             body.receipt_link = '';
             body.video_link = '';                   
             body.promo_code = '';
@@ -208,7 +211,7 @@ const creationUpload = async (req, res) => {
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
                 }
-                const actualLink = config.FILE_UPLOAD+`/creation/${actualLinkName}`;
+                const actualLink = `/creation/${actualLinkName}`;
                 command
                     .input(uploadPath)
                     .input(audioPath)
@@ -463,7 +466,7 @@ const handleHubspotCallback = (req, res) => {
         const db = getConnection(config.databases.mongo.db)
         const userCol = db.collection(CUSTOMER_COLLECTION);
         console.log('webhook: userID:', req.body.properties.cid.value)
-        userCol.findOne({ cid: req.body.properties.cid.value}).then(userById => {
+        userCol.findOne({ uid: req.body.properties.uid.value }).then(userById => {
             if (!userById) {
                 console.log('webhook error ===> No user found');        
             }
@@ -471,8 +474,8 @@ const handleHubspotCallback = (req, res) => {
                 customer_id: req.body.vid,            
                 updated_at: new Date(),                      
             }                       
-            userCol.updateOne({ cid: req.body.properties.cid.value },{ $set: toUpdate }).then(result => {
-                console.log('webhook: updated user cid', result)                
+            userCol.updateOne({ uid: req.body.properties.uid.value },{ $set: toUpdate }).then(result => {
+                console.log(`webhook: updated user cid: [uid: ${req.body.properties.uid.value}]`, result)                
             }).catch(err => {
                 console.log('webhook error ===> Can not update: ', err); 
             })            
