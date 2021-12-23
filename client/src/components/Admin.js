@@ -157,8 +157,8 @@ export class Admin extends Component {
           <td>{item.answer}</td>
           <td><FontAwesomeIcon icon={faEye} className="cursor-pointer" onClick={() => this.openVideo(item)} /></td>
           <td>
-            <FontAwesomeIcon className="cursor-pointer" icon={faPrint} onClick={() => this.openPrintPreview(item._id)}/>
-            <FontAwesomeIcon className="cursor-pointer" icon={faDownload} onClick={() => this.downloadQR(item._id)}/>
+            <FontAwesomeIcon className="cursor-pointer" icon={faPrint} onClick={() => this.openPrintPreview(item._id,item.customer_id)}/>
+            <FontAwesomeIcon className="cursor-pointer" icon={faDownload} onClick={() => this.downloadQR(item._id,item.customer_id)}/>
           </td>
           <td>
             <div className="d-flex">
