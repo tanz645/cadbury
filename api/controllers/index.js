@@ -6,6 +6,7 @@ const config = require('../config');
 const ObjectId = require('mongodb').ObjectId; 
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
+const PQueue = require('p-queue');
 const requestQueue = new PQueue({ concurrency: 1 });
 
 const userRegisterSchema = Joi.object({
