@@ -21,11 +21,11 @@ const processVideo = ({
     console.time(`process converting: ${cid}`);
     const db = getConnection(config.databases.mongo.db)
     const userCol = db.collection(CUSTOMER_COLLECTION);
+    
     ffmpeg()
         .input(uploadPath)
         .input(audioPath)
         .size('400x700')
-        .videoCodec('h.264')
         // .keepDAR()
         .on('error', function (err) {
             console.log(`Converting An error occurred ${token} : ` + err.message);
@@ -273,7 +273,10 @@ const creationUpload = async (req, res) => {
                 ffmpeg
                 .ffprobe(uploadPath, function(err, metadata) {
                     console.log(metadata);
-                });          
+                }).getAvailableCodecs(function(err, codecs) {
+                    console.log('Available codecs:');
+                    console.dir(codecs);
+                  });                          
                 q.push({
                     uploadPath,
                     audioPath,
