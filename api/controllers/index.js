@@ -24,7 +24,8 @@ const processVideo = ({
     ffmpeg()
         .input(uploadPath)
         .input(audioPath)
-        // .size(size)
+        .size('400x700')
+        .videoCodec('h264')
         // .keepDAR()
         .on('error', function (err) {
             console.log(`Converting An error occurred ${token} : ` + err.message);
