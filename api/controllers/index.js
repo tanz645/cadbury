@@ -6,7 +6,6 @@ const config = require('../config');
 const ObjectId = require('mongodb').ObjectId; 
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
-const PQueue = require('p-queue');
 const requestQueue = new PQueue({ concurrency: 1 });
 
 const userRegisterSchema = Joi.object({
@@ -214,48 +213,42 @@ const creationUpload = async (req, res) => {
                 console.log(err)
                 return res.status(500).send('Can not upload video');
             }   
-            creationAudio.mv(audioPath, async function(err){
+            creationAudio.mv(audioPath, function(err){
                 if (err){
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
                 }
                 
                 console.time(`start converting: ${userById.customer_id}`)
-                try {
-                    await requestQueue.add(async () => {
-                        ffmpeg(uploadPath)
-                            .input(audioPath)  
-                            .size(req.body.size)    
-                            .save(actualLinkPath)                                              
-                            // .keepDAR()
-                            .on('error', function(err) {
-                                console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
-                                fs.unlinkSync(uploadPath);
-                                fs.unlinkSync(audioPath);           
-                                console.timeEnd(`start converting: ${userById.customer_id}`)              
-                            })
-                            .on('end', function() {
-                                console.log(`Ended ${req.body.token} : `);
-                                fs.unlinkSync(uploadPath)
-                                fs.unlinkSync(audioPath)  
-                                console.log(`Conversion Processing finished: ${req.body.token}!`);   
-                                console.timeEnd(`start converting: ${userById.customer_id}`)                      
-                            });
-                        const toUpdate = {
-                            journey_state: journey_state[2],
-                            video_link: actualLink,                            
-                            updated_at: new Date(), 
-                        }                       
-                        userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
-                            return res.send('File uploaded!');
-                        }).catch(error => {
-                            console.log(error)
-                            return res.status(500).send('Sorry can not process your request');
-                        });
+                ffmpeg(uploadPath)
+                    .input(audioPath)  
+                    .size(req.body.size)    
+                    .save(actualLinkPath)                                              
+                    // .keepDAR()
+                    .on('error', function(err) {
+                        console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
+                        fs.unlinkSync(uploadPath);
+                        fs.unlinkSync(audioPath);           
+                        console.timeEnd(`start converting: ${userById.customer_id}`)              
+                    })
+                    .on('end', function() {
+                        console.log(`Ended ${req.body.token} : `);
+                        fs.unlinkSync(uploadPath)
+                        fs.unlinkSync(audioPath)  
+                        console.log(`Conversion Processing finished: ${req.body.token}!`);   
+                        console.timeEnd(`start converting: ${userById.customer_id}`)                      
                     });
-                } catch (error) {
-                    return res.status(500).send('Can not upload audio');
-                }                                                                                                                 
+                const toUpdate = {
+                    journey_state: journey_state[2],
+                    video_link: actualLink,                            
+                    updated_at: new Date(), 
+                }                       
+                userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
+                    return res.send('File uploaded!');
+                }).catch(error => {
+                    console.log(error)
+                    return res.status(500).send('Sorry can not process your request');
+                })                                                                                  
             })
              
         });
