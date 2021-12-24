@@ -15,7 +15,8 @@ const processVideo = ({
     size,
     token,
     cid,
-    actualLinkPath
+    actualLinkPath,
+    actualLink
 },cb) => {
     console.time(`process converting: ${cid}`);
     const db = getConnection(config.databases.mongo.db)
@@ -269,14 +270,19 @@ const creationUpload = async (req, res) => {
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
                 }
-                const actualLink = `/creation/${actualLinkName}`;                
+                const actualLink = `/creation/${actualLinkName}`;      
+                ffmpeg()
+                .ffprobe(uploadPath, function(err, metadata) {
+                    console.dir(metadata);
+                });          
                 q.push({
                     uploadPath,
                     audioPath,
                     size: req.body.size,
                     token: req.body.token,
                     cid: userById.customer_id,
-                    actualLinkPath
+                    actualLinkPath,
+                    actualLink
                 });
                 return res.send('File uploaded!');
 
