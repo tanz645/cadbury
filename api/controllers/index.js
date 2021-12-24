@@ -24,7 +24,7 @@ const processVideo = ({
     ffmpeg()
         .input(uploadPath)
         .input(audioPath)
-        .size(size)
+        // .size(size)
         // .keepDAR()
         .on('error', function (err) {
             console.log(`Converting An error occurred ${token} : ` + err.message);
