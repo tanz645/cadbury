@@ -219,7 +219,8 @@ const creationUpload = async (req, res) => {
                 }
                 const actualLink = `/creation/${actualLinkName}`;
                 console.time(`start converting: ${userById.customer_id}`)
-                ffmpeg(uploadPath)
+                ffmpeg()
+                    .input(uploadPath)
                     .input(audioPath)  
                     .size(req.body.size)    
                     .save(actualLinkPath,config.FILE_UPLOAD)                                              
