@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "better-queue": "^3.8.10",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
@@ -21,8 +22,7 @@
     "http-errors": "~1.6.3",
     "joi": "^17.4.2",
     "mongoose": "^6.0.12",
-    "morgan": "~1.9.1",
-    "p-queue": "^7.1.0"
+    "morgan": "~1.9.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"
