@@ -218,35 +218,40 @@ const creationUpload = async (req, res) => {
                     return res.status(500).send('Can not upload audio');
                 }
                 const actualLink = `/creation/${actualLinkName}`;
-                ffmpeg(audioPath)
-                    .input(audioPath)                                                    
+                ffmpeg({source: uploadPath, priority: 10})
+                    .addInput(audioPath)  
+                    .withSize(req.body.size)    
+                    .saveToFile(actualLinkPath,config.FILE_UPLOAD, function(out,err){
+                        if(err){
+                            console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
+                        }
+                        console.log('file has been converted succesfully');
+                    })                                              
                     // .keepDAR()
-                    .on('error', function(err) {
-                        console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
-                        // fs.unlinkSync(uploadPath);
-                        // fs.unlinkSync(audioPath);
-                        return res.status(500).send('Sorry can not process your request');
-                    })
-                    .on('end', function() {
-                        console.log(`Ended ${req.body.token} : `);
-                        // fs.unlinkSync(uploadPath)
-                        // fs.unlinkSync(audioPath)  
-                    })
-                    .save(actualLinkPath,config.FILE_UPLOAD)  
-                
-                    console.log(`Conversion Processing finished: ${req.body.token}!`);
-                    const toUpdate = {
-                        journey_state: journey_state[2],
-                        video_link: actualLink,                            
-                        updated_at: new Date(), 
-                    }                       
-                    userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
-                        return res.send('File uploaded!');
-                    }).catch(error => {
-                        console.log(error)
-                        return res.status(500).send('Sorry can not process your request');
-                    }) 
-                                                                                      
+                    // .on('error', function(err) {
+                    //     console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
+                    //     fs.unlinkSync(uploadPath);
+                    //     fs.unlinkSync(audioPath);
+                    //     return res.status(500).send('Sorry can not process your request');
+                    // })
+                    // .on('end', function() {
+                    //     console.log(`Ended ${req.body.token} : `);
+                    //     fs.unlinkSync(uploadPath)
+                    //     fs.unlinkSync(audioPath)  
+                    //     console.log(`Conversion Processing finished: ${req.body.token}!`);
+                    //     const toUpdate = {
+                    //         journey_state: journey_state[2],
+                    //         video_link: actualLink,                            
+                    //         updated_at: new Date(), 
+                    //     }                       
+                    //     userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
+                    //         return res.send('File uploaded!');
+                    //     }).catch(error => {
+                    //         console.log(error)
+                    //         return res.status(500).send('Sorry can not process your request');
+                    //     }) 
+                    // })
+                                                                                        
             })
              
         });
