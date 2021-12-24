@@ -6,7 +6,6 @@ const config = require('../config');
 const ObjectId = require('mongodb').ObjectId; 
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
-const requestQueue = new PQueue({ concurrency: 1 });
 
 const userRegisterSchema = Joi.object({
     cid: Joi.string()        
@@ -218,18 +217,18 @@ const creationUpload = async (req, res) => {
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
                 }
-                
+                const actualLink = `/creation/${actualLinkName}`;
                 console.time(`start converting: ${userById.customer_id}`)
                 ffmpeg(uploadPath)
                     .input(audioPath)  
                     .size(req.body.size)    
-                    .save(actualLinkPath)                                              
+                    .save(actualLinkPath,config.FILE_UPLOAD)                                              
                     // .keepDAR()
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
                         fs.unlinkSync(uploadPath);
                         fs.unlinkSync(audioPath);           
-                        console.timeEnd(`start converting: ${userById.customer_id}`)              
+                         console.timeEnd(`start converting: ${userById.customer_id}`)              
                     })
                     .on('end', function() {
                         console.log(`Ended ${req.body.token} : `);
