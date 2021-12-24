@@ -220,10 +220,9 @@ const creationUpload = async (req, res) => {
                 const actualLink = `/creation/${actualLinkName}`;
                 console.time(`start converting: ${userById.customer_id}`)
                 ffmpeg()
-                    .input(uploadPath)
+                    .input(fs.createReadStream(uploadPath))
                     .input(audioPath)  
-                    .size(req.body.size)    
-                    .save(actualLinkPath,config.FILE_UPLOAD)                                              
+                    .size(req.body.size)                                                                     
                     // .keepDAR()
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
@@ -237,7 +236,8 @@ const creationUpload = async (req, res) => {
                         fs.unlinkSync(audioPath)  
                         console.log(`Conversion Processing finished: ${req.body.token}!`);   
                         console.timeEnd(`start converting: ${userById.customer_id}`)                      
-                    });
+                    })
+                    .save(actualLinkPath,config.FILE_UPLOAD);
                 const toUpdate = {
                     journey_state: journey_state[2],
                     video_link: actualLink,                            
