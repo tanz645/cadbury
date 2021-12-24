@@ -213,7 +213,7 @@ const creationUpload = async (req, res) => {
                 console.log(err)
                 return res.status(500).send('Can not upload video');
             }   
-            creationAudio.mv(audioPath, function(err){
+            creationAudio.mv(audioPath, async function(err){
                 if (err){
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
