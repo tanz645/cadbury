@@ -273,7 +273,8 @@ const creationUpload = async (req, res) => {
                 ffmpeg
                 .ffprobe(uploadPath, function(err, metadata) {
                     console.log(metadata);
-                }).getAvailableCodecs(function(err, codecs) {
+                })
+                ffmpeg.getAvailableCodecs(function(err, codecs) {
                     console.log('Available codecs:');
                     console.dir(codecs);
                   });                          
