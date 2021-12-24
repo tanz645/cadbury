@@ -218,7 +218,7 @@ const creationUpload = async (req, res) => {
                     return res.status(500).send('Can not upload audio');
                 }
                 const actualLink = `/creation/${actualLinkName}`;
-                ffmpeg({source: uploadPath, priority: 10})
+                ffmpeg({source: uploadPath})
                     .addInput(audioPath)  
                     .withSize(req.body.size)    
                     .saveToFile(actualLinkPath,config.FILE_UPLOAD, function(out,err){
@@ -239,17 +239,17 @@ const creationUpload = async (req, res) => {
                     //     fs.unlinkSync(uploadPath)
                     //     fs.unlinkSync(audioPath)  
                     //     console.log(`Conversion Processing finished: ${req.body.token}!`);
-                    //     const toUpdate = {
-                    //         journey_state: journey_state[2],
-                    //         video_link: actualLink,                            
-                    //         updated_at: new Date(), 
-                    //     }                       
-                    //     userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
-                    //         return res.send('File uploaded!');
-                    //     }).catch(error => {
-                    //         console.log(error)
-                    //         return res.status(500).send('Sorry can not process your request');
-                    //     }) 
+                        const toUpdate = {
+                            journey_state: journey_state[2],
+                            video_link: actualLink,                            
+                            updated_at: new Date(), 
+                        }                       
+                        userCol.updateOne({ _id:new ObjectId(req.body.token) },{ $set: toUpdate }).then(() => {
+                            return res.send('File uploaded!');
+                        }).catch(error => {
+                            console.log(error)
+                            return res.status(500).send('Sorry can not process your request');
+                        }) 
                     // })
                                                                                         
             })
