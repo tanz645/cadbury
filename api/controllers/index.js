@@ -6,7 +6,7 @@ const config = require('../config');
 const ObjectId = require('mongodb').ObjectId; 
 const path = require('path');
 const ffmpeg = require('fluent-ffmpeg');
-const command = ffmpeg();
+
 const userRegisterSchema = Joi.object({
     cid: Joi.string()        
         .min(1)
@@ -205,7 +205,7 @@ const creationUpload = async (req, res) => {
         const actualLink = `/creation/${actualLinkName}`;
         uploadPath = config.FILE_UPLOAD + creationLink;
         audioPath = config.FILE_UPLOAD + creationAudioLink;
-        const actualLinkPath = config.FILE_UPLOAD +actualLink;
+        const actualLinkPath = config.FILE_UPLOAD + actualLink;
         console.log(req.body.size)
         creation.mv(uploadPath, function(err) {
             if (err){
@@ -218,9 +218,8 @@ const creationUpload = async (req, res) => {
                     return res.status(500).send('Can not upload audio');
                 }
                 const actualLink = `/creation/${actualLinkName}`;
-                command
-                    .input(audioPath)
-                    .input(uploadPath)                                     
+                ffmpeg(audioPath)
+                    .input(audioPath)                                                    
                     // .keepDAR()
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
@@ -233,7 +232,7 @@ const creationUpload = async (req, res) => {
                         // fs.unlinkSync(uploadPath)
                         // fs.unlinkSync(audioPath)  
                     })
-                    .mergeToFile(actualLinkPath,config.FILE_UPLOAD)  
+                    .save(actualLinkPath,config.FILE_UPLOAD)  
                 
                     console.log(`Conversion Processing finished: ${req.body.token}!`);
                     const toUpdate = {
