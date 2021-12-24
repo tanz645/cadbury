@@ -219,9 +219,9 @@ const creationUpload = async (req, res) => {
                 }
                 const actualLink = `/creation/${actualLinkName}`;
                 ffmpeg({source: uploadPath})
-                    .addInput(audioPath)  
-                    .withSize(req.body.size)    
-                    .saveToFile(actualLinkPath,config.FILE_UPLOAD, function(out,err){
+                    .input(audioPath)  
+                    .size(req.body.size)    
+                    .save(actualLinkPath,config.FILE_UPLOAD, function(out,err){
                         if(err){
                             console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
                         }
