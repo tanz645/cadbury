@@ -16,30 +16,44 @@ const processVideo = ({
     token,
     cid,
     actualLinkPath
-}) => {
-    return new Promise((resolve, reject) => {
-        ffmpeg()
-            .input(uploadPath)
-            .input(audioPath)
-            .size(size)
-            // .keepDAR()
-            .on('error', function (err) {
-                console.log(`Converting An error occurred ${token} : ` + err.message);
-                fs.unlinkSync(uploadPath);
-                fs.unlinkSync(audioPath);
-                console.timeEnd(`start converting: ${cid}`)
-                reject('rejected')
-            })
-            .on('end', function () {
-                console.log(`Ended ${token} : `);
-                fs.unlinkSync(uploadPath)
-                fs.unlinkSync(audioPath)
-                console.log(`Conversion Processing finished: ${token}!`);
-                console.timeEnd(`start converting: ${cid}`)
+},cb) => {
+    console.time(`process converting: ${cid}`);
+    const db = getConnection(config.databases.mongo.db)
+    const userCol = db.collection(CUSTOMER_COLLECTION);
+    ffmpeg()
+        .input(uploadPath)
+        .input(audioPath)
+        .size(size)
+        // .keepDAR()
+        .on('error', function (err) {
+            console.log(`Converting An error occurred ${token} : ` + err.message);
+            fs.unlinkSync(uploadPath);
+            fs.unlinkSync(audioPath);
+            console.timeEnd(`process converting: ${cid}`)
+            cb(null,'')
+        })
+        .on('end', function () {
+            console.log(`Ended ${token} : `);
+            fs.unlinkSync(uploadPath)
+            fs.unlinkSync(audioPath)
+            console.log(`Conversion Processing finished: ${token}!`);
+            console.timeEnd(`process converting: ${cid}`);
+            const toUpdate = {
+                journey_state: journey_state[2],
+                video_link: actualLink,
+                updated_at: new Date(),
+            }
+            userCol.updateOne({ _id: new ObjectId(token) }, { $set: toUpdate }).then(() => {
                 resolve('resolved')
+                cb(null,'')
+            }).catch(error => {
+                console.log(error)
+                reject('rejected')
+                cb(null,'')
             })
-            .save(actualLinkPath, config.FILE_UPLOAD);
-    })
+            
+        })
+        .save(actualLinkPath, config.FILE_UPLOAD);
 }
 
 
@@ -255,8 +269,7 @@ const creationUpload = async (req, res) => {
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
                 }
-                const actualLink = `/creation/${actualLinkName}`;
-                console.time(`start converting: ${userById.customer_id}`)
+                const actualLink = `/creation/${actualLinkName}`;                
                 q.push({
                     uploadPath,
                     audioPath,
@@ -265,19 +278,9 @@ const creationUpload = async (req, res) => {
                     cid: userById.customer_id,
                     actualLinkPath
                 });
+                return res.send('File uploaded!');
 
-
-                const toUpdate = {
-                    journey_state: journey_state[2],
-                    video_link: actualLink,
-                    updated_at: new Date(),
-                }
-                userCol.updateOne({ _id: new ObjectId(req.body.token) }, { $set: toUpdate }).then(() => {
-                    return res.send('File uploaded!');
-                }).catch(error => {
-                    console.log(error)
-                    return res.status(500).send('Sorry can not process your request');
-                })
+                
             })
 
         });
