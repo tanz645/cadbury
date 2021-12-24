@@ -44,12 +44,10 @@ const processVideo = ({
                 video_link: actualLink,
                 updated_at: new Date(),
             }
-            userCol.updateOne({ _id: new ObjectId(token) }, { $set: toUpdate }).then(() => {
-                resolve('resolved')
+            userCol.updateOne({ _id: new ObjectId(token) }, { $set: toUpdate }).then(() => {                
                 cb(null,'')
             }).catch(error => {
-                console.log(error)
-                reject('rejected')
+                console.log(error)               
                 cb(null,'')
             })
             
@@ -271,9 +269,9 @@ const creationUpload = async (req, res) => {
                     return res.status(500).send('Can not upload audio');
                 }
                 const actualLink = `/creation/${actualLinkName}`;      
-                ffmpeg()
+                ffmpeg
                 .ffprobe(uploadPath, function(err, metadata) {
-                    console.dir(metadata);
+                    console.log(metadata);
                 });          
                 q.push({
                     uploadPath,
@@ -285,8 +283,6 @@ const creationUpload = async (req, res) => {
                     actualLink
                 });
                 return res.send('File uploaded!');
-
-                
             })
 
         });
