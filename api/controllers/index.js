@@ -217,23 +217,25 @@ const creationUpload = async (req, res) => {
                     console.log(err)
                     return res.status(500).send('Can not upload audio');
                 }
-                const actualLink = `/creation/${actualLinkName}`;
+                
+                console.time(`start converting: ${userById.customer_id}`)
                 ffmpeg(uploadPath)
                     .input(audioPath)  
                     .size(req.body.size)    
-                    .save(actualLinkPath,config.FILE_UPLOAD)                                              
+                    .save(actualLinkPath)                                              
                     // .keepDAR()
                     .on('error', function(err) {
                         console.log(`Converting An error occurred ${req.body.token} : ` + err.message);
                         fs.unlinkSync(uploadPath);
-                        fs.unlinkSync(audioPath);
-                        return res.status(500).send('Sorry can not process your request');
+                        fs.unlinkSync(audioPath);           
+                        console.timeEnd(`start converting: ${userById.customer_id}`)              
                     })
                     .on('end', function() {
                         console.log(`Ended ${req.body.token} : `);
                         fs.unlinkSync(uploadPath)
                         fs.unlinkSync(audioPath)  
-                        console.log(`Conversion Processing finished: ${req.body.token}!`);                         
+                        console.log(`Conversion Processing finished: ${req.body.token}!`);   
+                        console.timeEnd(`start converting: ${userById.customer_id}`)                      
                     });
                 const toUpdate = {
                     journey_state: journey_state[2],
