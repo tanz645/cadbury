@@ -52,12 +52,6 @@ router.put('/result-set', (req, res) => {
 router.post('/hubspot/callback', (req, res) => {
     return handleHubspotCallback(req, res)
 });
-router.get('/', (req, res) => {
-    return getAllUsers(req, res);
-});
-router.get('/:token', (req, res) => {
-    return getUser(req, res);
-});
 
 router.get('/creation-need-to-process', (req, res) => {
     return creationNeedToProcess(req, res);
@@ -66,5 +60,14 @@ router.get('/creation-need-to-process', (req, res) => {
 router.post('/creation-need-to-process-upload', (req, res) => {
     return creationNeedToProcessUpload(req, res);
 });
+
+router.get('/', (req, res) => {
+    return getAllUsers(req, res);
+});
+router.get('/:token', (req, res) => {
+    return getUser(req, res);
+});
+
+
 
 module.exports = router;
