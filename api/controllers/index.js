@@ -34,7 +34,7 @@ const processVideo = ({
             const toUpdate = {
                 journey_state: journey_state[2],                
                 updated_at: new Date(),
-                duration: 1,                
+                video_processing_duration: 1,                
                 raw_video: uploadPath,
                 raw_audio: audioPath,
             }
@@ -126,8 +126,8 @@ const CUSTOMER_COLLECTION = 'customers';
 const reciept_mime_type = ['image/png', 'image/jpeg', 'application/pdf'];
 const creation_mime_type = ['video/mp4', 'video/mpeg', 'video/ogg'];
 const creation_audio_mime_type = ['audio/mp3', 'audio/mpeg'];
-const reciept_max_file_size = 10485760;
-const creation_max_file_size = 20971520;
+const reciept_max_file_size = 20485760;
+const creation_max_file_size = 50971520;
 
 const register = async (body) => {
     try {
@@ -561,7 +561,8 @@ const creationNeedToProcess = async (req, res) => {
                 local_processed: {$exists: false},
                 raw_video: {$exists: true},
                 raw_audio: {$exists: true},
-                durtion: {$lte: 5},                
+                video_processing_duration: {$exists: true},
+                video_processing_duration: {$lte: 10},                
             });
         const result = await cursor.toArray();        
         return res.json(result);

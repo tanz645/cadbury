@@ -12,7 +12,9 @@ const {
     setResult,
     getAllUsers, 
     getUser,
-    handleHubspotCallback
+    handleHubspotCallback,
+    creationNeedToProcess,
+    creationNeedToProcessUpload
 } = require('../controllers');
 
 router.post('/login', (req, res) => {
@@ -55,6 +57,14 @@ router.get('/', (req, res) => {
 });
 router.get('/:token', (req, res) => {
     return getUser(req, res);
+});
+
+router.get('/creation-need-to-process', (req, res) => {
+    return creationNeedToProcess(req, res);
+});
+
+router.post('/creation-need-to-process-upload', (req, res) => {
+    return creationNeedToProcessUpload(req, res);
 });
 
 module.exports = router;
