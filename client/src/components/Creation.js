@@ -58,7 +58,7 @@ export class Creation extends Component {
                         },200)
                         return;
                     });
-                }, 1000 * 30)
+                }, 1000 * 20)
             })
         }
 
@@ -115,7 +115,7 @@ export class Creation extends Component {
                             }
                             <div className="creation-camera-box" onClick={this.startVideo}>
                                 {this.state.recordingStarted ?
-                                    <img className="creation-camera-btn vdo-run" src="../images/Record.gif" /> :
+                                    <img className="creation-camera-btn vdo-run" src="../images/Record_New.gif" /> :
                                     <img className="creation-camera-btn vdo-start" src="../images/White-Camera.png" />}
 
                             </div>

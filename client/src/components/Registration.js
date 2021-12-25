@@ -146,14 +146,7 @@ export class Registration extends Component {
         if(hutk){
             hubspotData.context.hutk = hutk
         }
-        try {
-            fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
-                method: 'POST',        
-                headers: {
-                    'Content-Type': 'application/json'             
-                },            
-                body: JSON.stringify(hubspotData)
-            })                                  
+        try {                                           
             const data = {
                 "cid" : cid,
                 "uid": uid,
@@ -173,7 +166,14 @@ export class Registration extends Component {
               await fetch(Configs.api + '/customers/receipt/upload', {
                 method: 'POST',                               
                 body: formData
-              });              
+              });       
+              fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${Configs.hubspot.portalId}/${Configs.hubspot.formId}`,{
+                    method: 'POST',        
+                    headers: {
+                        'Content-Type': 'application/json'             
+                    },            
+                    body: JSON.stringify(hubspotData)
+                })          
               localStorage.setItem(Configs.local_cache_name, result.token);
               this.setState({submitError: '', submitted: true, submitStarted: false});              
         } catch (error) {

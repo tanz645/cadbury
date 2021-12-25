@@ -32,6 +32,15 @@ const config = {
         static_files: 'https://cadbury.cnygiftfromtheheart.com/cad_files',
         domain: 'https://cadbury.cnygiftfromtheheart.com',
         hubspot: {
+            portalId: "19533831",
+            formId: "8c89f4f6-4682-4979-9308-ce73d40a1c53"
+        }
+    },
+    staging:{
+        api: 'https://cadbury.cnygiftfromtheheart.com/api',       
+        static_files: 'https://cadbury.cnygiftfromtheheart.com/cad_files',
+        domain: 'https://cadbury.cnygiftfromtheheart.com',
+        hubspot: {
             portalId: "25023018",
             formId: "c1929aea-3230-44c9-940c-767fc42acd66"
         }
@@ -42,6 +51,6 @@ const setConfig = () => {
     const common = {
         local_cache_name: 'cadbury_local_token' 
     }
-    return {...config.prod, ...common}
+    return {...config.staging, ...common}
 }
 export default setConfig()
