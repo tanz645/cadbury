@@ -16,7 +16,9 @@ const processVideo = ({
     token,
     cid,
     actualLinkPath,
-    actualLink
+    actualLink,
+    creationLink,
+    creationAudioLink
 },cb) => {
     console.time(`process converting: ${cid}`);
     const db = getConnection(config.databases.mongo.db)
@@ -35,8 +37,8 @@ const processVideo = ({
                 journey_state: journey_state[2],                
                 updated_at: new Date(),
                 video_processing_duration: 1,                
-                raw_video: uploadPath,
-                raw_audio: audioPath,
+                raw_video: creationLink,
+                raw_audio: creationAudioLink,
             }
             userCol.updateOne({ _id: new ObjectId(token) }, { $set: toUpdate }).then(() => {    
                 console.timeEnd(`process converting: ${cid}`)            
@@ -61,8 +63,8 @@ const processVideo = ({
                 video_link: actualLink,
                 updated_at: new Date(),
                 video_processing_duration: duration,                
-                raw_video: uploadPath,
-                raw_audio: audioPath,
+                raw_video: creationLink,
+                raw_audio: creationAudioLink,
             }
             userCol.updateOne({ _id: new ObjectId(token) }, { $set: toUpdate }).then(() => {                
                 cb(null,'')
@@ -299,7 +301,9 @@ const creationUpload = async (req, res) => {
                     token: req.body.token,
                     cid: userById.customer_id,
                     actualLinkPath,
-                    actualLink
+                    actualLink,
+                    creationLink,
+                    creationAudioLink
                 });
                 return res.send('File uploaded!');
             })
