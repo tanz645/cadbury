@@ -21,7 +21,7 @@ const processVideo = ({
     console.time(`process converting: ${cid}`);
     const db = getConnection(config.databases.mongo.db)
     const userCol = db.collection(CUSTOMER_COLLECTION);
-    
+    const start = Date.now();
     ffmpeg()
         .input(uploadPath)
         .input(audioPath)
@@ -29,21 +29,40 @@ const processVideo = ({
         // .keepDAR()
         .on('error', function (err) {
             console.log(`Converting An error occurred ${token} : ` + err.message);
-            fs.unlinkSync(uploadPath);
-            fs.unlinkSync(audioPath);
-            console.timeEnd(`process converting: ${cid}`)
-            cb(null,'')
+            // fs.unlinkSync(uploadPath);
+            // fs.unlinkSync(audioPath);
+            const toUpdate = {
+                journey_state: journey_state[2],                
+                updated_at: new Date(),
+                duration: 1,                
+                raw_video: uploadPath,
+                raw_audio: audioPath,
+            }
+            userCol.updateOne({ _id: new ObjectId(token) }, { $set: toUpdate }).then(() => {    
+                console.timeEnd(`process converting: ${cid}`)            
+                cb(null,'')
+            }).catch(error => {
+                console.log(error)               
+                cb(null,'')
+                console.timeEnd(`process converting error: ${cid}`)
+            })
+            
         })
         .on('end', function () {
             console.log(`Ended ${token} : `);
-            fs.unlinkSync(uploadPath)
-            fs.unlinkSync(audioPath)
+            const end = Date.now();
+            const duration  = (end - start) / 1000;
+            // fs.unlinkSync(uploadPath)
+            // fs.unlinkSync(audioPath)
             console.log(`Conversion Processing finished: ${token}!`);
             console.timeEnd(`process converting: ${cid}`);
             const toUpdate = {
                 journey_state: journey_state[2],
                 video_link: actualLink,
                 updated_at: new Date(),
+                video_processing_duration: duration,                
+                raw_video: uploadPath,
+                raw_audio: audioPath,
             }
             userCol.updateOne({ _id: new ObjectId(token) }, { $set: toUpdate }).then(() => {                
                 cb(null,'')
@@ -55,7 +74,6 @@ const processVideo = ({
         })
         .save(actualLinkPath, config.FILE_UPLOAD);
 }
-
 
 const q = new Queue(processVideo);
 
@@ -228,7 +246,7 @@ const creationUpload = async (req, res) => {
         // if(userById.journey_state !== journey_state[1]){
         //     return res.status(400).send('Not in proper state to upload video'); 
         // }
-        let uploadPath;
+        let uploadPath, audioPath, actualLinkPath;
         if (!req.files || Object.keys(req.files).length === 0 || (!req.files.creation && !req.files.creationAudio)) {
             return res.status(400).send('No files were uploaded.');
         }
@@ -246,7 +264,7 @@ const creationUpload = async (req, res) => {
         if (!creation_audio_mime_type.includes(creationAudio.mimetype)) {
             return res.status(400).send('Only mp3,mpeg');
         }
-        actualLinkName = `${req.body.token}_actual_${creation.name}`;
+        let actualLinkName = `${req.body.token}_actual_${creation.name}`;
         creation.name = `${req.body.token}_${creation.name}`;
         console.log({
             actualLinkName
@@ -257,7 +275,7 @@ const creationUpload = async (req, res) => {
         const actualLink = `/creation/${actualLinkName}`;
         uploadPath = config.FILE_UPLOAD + creationLink;
         audioPath = config.FILE_UPLOAD + creationAudioLink;
-        const actualLinkPath = config.FILE_UPLOAD + actualLink;
+        actualLinkPath = config.FILE_UPLOAD + actualLink;
         console.log(req.body.size)
         creation.mv(uploadPath, function (err) {
             if (err) {
@@ -535,6 +553,69 @@ const handleHubspotCallback = (req, res) => {
 
 };
 
+const creationNeedToProcess = async (req, res) => {
+    try {
+        const db = getConnection(config.databases.mongo.db)
+        const userCol = db.collection(CUSTOMER_COLLECTION);
+        const cursor = userCol.find({
+                local_processed: {$exists: false},
+                raw_video: {$exists: true},
+                raw_audio: {$exists: true},
+                durtion: {$lte: 5},                
+            });
+        const result = await cursor.toArray();        
+        return res.json(result);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send('Sorry can not process your request');
+    }
+}
+
+const creationNeedToProcessUpload = async (req, res) => {
+    if (!req.body || !req.body.token) {
+        return res.status(400).send('Token is required');
+    }
+    try {
+        const db = getConnection(config.databases.mongo.db)
+        const userCol = db.collection(CUSTOMER_COLLECTION);
+        const userById = await userCol.findOne({ _id: new ObjectId(req.body.token) });
+        if (!userById) {
+            return res.status(400).send('No user found');
+        }               
+        if (!req.files || Object.keys(req.files).length === 0 || (!req.files.creation)) {
+            return res.status(400).send('No files were uploaded.');
+        }
+
+        const creation = req.files.creation;       
+       
+        const actualLinkName = `${req.body.token}_actual_${creation.name}`;                       
+        const actualLink = `/creation/${actualLinkName}`;       
+        const actualLinkPath = config.FILE_UPLOAD + actualLink;
+        console.log(req.body.size)
+        creation.mv(actualLinkPath, async function (err) {
+            if (err) {
+                console.log(err)
+                return res.status(500).send('Can not upload video');
+            }
+            const toUpdate = {
+                journey_state: journey_state[2],
+                video_link: actualLink,
+                local_processed: true,
+                updated_at: new Date(),
+            }
+            try {
+                await userCol.updateOne({ _id: new ObjectId(req.body.token) }, { $set: toUpdate })
+                return res.send('File uploaded!');
+            } catch (error) {
+                console.log(error)
+                return res.status(500).send('Sorry can not process your request');
+            }
+        });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send('Sorry can not process your request');
+    }
+};
 module.exports = {
     register,
     receiptUpload,
@@ -546,5 +627,7 @@ module.exports = {
     setResult,
     getAllUsers,
     getUser,
-    handleHubspotCallback
+    handleHubspotCallback,
+    creationNeedToProcess,
+    creationNeedToProcessUpload
 }
