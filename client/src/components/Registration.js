@@ -120,8 +120,8 @@ export class Registration extends Component {
                     "value": this.state.phone
                 },                
                 {
-                    "name": "agree_to_terms_and_conditions",
-                    "value": "true"
+                    "name": "terms_and_conditions",
+                    "value": "Yes"
                 },
                 {
                     "name": "sign_me_up_to_receive_emails",
