@@ -13,7 +13,7 @@ const config = {
 			db: env.MONGO_DATABASE
 		}
 	},
-	hubspot_api_key: 'eu1-5201-252e-4a0a-b86d-2b813d495bc0',
+	hubspot_api_key: '2066b35f-a5d7-4f7e-95ae-f7a46067d990',
 	FILE_UPLOAD: env.FILE_UPLOAD
 };
 

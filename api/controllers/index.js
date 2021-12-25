@@ -163,6 +163,7 @@ const register = async (body) => {
             body.answer = '';
             body.result_set_at = null;
             body.result = '';
+            body.env = 'production';
             body.result_type = '';
             body.customer_id = '';
             const insert = await userCol.insertOne(body)
@@ -501,7 +502,7 @@ const getAllUsers = async (req, res) => {
     try {
         const db = getConnection(config.databases.mongo.db)
         const userCol = db.collection(CUSTOMER_COLLECTION);
-        const cursor = userCol.find({});
+        const cursor = userCol.find({env: 'production'});
         const result = await cursor.toArray();
         return res.json(result);
     } catch (error) {
