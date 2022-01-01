@@ -17,7 +17,7 @@ export class Thankyou extends Component {
       const data = {
         url: '/',
         title: 'Cadbury',
-        text: 'Gift From The Heart'
+        text: 'CNY Gift From The Heart'
       }
       try {
         await navigator
