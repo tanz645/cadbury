@@ -15,7 +15,7 @@ export class Thankyou extends Component {
     console.log(url)
     if (navigator.share) {
       const data = {
-        url: '/',
+        url: 'https://cadbury.cnygiftfromtheheart.com',
         title: 'Cadbury',
         text: 'CNY Gift From The Heart'
       }
