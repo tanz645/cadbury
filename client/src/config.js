@@ -28,8 +28,8 @@ const config = {
         }
     },
     prod:{
-        api: 'https://cadbury.cnygiftfromtheheart.com/api',       
-        static_files: 'https://cadbury.cnygiftfromtheheart.com/cad_files',
+        api: '/api',       
+        static_files: '/cad_files',
         domain: 'https://cadbury.cnygiftfromtheheart.com',
         hubspot: {
             portalId: "19533831",
