@@ -72,8 +72,11 @@ export class Creation extends Component {
     }
 
     startEngine() {
+        const wwwKey = 'f98e4511dbbd4e0c58ab7fe7a14300ad49455b9d515d52c1009071e65c952e0ee63f3e4f3499c787';
+        const nonWwwKey = '0fbd35eb6980c5f59bfb31b7de3f62c53096f01289d8e9be2fcfc03d93501b07b2572d0750e5b2ac';
+        let key = window.location.href.includes('www') ? wwwKey : nonWwwKey;
         const deepAR = window.DeepAR({
-            licenseKey: '0fbd35eb6980c5f59bfb31b7de3f62c53096f01289d8e9be2fcfc03d93501b07b2572d0750e5b2ac',
+            licenseKey: key,
             canvasWidth: window.innerWidth,
             canvasHeight: window.innerHeight,
             canvas: document.getElementById('deepar-canvas'),
