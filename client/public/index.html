@@ -51,7 +51,10 @@
         if(window.location.protocol === 'http:'){
           window.location.href="https://cadbury.cnygiftfromtheheart.com"
         }
-        if(!window.location.href.includes('admin')){
+        if(!window.location.href.includes('admin') 
+        && !window.location.href.includes('message-play')
+        && ! window.location.href.includes('qr')
+        && !window.location.href.includes('user-creation')){
           window.location.href="https://www.mondelezinternational.com/Malaysia"
         }
       })()
